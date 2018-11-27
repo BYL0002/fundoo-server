@@ -7,24 +7,60 @@
 
 const userservices = require('../services/UserServices');
 
-/**
- * @description Register Controller for request to register & response on succesful done
- */
-exports.registerController = (req, res, next) => {
-    console.log(typeof req);
+exports.loginController = function (req, res, next) {
     try {
-        userservices.registerService(req.body, (err, data) => {
-            if(err)
-            {
-                res.status(404).send(err);
+        userservices.login_service_function(req.body, (err, data) => {
+
+            if (err) {
+                res.status(400).send(err);
             }
-            else
-            {
+            else {
+
+                var token = jwt.sign(payload, privateKEY, signOptions);
+                console.log("Token - " + token);
+
+                res.status(200).send(data);
+            }
+        })
+    }
+    catch (err) {
+        next(err);
+    }
+}
+/**
+ * @description Controller for register & sending response to client
+ */
+exports.registerController = function (req, res, next) {
+
+    try {
+        userservices.register_service_function(req.body, (err, data) => {
+
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
                 res.status(200).send(data);
             }
         })
     }
     catch(err) {
+        next(err);
+    }
+}
+
+exports.logoutController = function (req, res, next) {
+    try {
+        userservices.logout_service_function(req, (err, data) => {
+
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.status(200).send(data);
+            }
+        })
+    }
+    catch (err) {
         next(err);
     }
 }

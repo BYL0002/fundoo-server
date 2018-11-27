@@ -6,17 +6,82 @@
  */
 
 const usermodel = require('../app/models/UserModel');
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+           user: 'labzbridge02@gmail.com',
+           pass: 'bridge01!'
+       }
+   });
 
 /**
- * @description registration service
+ * @description login service
  */
-exports.registerService = (req, callback) => {
-    usermodel.registerModel(req, (err, data) => {
+exports.login_service_function = function(req, callback) {
+    
+    usermodel.loginModel(req, (err, data) => {
+
         if(err) {
             return callback(err);
         }
         else {
-            return callbacknull(null, data);
+            console.log('data on service page');
+            console.log(data);
+
+            return callback(null, data);
         }
+    });
+}
+
+/**
+ * @description registration service
+ */
+exports.register_service_function = function(req, callback) {
+
+    console.log('request on service page');
+    console.log(req);
+    usermodel.registerModel(req, (err, data) => {
+
+        if(err) {
+            return callback(err);
+        }
+        else {
+
+            // const mailOptions = {
+            //     from: 'labzbridge02@gmail.com', // sender address
+            //     to: req.email, // list of receivers
+            //     subject: 'Registration Successful on ChatApp', // Subject line
+            //     html: '<p>Your are most Welcome to chat on ChatApp anytime. Thank You!</p>'// plain text body
+            // };
+
+            // transporter.sendMail(mailOptions, function (err, info) {
+            //     if(err) {
+            //         console.log('Register Email not sent');
+            //         console.log(err)
+            //     }
+            //     else {
+            //         console.log('Register Email Sent');
+            //         console.log(info);
+            //     }
+                    
+            // });
+
+            return callback(null, data);
+        }
+
+    })
+}
+
+/**
+ * @description registration service
+ */
+exports.logout_service_function = function(req, callback) {
+
+    usermodel.logoutModel(req, (err, data) => {
+
+        if(err) return callback(err);
+        else return callback(null, data);
+
     })
 }

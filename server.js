@@ -38,7 +38,7 @@ server = app.listen(3001, () => {
 function startMongoDb(dbUrl) {
     mongoose.connect(dbUrl, { useCreateIndex: true, useNewUrlParser: true });
     mongoose.connection.on('error', (error) => { console.log('Connection error with MongoDb'); });
-    mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb on port  :' + db_url); });
+    mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb on port  :' + dbUrl); });
 }
 
 app.use(function (err, req, res, next) {

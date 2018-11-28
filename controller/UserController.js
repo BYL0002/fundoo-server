@@ -8,17 +8,16 @@
 const userservices = require('../services/UserServices');
 
 exports.loginController = function (req, res, next) {
+    console.log('login controller');
+    
+    
     try {
-        userservices.login_service_function(req.body, (err, data) => {
+        userservices.loginService(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send(err);
             }
             else {
-
-                var token = jwt.sign(payload, privateKEY, signOptions);
-                console.log("Token - " + token);
-
                 res.status(200).send(data);
             }
         })
@@ -31,10 +30,15 @@ exports.loginController = function (req, res, next) {
  * @description Controller for register & sending response to client
  */
 exports.registerController = function (req, res, next) {
-    console.log('controller before service ', req.body);
+
+    let request = {
+        email : req.body.email,
+        password : req.body.password1
+    }
+    console.log(typeof request);
     
     try {
-        userservices.register_service_function(req.body, (err, data) => {
+        userservices.registerService(request, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)
@@ -49,9 +53,12 @@ exports.registerController = function (req, res, next) {
     }
 }
 
+/**
+ * @description Logout controller function to get the output and pass the input to services where business logic exist
+ */
 exports.logoutController = function (req, res, next) {
     try {
-        userservices.logout_service_function(req, (err, data) => {
+        userservices.logoutService(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)

@@ -12,8 +12,9 @@
   * @description Schema created via mongoose
   */
  const newSchema = new schema({
-     email_id : {type:String},
-     password : {type:String}
+     email_id : {type : String},
+     password : {type : String},
+     token : {type : String}
  })
 
 /**
@@ -48,25 +49,22 @@
  */
 userFunction.prototype.loginModel = function (req, callback) {
 
-    console.log("model login user bcrpt");
-    console.log(req.email);
-    console.log(req.passw);
-    user.findOne({ email_id: req.email }, function (err, result) {
+    user.findOne({ email_id: req.email, password: req.password }, function (err, result) {
       if (result == null) {
         console.log('error in checking ', err);
         return callback(err);
       }
       else {
-  
-        if (bcrypt.compareSync(req.passw, result.password)) {
-          console.log("compare result");
-          console.log(result);
-          return callback(null, result);
-        }
-        else {
-          console.log("compare null");
-          return callback(null);
-        }
+        return callback(null, result);
+        // if (bcrypt.compareSync(req.passw, result.password)) {
+        //   console.log("compare result");
+        //   console.log(result);
+          // return callback(null, result);
+        // }
+        // else {
+        //   console.log("compare null");
+          // return callback(null);
+        // }
       }
   
     })
@@ -78,7 +76,7 @@ userFunction.prototype.loginModel = function (req, callback) {
  */
 userFunction.prototype.logoutModel = function (req, callback) {
 
-    user.findOne({ email_id: req.body.log_user_email_id }, function (err, result) {
+    user.findOne({ email_id: req.loggedUser }, function (err, result) {
       if (err) {
   
         console.log(err);

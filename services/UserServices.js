@@ -18,7 +18,7 @@ var transporter = nodemailer.createTransport({
 /**
  * @description login service
  */
-exports.login_service_function = function(req, callback) {
+exports.loginService = function(req, callback) {
     
     usermodel.loginModel(req, (err, data) => {
 
@@ -26,8 +26,12 @@ exports.login_service_function = function(req, callback) {
             return callback(err);
         }
         else {
-            console.log('data on service page');
-            console.log(data);
+            // const mailOptions = {
+            //     from: 'labzbridge02@gmail.com', // sender address
+            //     to: req.email, // list of receivers
+            //     subject: 'Registration Successful on ChatApp', // Subject line
+            //     html: '<p>Your are most Welcome to chat on ChatApp anytime. Thank You!</p>'// plain text body
+            // };
 
             return callback(null, data);
         }
@@ -37,7 +41,7 @@ exports.login_service_function = function(req, callback) {
 /**
  * @description registration service
  */
-exports.register_service_function = function(req, callback) {
+exports.registerService = function(req, callback) {
 
     console.log('request on service page');
     console.log(req);
@@ -63,8 +67,7 @@ exports.register_service_function = function(req, callback) {
             //     else {
             //         console.log('Register Email Sent');
             //         console.log(info);
-            //     }
-                    
+            //     }                    
             // });
 
             return callback(null, data);
@@ -76,7 +79,7 @@ exports.register_service_function = function(req, callback) {
 /**
  * @description registration service
  */
-exports.logout_service_function = function(req, callback) {
+exports.logoutService = function(req, callback) {
 
     usermodel.logoutModel(req, (err, data) => {
 

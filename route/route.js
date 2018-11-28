@@ -18,7 +18,7 @@ const controller = require('../controller/UserController');
  * post method of express to send controls to controller from routes through middleware
  * post for registration
  */
-router.post("/register", middleware.register, controller.registerController);
+router.post("/register", middleware.registerMiddleware, controller.registerController);
 /**
  * post for login
  */

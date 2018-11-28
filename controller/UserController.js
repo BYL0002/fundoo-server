@@ -31,7 +31,8 @@ exports.loginController = function (req, res, next) {
  * @description Controller for register & sending response to client
  */
 exports.registerController = function (req, res, next) {
-
+    console.log('controller before service ', req.body);
+    
     try {
         userservices.register_service_function(req.body, (err, data) => {
 

@@ -43,6 +43,8 @@ exports.loginMiddleware = function login_middleware(req, res, next) {
  * @description function formed as to perform middleware work for registration
  */
 exports.registerMiddleware = function (req, res, next) {
+    console.log("46 ",req.body);
+    
     if(req.body.email == null || req.body.email.length === 0 || req.body.email === undefined) {
         console.log('Email Error');
         next(err);

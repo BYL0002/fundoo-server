@@ -13,7 +13,6 @@ const routes = require('./route/route.js');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbUrl = require('./config/dbconfig');
-console.log('url', dbUrl);
 
 // const MongoClient = require('mongodb').MongoClient;
 
@@ -23,22 +22,23 @@ console.log('url', dbUrl);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors);
-app.use('/', routes);
+app.use(cors());
 
-server = app.listen(3001, () => {
-    startMongoDb(dbUrl);
-    console.log('server is up and running');
-  });
+
+app.use('/', routes);
+// app.get('/get',(req, res)=>{
+//     res.send("Hello")
+// })
 
 /**
  * @description cheking database connectivity
  * @param {String} dbUrl 
  */
 function startMongoDb(dbUrl) {
-    mongoose.connect(dbUrl, { useCreateIndex: true, useNewUrlParser: true });
+    mongoose.set({useCreateIndex: true})
+    mongoose.connect(dbUrl, { useNewUrlParser: true });
     mongoose.connection.on('error', (error) => { console.log('Connection error with MongoDb'); });
-    mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb on port  :' + dbUrl); });
+    mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb on port : ' + dbUrl); });
 }
 
 app.use(function (err, req, res, next) {
@@ -46,3 +46,9 @@ app.use(function (err, req, res, next) {
     console.log(err);  
     res.status(500).send('Something broke ! Internal Server Error')
 });
+
+app.listen(8000, () => {
+    startMongoDb(dbUrl);
+    console.log('server is up and running on : ',8000);
+});
+

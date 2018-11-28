@@ -49,13 +49,24 @@ exports.loginService = function(req, callback) {
             return callback(err);
         }
         else {
-            // const mailOptions = {
-            //     from: 'labzbridge02@gmail.com', // sender address
-            //     to: req.email, // list of receivers
-            //     subject: 'Registration Successful on ChatApp', // Subject line
-            //     html: '<p>Your are most Welcome to chat on ChatApp anytime. Thank You!</p>'// plain text body
-            // };
 
+            let mailOptions = {
+                from: 'labzbridge02@gmail.com', // sender address
+                to: data.email_id, // list of receivers
+                subject: 'Activity Review', // Subject line
+                html: '<p>Login Successful on Fundoo Notes!</p>'// plain text body
+            };
+
+            transporter.sendMail(mailOptions, function (err, info) {
+                if(err) {
+                    console.log('Login Email not sent');
+                    console.log(err)
+                }
+                else {
+                    console.log('Login Email Sent');
+                    console.log(info);
+                }                    
+            });
             return callback(null, data);
         }
     });

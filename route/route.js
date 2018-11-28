@@ -28,6 +28,11 @@ router.post('/login', middleware.loginMiddleware , controller.loginController);
  */
 router.post('/logout', middleware.logoutMiddleware, controller.logoutController)
 /**
+ * get for messages for chatting application
+ */
+router.post('/registerUserVerify', middleware.logoutMiddleware, controller.logoutController)
+
+/**
  * @exports express_router so the flow can include express router and get the proper routng to required task
  */
 module.exports = router;

@@ -67,12 +67,8 @@
  * @description 
  */
 userFunction.prototype.forgotPasswordModel = (req, callback ) => {
-  let newUser = new user ({
-      email_id : req.email,
-      token : req.token
-  })
 
-  user.findOneAndUpdate({email_id : req.email_id}, {token : req.token}, function(err, result) {
+  user.findOneAndUpdate({email_id : req.email}, {token : req.token}, function(err, result) {
     user.findOne({_id : result._id}, function(err, data) {
       if(err) 
       {

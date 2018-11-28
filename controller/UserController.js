@@ -96,8 +96,8 @@ exports.registerUserVerifyController = function (req, res, next) {
  */
 exports.forgotPasswordController = function (req, res, next) {
 
-    console.log(typeof request);
-    console.log(request);
+    console.log(typeof req);
+    console.log(req.body);
     
     try {
         userservices.forgotPasswordService(req.body, (err, data) => {

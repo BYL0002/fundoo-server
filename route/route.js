@@ -34,7 +34,7 @@ router.post('/registerUserVerify', middleware.registerUserVerifyMiddleware, cont
 /**
  * get for messages for chatting application
  */
-router.post('/forgotpassword', middleware.registerUserVerifyMiddleware, controller.forgotPasswordController);
+router.post('/forgotpassword', middleware.forgotPasswordMiddleware, controller.forgotPasswordController);
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

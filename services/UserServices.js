@@ -235,7 +235,7 @@ exports.forgotPasswordService = function(req, callback) {
             let mailOptions = {
                 from: 'labzbridge02@gmail.com', // sender address
                 to: req.email, // list of receivers
-                subject: 'Registration Link for Fundoo Notes', // Subject line
+                subject: 'Reset Password Link for Fundoo Notes', // Subject line
                 html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>' // plain text body
                 // html: '<p>Click <a href="http://localhost:3000/sessions/recover/' + recovery_token + '">here</a> to reset your password</p>'
 

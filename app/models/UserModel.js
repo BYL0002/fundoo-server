@@ -12,8 +12,9 @@
   * @description Schema created via mongoose
   */
  const newSchema = new schema({
+     name : {type : String},
      email_id : {type : String},
-     password : {type : String},
+     password : {type : String, default : ""},
      token : {type : String}
  })
 
@@ -41,6 +42,25 @@
          }
      })
  }
+
+
+ userFunction.prototype.registerUserVerifyModel = (req, callback ) => {
+  let newUser = new user ({
+      name : req.name,
+      email_id : req.email,
+      token : req.token
+  })
+
+  newUser.save(function(err, result) {
+      if(err) {
+         return callback(err);
+      }
+      else {
+         return callback(null, result);
+      }
+  })
+}
+
 
 
 /**
@@ -88,5 +108,35 @@ userFunction.prototype.logoutModel = function (req, callback) {
       }
     })
   }
+
+
+/**
+ * @description Finding data inside database
+ * make this available to our users in our Node applications
+ */
+userFunction.prototype.findAndSaveTokenModel = function (req, callback) {
+
+  user.findOneAndUpdate({ token: req.token }, {password : req.password}, function (err, result) {
+    if (err) {
+      console.log(err);
+      return callback(err);
+    }
+    else {
+      user.findOne({_id : result._id}, function(err, data) {
+        if(err) 
+        {
+          console.log(err);
+          return callback(err);
+        }
+        else 
+        {
+          console.log('Successful Token match');
+          console.log('Successful data retrieved is : ');
+          return callback(null, data);
+        }
+      })
+    }
+  })
+}
 
  module.exports = new userFunction;

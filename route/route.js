@@ -30,7 +30,7 @@ router.post('/logout', middleware.logoutMiddleware, controller.logoutController)
 /**
  * get for messages for chatting application
  */
-router.post('/registerUserVerify', middleware.logoutMiddleware, controller.logoutController)
+router.post('/registerUserVerify', middleware.registerUserVerifyMiddleware, controller.registerUserVerifyController)
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

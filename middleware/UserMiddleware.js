@@ -50,9 +50,9 @@ exports.loginMiddleware = function login_middleware(req, res, next) {
  */
 exports.registerMiddleware = function (req, res, next) {
     
-    if(req.body.email == null || req.body.email.length === 0 || req.body.email === undefined) 
+    if(req.body.token == null || req.body.token.length === 0 || req.body.token === undefined) 
     {
-        console.log('Email Error');
+        console.log('Token Error');
         next(err);
     } 
     else if (req.body.password1 === null || req.body.password1.length === 0 || req.body.password1 === undefined) 
@@ -62,28 +62,50 @@ exports.registerMiddleware = function (req, res, next) {
     }
     else 
     {
-        
-        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
+        if(req.body.password1.length >= 5)
         {
-            if(req.body.password1.length >= 5)
+            if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(req.body.password1))
             {
-                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(req.body.password1))
-                {
-                    next();
-                }
-                else {
-                    console.log('Password Invalid');                    
-                }
+                next();
             }
             else {
-                console.log('Password Incorrect');                
+                console.log('Password Invalid');                    
             }
         }
         else {
-            console.log('Email_id not correct');            
+            console.log('Password Incorrect');                
         }
     }
 }
+
+
+/**
+ * @description function formed as to perform middleware work for registration
+ */
+exports.registerUserVerifyMiddleware = function (req, res, next) {
+    
+    if(req.body.email == null || req.body.email.length === 0 || req.body.email === undefined) 
+    {
+        console.log('Email Error');
+        next(err);
+    } 
+    else if (req.body.name === null || req.body.name.length === 0 || req.body.name === undefined) 
+    {
+        console.log('Name Error');
+        next(err);
+    }
+    else 
+    {
+        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
+        {
+            next();
+        }
+        else {
+            console.log('Email Invalid');                    
+        }
+    }
+}
+
 
 /**
  * @description function formed as to perform middleware work for registration

@@ -43,7 +43,9 @@
      })
  }
 
-
+/**
+ * @description Register Process to get user details & send link to verify
+ */
  userFunction.prototype.registerUserVerifyModel = (req, callback ) => {
   let newUser = new user ({
       name : req.name,
@@ -61,6 +63,31 @@
   })
 }
 
+/**
+ * @description 
+ */
+userFunction.prototype.forgotPasswordModel = (req, callback ) => {
+  let newUser = new user ({
+      email_id : req.email,
+      token : req.token
+  })
+
+  user.findOneAndUpdate({email_id : req.email_id}, {token : req.token}, function(err, result) {
+    user.findOne({_id : result._id}, function(err, data) {
+      if(err) 
+      {
+        console.log(err);
+        return callback(err);
+      }
+      else 
+      {
+        console.log('Successful Token match');
+        console.log('Successful data retrieved is : ', data);
+        return callback(null, data);
+      }
+    })
+  })
+}
 
 
 /**
@@ -131,7 +158,7 @@ userFunction.prototype.findAndSaveTokenModel = function (req, callback) {
         else 
         {
           console.log('Successful Token match');
-          console.log('Successful data retrieved is : ');
+          console.log('Successful data retrieved is : ', data);
           return callback(null, data);
         }
       })

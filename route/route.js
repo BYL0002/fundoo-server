@@ -26,11 +26,15 @@ router.post('/login', middleware.loginMiddleware , controller.loginController);
 /**
  * get for messages for chatting application
  */
-router.post('/logout', middleware.logoutMiddleware, controller.logoutController)
+router.post('/logout', middleware.logoutMiddleware, controller.logoutController);
 /**
  * get for messages for chatting application
  */
-router.post('/registerUserVerify', middleware.registerUserVerifyMiddleware, controller.registerUserVerifyController)
+router.post('/registerUserVerify', middleware.registerUserVerifyMiddleware, controller.registerUserVerifyController);
+/**
+ * get for messages for chatting application
+ */
+router.post('/forgotpassword', middleware.registerUserVerifyMiddleware, controller.forgotPasswordController);
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

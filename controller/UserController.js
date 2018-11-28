@@ -91,6 +91,29 @@ exports.registerUserVerifyController = function (req, res, next) {
     }
 }
 
+/**
+ * @description Controller for register & sending response to client
+ */
+exports.forgotPasswordController = function (req, res, next) {
+
+    console.log(typeof request);
+    console.log(request);
+    
+    try {
+        userservices.forgotPasswordService(req.body, (err, data) => {
+
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.status(200).send(data);
+            }
+        })
+    }
+    catch(err) {
+        next(err);
+    }
+}
 
 /**
  * @description Logout controller function to get the output and pass the input to services where business logic exist

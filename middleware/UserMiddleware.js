@@ -78,7 +78,6 @@ exports.registerMiddleware = function (req, res, next) {
     }
 }
 
-
 /**
  * @description function formed as to perform middleware work for registration
  */
@@ -106,7 +105,6 @@ exports.registerUserVerifyMiddleware = function (req, res, next) {
     }
 }
 
-
 /**
  * @description function formed as to perform middleware work for registration
  */
@@ -120,4 +118,26 @@ exports.logoutMiddleware = function (req, res, next) {
     else {
         next();
     }
-} 
+}
+
+/**
+ * @description function formed as to perform middleware work for registration
+ */
+exports.forgotPasswordMiddleware = function (req, res, next) {
+    
+    if(req.body.email == null || req.body.email.length === 0 || req.body.email === undefined) 
+    {
+        console.log('Email Error');
+        next(err);
+    }
+    else 
+    {
+        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
+        {
+            next();
+        }
+        else {
+            console.log('Email Invalid');                    
+        }
+    }
+}

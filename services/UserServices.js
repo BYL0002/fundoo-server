@@ -213,6 +213,52 @@ exports.registerUserVerifyService = function(req, callback) {
 }
 
 /**
+ * @description forgot password service
+ */
+exports.forgotPasswordService = function(req, callback) {
+
+    console.log('request on service page');
+    console.log(req);
+
+    let requestContainToken = {
+        email : req.email,
+        token : token
+    }
+
+    usermodel.forgotPasswordModel(requestContainToken, (err, data) => {
+
+        if(err) {
+            return callback(err);
+        }
+        else {
+
+            let mailOptions = {
+                from: 'labzbridge02@gmail.com', // sender address
+                to: req.email, // list of receivers
+                subject: 'Registration Link for Fundoo Notes', // Subject line
+                html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>' // plain text body
+                // html: '<p>Click <a href="http://localhost:3000/sessions/recover/' + recovery_token + '">here</a> to reset your password</p>'
+
+            };
+
+            transporter.sendMail(mailOptions, function (err, info) {
+                if(err) {
+                    console.log('Register Email not sent');
+                    console.log(err)
+                }
+                else {
+                    console.log('Register Email Sent');
+                    console.log(info);
+                }                    
+            });
+
+            return callback(null, data);
+        }
+
+    })
+}
+
+/**
  * @description registration service
  */
 exports.logoutService = function(req, callback) {

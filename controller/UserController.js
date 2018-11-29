@@ -6,9 +6,10 @@
  */
 
 const userservices = require('../services/UserServices');
+const utility = require('../utility/util');
 
 exports.loginController = function (req, res, next) {
-    console.log('login controller');
+    // console.log('login controller');
     
     
     try {
@@ -18,6 +19,9 @@ exports.loginController = function (req, res, next) {
                 res.status(400).send(err);
             }
             else {
+                console.log('res on controller', data);
+                
+                // utility.tokenGeneration();
                 res.status(200).send(data);
             }
         })
@@ -36,8 +40,8 @@ exports.registerController = function (req, res, next) {
         token : req.body.token,
         password : req.body.password1
     }
-    console.log(typeof request);
-    console.log(request);    
+    // console.log(typeof request);
+    // console.log(request);    
     
     try {
         userservices.registerService(request, (err, data) => {
@@ -72,8 +76,8 @@ exports.registerUserVerifyController = function (req, res, next) {
         email : req.body.email,
         name : req.body.name
     }
-    console.log(typeof request);
-    console.log(request);
+    // console.log(typeof request);
+    // console.log(request);
     
     try {
         userservices.registerUserVerifyService(request, (err, data) => {
@@ -96,8 +100,8 @@ exports.registerUserVerifyController = function (req, res, next) {
  */
 exports.forgotPasswordController = function (req, res, next) {
 
-    console.log(typeof req);
-    console.log(req.body);
+    // console.log(typeof req);
+    // console.log(req.body);
     
     try {
         userservices.forgotPasswordService(req.body, (err, data) => {

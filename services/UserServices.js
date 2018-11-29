@@ -35,7 +35,7 @@ expiresIn: "1h"
 };
 
 let token = jwt.sign(payload, privateKey, signOptions);
-console.log('token - ',token);
+// console.log('token - ',token);
 
 
 /**
@@ -49,7 +49,8 @@ exports.loginService = function(req, callback) {
             return callback(err);
         }
         else {
-
+            // console.log('data retuned from model to service : ', data);
+            
             let mailOptions = {
                 from: 'labzbridge02@gmail.com', // sender address
                 to: data.email_id, // list of receivers
@@ -60,11 +61,11 @@ exports.loginService = function(req, callback) {
             transporter.sendMail(mailOptions, function (err, info) {
                 if(err) {
                     console.log('Login Email not sent');
-                    console.log(err)
+                    // console.log(err)
                 }
                 else {
                     console.log('Login Email Sent');
-                    console.log(info);
+                    // console.log(info);
                 }                    
             });
             return callback(null, data);
@@ -92,88 +93,16 @@ exports.registerService = function(req, callback) {
             transporter.sendMail(mailOptions, function (err, info) {
                 if(err) {
                     console.log('Register Email not sent');
-                    console.log(err)
+                    // console.log(err)
                 }
                 else {
                     console.log('Register Email Sent');
-                    console.log(info);
+                    // console.log(info);
                 }                    
             });
             return callback(null, data);
-    }
-
+        }
     })    
-    // async.waterfall([
-
-    //     function (callback) {
-
-    //         usermodel.findTokenModel(reqToken, (err, data) => {
-    //             if (err) {
-    //                 callback(err);
-    //             }
-    //             else {
-    //                 callback(null, req, data);
-    //             }
-
-    //         })
-    //     }, function (req, result, callback) {
-
-    //         if (result != null) {
-
-    //             let requestFinal = {
-    //                 name : result.name,
-    //                 email : result.email_id,
-    //                 token : result.token,
-    //                 password : req.password
-    //             }
-    //             usermodel.registerModel(requestFinal, (err, data) => {
-
-    //                 if (err) {
-    //                     return callback(err);
-    //                 }
-    //                 else {
-    //                     return callback(null, data);
-    //                 }
-    //             });
-    //         }
-    //         else {
-    //             callback(result);
-    //         }
-
-    //     } ], function (err, resultFetch) {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-    //     else {
-    //         resultFinal = resultFetch;
-    //     }
-    //     //------------------------------
-    //     if (resultFinal == null) {
-    //         return callback(null);
-    //     }
-    //     else {
-
-    //         let mailOptions = {
-    //             from: 'labzbridge02@gmail.com', // sender address
-    //             to: resultFinal.email_id, // list of receivers
-    //             subject: 'Registration Successful on Fundoo Notes', // Subject line
-    //             html: '<p>Your are most Welcome to Fundoo Notes anytime. Thank You!</p>'// plain text body
-    //         };
-
-    //         transporter.sendMail(mailOptions, function (err, info) {
-    //             if(err) {
-    //                 console.log('Register Email not sent');
-    //                 console.log(err)
-    //             }
-    //             else {
-    //                 console.log('Register Email Sent');
-    //                 console.log(info);
-    //             }                    
-    //         });
-
-    //         return callback(resultFinal);
-    //     }
-    // });
 }
 
 /**

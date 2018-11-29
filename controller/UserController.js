@@ -36,8 +36,8 @@ exports.registerController = function (req, res, next) {
         token : req.body.token,
         password : req.body.password1
     }
-    // console.log(typeof request);
-    // console.log(request);    
+    console.log(typeof request);
+    console.log('controller register',request);    
     
     try {
         userservices.registerService(request, (err, data) => {

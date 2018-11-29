@@ -31,6 +31,8 @@ exports.loginService = function(req, callback) {
  */
 exports.registerService = function(req, callback) {
 
+    console.log('req on service', req);
+    
     usermodel.findAndSaveTokenModel(req, (err, data) => {
         if (err) {
             return callback(err);

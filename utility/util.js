@@ -12,7 +12,7 @@ const nodemailer = require('nodemailer');
  */
 exports.tokenGeneration = (user) => {
     let payload = {
-        data: 'data01'
+        user : user
     }
 
     let privateKey = "privateKey";

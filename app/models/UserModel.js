@@ -120,7 +120,7 @@ userFunction.prototype.logoutModel = function (req, callback) {
  * make this available to our users in our Node applications
  */
 userFunction.prototype.findAndSaveTokenModel = function (req, callback) {
-  console.log('req on model find&saveTokenmodel', req);
+  // console.log('req on model find&saveTokenmodel', req);
 
 
   bcryptjs.genSalt(10, function (err, salt) {

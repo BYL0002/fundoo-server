@@ -14,11 +14,18 @@ exports.loginController = function (req, res, next) {
         userservices.loginService(req.body, (err, data) => {
 
             if (err) {
-                res.status(400).send(err);
+                res.status(400).send({
+                    status : false,
+                    message : err,
+                });
             }
             else {                
                 let token = utility.tokenGeneration(data.email_id);
-                res.status(200).send(data);
+                res.status(200).send({
+                    status : true,
+                    message : data,
+                    token : token
+                });
             }
         })
     }
@@ -37,7 +44,7 @@ exports.registerController = function (req, res, next) {
         password : req.body.password1
     }
     console.log(typeof request);
-    console.log('controller register',request);    
+    // console.log('controller register',request);    
     
     try {
         userservices.registerService(request, (err, data) => {

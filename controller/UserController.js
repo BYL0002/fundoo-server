@@ -7,6 +7,8 @@
 
 const userservices = require('../services/UserServices');
 const utility = require('../utility/util');
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
 
 exports.loginController = function (req, res, next) {
         
@@ -141,3 +143,12 @@ exports.logoutController = function (req, res, next) {
         next(err);
     }
 }
+
+//---------------------------------------------------Event Emitter Operations----------------------------------------------------------
+
+eventEmitter.on('list', function(msg) {
+    console.log(msg);
+    console.log('list event called --------------------------');
+})
+
+eventEmitter.emit('list', 'messages----');

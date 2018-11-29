@@ -145,6 +145,9 @@ userFunction.prototype.findAndSaveTokenModel = function (req, callback) {
       return callback(err);
     }
     else {
+      // console.log('token on find & update : ', req.token);
+      // console.log('data on find & update : ', result);
+      
       user.findOne({_id : result._id}, function(err, data) {
         if(err) 
         {
@@ -154,7 +157,7 @@ userFunction.prototype.findAndSaveTokenModel = function (req, callback) {
         else 
         {
           console.log('Successful Token match');
-          console.log('Successful data retrieved is : ', data);
+          // console.log('Successful data retrieved is : ', data);
           return callback(null, data);
         }
       })

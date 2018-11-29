@@ -9,19 +9,15 @@ const userservices = require('../services/UserServices');
 const utility = require('../utility/util');
 
 exports.loginController = function (req, res, next) {
-    // console.log('login controller');
-    
-    
+        
     try {
         userservices.loginService(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send(err);
             }
-            else {
-                console.log('res on controller', data);
-                
-                // utility.tokenGeneration();
+            else {                
+                let token = utility.tokenGeneration(data.email_id);
                 res.status(200).send(data);
             }
         })

@@ -5,9 +5,11 @@
  * @version 1.1
  */
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
-
-
+/**
+ * @description Token generation code method
+ */
 exports.tokenGeneration = (user) => {
     let payload = {
         data: 'data01'
@@ -28,11 +30,14 @@ exports.tokenGeneration = (user) => {
     };
 
     let token = jwt.sign(payload, privateKey, signOptions);
-    // console.log('token - ',token);
+    // console.log('token on util - ',token);
     return token;
 }
 
-exports.mailSender = (data, check) => {
+/**'
+ * @description Method to send mails to users on different tasks
+ */
+exports.mailSender = (user, check) => {
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -41,17 +46,19 @@ exports.mailSender = (data, check) => {
             pass: 'bridge01!'
         }
     });
+    
+    let mailOptions;
 
     /**
      * @description setting login send details
      */
     if(check === "login") 
     {
-        let mailOptions = {
+        mailOptions = {
             from: 'labzbridge02@gmail.com', // sender address
-            to: data.email_id, // list of receivers
+            to: user, // list of receivers
             subject: 'Activity Review', // Subject line
-            html: '<p>Login Successful on Fundoo Notes!</p>'// plain text body
+            html: '<p>Account logged on Fundoo Notes !</p>'// plain text body
         };
     }
     /**
@@ -59,9 +66,9 @@ exports.mailSender = (data, check) => {
      */
     else if (check === "register") 
     {
-        let mailOptions = {
+        mailOptions = {
             from: 'labzbridge02@gmail.com', // sender address
-            to: data.email_id, // list of receivers
+            to: user, // list of receivers
             subject: 'Registration Successful on Fundoo Notes', // Subject line
             html: '<p>Your are most Welcome to Fundoo Notes anytime. Thank You!</p>'// plain text body
         };
@@ -71,13 +78,12 @@ exports.mailSender = (data, check) => {
      */
     else if(check === "verifyUser")
     {
-        let mailOptions = {
+        let token = this.tokenGeneration(user);
+        mailOptions = {
             from: 'labzbridge02@gmail.com', // sender address
-            to: req.email, // list of receivers
+            to: user, // list of receivers
             subject: 'Registration Link for Fundoo Notes', // Subject line
             html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>' // plain text body
-            // html: '<p>Click <a href="http://localhost:3000/sessions/recover/' + recovery_token + '">here</a> to reset your password</p>'
-
         };
     }
     /**
@@ -85,24 +91,23 @@ exports.mailSender = (data, check) => {
      */
     else
     {
-        let mailOptions = {
+        let token = this.tokenGeneration(user);
+        mailOptions = {
             from: 'labzbridge02@gmail.com', // sender address
-            to: req.email, // list of receivers
+            to: user, // list of receivers
             subject: 'Reset Password Link for Fundoo Notes', // Subject line
-            html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>' // plain text body
-            // html: '<p>Click <a href="http://localhost:3000/sessions/recover/' + recovery_token + '">here</a> to reset your password</p>'
-    
+            html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>' // plain text body    
         };
     }
     
     transporter.sendMail(mailOptions, function (err, info) {
         if(err) {
             console.log('Email not sent');
-            console.log(err)
+            // console.log(err)
         }
         else {
             console.log('Email Sent');
-            console.log(info);
+            // console.log(info);
         }                    
     });
 }

@@ -85,7 +85,7 @@ exports.registerUserVerifyController = function (req, res, next) {
     // console.log(request);
     
     try {
-        userservices.registerUserVerifyService(request, (err, data) => {
+        userservices.registerUserVerifyServiceEmitter(request, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)
@@ -146,9 +146,25 @@ exports.logoutController = function (req, res, next) {
 
 //---------------------------------------------------Event Emitter Operations----------------------------------------------------------
 
-eventEmitter.on('list', function(msg) {
-    console.log(msg);
-    console.log('list event called --------------------------');
-})
+// eventEmitter.on('list', function(msg) {
+//     console.log(msg);
+//     console.log('list event called --------------------------');
+// })
 
-eventEmitter.emit('list', 'messages----');
+// eventEmitter.addListener('FirstEvent', function (data) {
+//     console.log('First subscriber ----- : ' + data);
+// });
+
+// eventEmitter.on('FirstEvent', function (data) {
+//     console.log('First subscriber: ' + data);
+// });
+
+// eventEmitter.emit('FirstEvent', 'Test event emitter');
+// eventEmitter.emit('list', 'messages----');
+// eventEmitter.emit('list', 'messages----');
+
+// eventEmitter.on('x', function(data) {
+//     console.log(data);    
+// });
+
+// exports.emitter = eventEmitter;

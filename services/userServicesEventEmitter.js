@@ -1,19 +1,14 @@
 /**
- * @description Services for operaions on request by user as client
+ * @description Event Emitter using for sending mail
  * @author Yash
- * @since   26/11/2018
+ * @since 30/11/2018
  * @version 1.1
  */
-const EventEmitter = require('events');
-const eventEmitter = new EventEmitter();
-const utility = require('../utility/util');
-const usermodel = require('../app/models/UserModel');
-// const async = require('async');
 
 /**
  * @description login service
  */
-exports.loginService = function(req, callback) {
+exports.loginServiceEmitter = function(req, callback) {
     
     usermodel.loginModel(req, (err, data) => {
 
@@ -26,7 +21,7 @@ exports.loginService = function(req, callback) {
                 subject: 'Activity Review',
                 html: '<p>Account logged on Fundoo Notes !</p>'
             }
-            utility.mailSender(userDetails);
+            utility.eventEmitter.emit("login", userDetails);
             return callback(null, data);
         }
     });
@@ -35,7 +30,7 @@ exports.loginService = function(req, callback) {
 /**
  * @description registration service
  */
-exports.registerService = function(req, callback) {
+exports.registerServiceEmitter = function(req, callback) {
 
     // console.log('req on service', req);
     
@@ -44,12 +39,13 @@ exports.registerService = function(req, callback) {
             return callback(err);
         }
         else {
+
             let userDetails = {
                 to: data.email_id,
                 subject: 'Registration Successful on Fundoo Notes',
                 html: '<p>Your are most Welcome to Fundoo Notes anytime. Thank You!</p>'
             }
-            utility.mailSender(userDetails);
+            utility.eventEmitter.emit("register", userDetails);
             return callback(null, data);
         }
     })    
@@ -58,7 +54,7 @@ exports.registerService = function(req, callback) {
 /**
  * @description registration service
  */
-exports.registerUserVerifyService = function(req, callback) {
+exports.registerUserVerifyServiceEmitter = function(req, callback) {
 
     let token = utility.tokenGeneration(req.email);
     let requestContainToken = {
@@ -73,6 +69,7 @@ exports.registerUserVerifyService = function(req, callback) {
             return callback(err);
         }
         else {
+
             let token = utility.tokenGeneration(req.email);
 
             let userDetails = {
@@ -80,7 +77,7 @@ exports.registerUserVerifyService = function(req, callback) {
                 subject: 'Registration Link for Fundoo Notes',
                 html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>'
             }
-            utility.mailSender(userDetails);
+            utility.eventEmitter.emit('userVerify', userDetails );
             return callback(null, data);
         }
 
@@ -90,7 +87,7 @@ exports.registerUserVerifyService = function(req, callback) {
 /**
  * @description forgot password service
  */
-exports.forgotPasswordService = function(req, callback) {
+exports.forgotPasswordServiceEmitter = function(req, callback) {
 
     let token = utility.tokenGeneration(req.email);
     let requestContainToken = {
@@ -110,8 +107,7 @@ exports.forgotPasswordService = function(req, callback) {
                 subject : 'Reset Password Link for Fundoo Notes',
                 html : '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>'
             }
-
-            utility.mailSender(userDetails);
+            utility.eventEmitter.emit('forgotPassword', userDetails );
             return callback(null, data);
         }
 
@@ -121,7 +117,7 @@ exports.forgotPasswordService = function(req, callback) {
 /**
  * @description registration service
  */
-exports.logoutService = function(req, callback) {
+exports.logoutServiceEmitter = function(req, callback) {
 
     usermodel.logoutModel(req, (err, data) => {
 
@@ -130,12 +126,3 @@ exports.logoutService = function(req, callback) {
 
     })
 }
-
-//-----------------------------------------------------------------------Event Emitter
-
-// console.log(utility.eventEmitter.emit('sendEmail', {'data':1}));
-
-
-// class eventNotes extend EventEmitter{
-
-// } 

@@ -5,7 +5,11 @@
  * @version 1.1
  */
 const jwt = require('jsonwebtoken');
+var util = require('util');
+const EventEmitter = require('events');
+const event = new EventEmitter();
 const nodemailer = require('nodemailer');
+// const mail = require('/')
 
 /**
  * @description Token generation code method
@@ -104,10 +108,54 @@ exports.mailSender = (user, check) => {
         if(err) {
             console.log('Email not sent');
             // console.log(err)
+            // this.events.emit('error', err);
         }
         else {
             console.log('Email Sent');
             // console.log(info);
+            // this.events.emit('success', success);
         }                    
     });
 }
+
+
+
+
+
+// module.exports = function(from, to, subject){
+//     this.from = from;
+//     this.to = to;
+//     this.subject = subject;
+//     this.events = new events.EventEmitter();
+//     //....
+//     this.send = function(){
+//         var options = {
+//             from : this.from,
+//             to : this.to
+
+//         };
+
+//         smtpTransport.sendMail(options, function(err, success) {
+//             if(err){
+//                 this.events.emit('error', err);
+//             }
+//             if(success){
+//                 this.events.emit('success', success);
+//             }
+//         });
+//     }
+// };
+
+// var Mail = require('./mail');
+// var mail = new Mail();
+// mail.from = "email@mail.com";
+// mail.to = "email@mail.com";
+
+// mail.events.on("error", function(err){
+//          console.log("Mail not send");
+// });
+// mail.events.on("success", function(success){
+//          console.log("Mail send");
+// });
+
+// mail.send();

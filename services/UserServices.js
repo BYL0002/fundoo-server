@@ -4,6 +4,8 @@
  * @since   26/11/2018
  * @version 1.1
  */
+const EventEmitter = require('events');
+const events = new EventEmitter();
 const utility = require('../utility/util');
 const usermodel = require('../app/models/UserModel');
 // const async = require('async');

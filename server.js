@@ -49,6 +49,6 @@ app.use(function (err, req, res, next) {
 
 app.listen(8000, () => {
     startMongoDb(dbUrl);
-    console.log('server is up and running on : ',8000);
+    console.log('server is up and running on :',8000);
 });
 

@@ -14,7 +14,7 @@ const eventEmitter = new EventEmitter();
 exports.loginController = function (req, res, next) {
         
     try {
-        userServices.loginService(req.body, (err, data) => {
+        userServices.loginService(req.body.data, (err, data) => {
 
             if (err) {
                 res.status(400).send({
@@ -43,8 +43,8 @@ exports.loginController = function (req, res, next) {
 exports.registerController = function (req, res, next) {
 
     let request = {
-        token : req.body.token,
-        password : req.body.password1
+        token : req.body.data.token,
+        password : req.body.data.password1
     }
     console.log(typeof request);
     // console.log('controller register',request);    
@@ -53,18 +53,16 @@ exports.registerController = function (req, res, next) {
         userServices.registerService(request, (err, data) => {
 
             if (err) {
-                res.status(400).send(err);
-                // res.status(404).json({
-                //     success : true,
-                //     message: err
-                // });
+                res.status(400).send({
+                    status : false,
+                    message : err
+                })
             }
             else {
-                res.status(200).send(data);
-                // return res.status(404).json({
-                //     success : true,
-                //     message: data
-                //   });
+                res.status(200).send({
+                    status : true,
+                    message : data 
+                })
             }
         })
     }
@@ -89,10 +87,16 @@ exports.registerUserVerifyController = function (req, res, next) {
         userServicesEmiteer.registerUserVerifyServiceEmitter(request, (err, data) => {
 
             if (err) {
-                res.status(400).send(err)
+                res.status(400).send({
+                    status : false,
+                    message : err
+                })
             }
             else {
-                res.status(200).send(data);
+                res.status(200).send({
+                    status : true,
+                    message : data
+                });
             }
         })
     }
@@ -110,13 +114,19 @@ exports.forgotPasswordController = function (req, res, next) {
     // console.log(req.body);
     
     try {
-        userServices.forgotPasswordService(req.body, (err, data) => {
+        userServices.forgotPasswordService(req.body.data, (err, data) => {
 
             if (err) {
-                res.status(400).send(err)
+                res.status(400).send({
+                    status : false,
+                    message : err
+                })
             }
             else {
-                res.status(200).send(data);
+                res.status(200).send({
+                    status : true,
+                    message : data
+                });
             }
         })
     }
@@ -130,13 +140,19 @@ exports.forgotPasswordController = function (req, res, next) {
  */
 exports.logoutController = function (req, res, next) {
     try {
-        userServices.logoutService(req.body, (err, data) => {
+        userServices.logoutService(req.body.data, (err, data) => {
 
             if (err) {
-                res.status(400).send(err)
+                res.status(400).send({
+                    status : false,
+                    message : err
+                })
             }
             else {
-                res.status(200).send(data);
+                res.status(200).send({
+                    status : true,
+                    message : data
+                });
             }
         })
     }
@@ -177,8 +193,8 @@ exports.logoutController = function (req, res, next) {
 exports.registerEventEmitterController = function (req, res, next) {
 
     let request = {
-        token : req.body.token,
-        password : req.body.password1
+        token : req.body.data.token,
+        password : req.body.data.password1
     }
     console.log(typeof request);
     // console.log('controller register',request);    
@@ -213,8 +229,8 @@ exports.registerEventEmitterController = function (req, res, next) {
 exports.registerUserVerifyEventEmitterController = function (req, res, next) {
 
     let request = {
-        email : req.body.email,
-        name : req.body.name
+        email : req.body.data.email,
+        name : req.body.data.name
     }
     // console.log(typeof request);
     // console.log(request);
@@ -244,7 +260,7 @@ exports.forgotPasswordEventEmitterController = function (req, res, next) {
     // console.log(req.body);
     
     try {
-        userServices.forgotPasswordService(req.body, (err, data) => {
+        userServices.forgotPasswordService(req.body.data, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)

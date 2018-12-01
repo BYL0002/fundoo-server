@@ -11,23 +11,23 @@
  */
 exports.loginMiddleware = function login_middleware(req, res, next) {
     
-    if(req.body.email === null || req.body.email.length === 0 || req.body.email === undefined) 
+    if(req.body.data.email === null || req.body.data.email.length === 0 || req.body.data.email === undefined) 
     {
         console.log('Email Error');
         next(err);
     } 
-    else if (req.body.password === null || req.body.password.length === 0 || req.body.password === undefined) 
+    else if (req.body.data.password === null || req.body.data.password.length === 0 || req.body.data.password === undefined) 
     {
         console.log('Password Error');
         next(err);
     } 
     else 
     {
-        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
+        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.data.email))
         {
-            if(req.body.password.length >= 5)
+            if(req.body.data.password.length >= 5)
             {
-                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(req.body.password))
+                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(req.body.data.password))
                 {
                     next();
                 }
@@ -49,20 +49,22 @@ exports.loginMiddleware = function login_middleware(req, res, next) {
  * @description function formed as to perform middleware work for registration
  */
 exports.registerMiddleware = function (req, res, next) {
+    console.log('register api');
+    console.log(req.body);   
     
-    if(req.body.token == null || req.body.token.length === 0 || req.body.token === undefined) 
+    if(req.body.data.token == null || req.body.data.token.length === 0 || req.body.data.token === undefined) 
     {
         console.log('Token Error');
         next(err);
     } 
-    else if (req.body.password1 === null || req.body.password1.length === 0 || req.body.password1 === undefined) 
+    else if (req.body.data.password1 === null || req.body.data.password1.length === 0 || req.body.data.password1 === undefined) 
     {
         console.log('Password Error');
         next(err);
     }
     else 
     {
-        if(req.body.password1.length >= 5)
+        if(req.body.data.password1.length >= 5)
         {
             if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(req.body.password1))
             {
@@ -113,9 +115,9 @@ exports.registerUserVerifyMiddleware = function (req, res, next) {
  * @description function formed as to perform middleware work for registration
  */
 exports.logoutMiddleware = function (req, res, next) {
-    console.log('middleware logout', req.body.email);
+    console.log('middleware logout', req.body.data.email);
     
-    if(req.body.email === null || req.body.email === undefined || req.body.email.length === 0) {
+    if(req.body.data.email === null || req.body.data.email === undefined || req.body.data.email.length === 0) {
         console.log('Email Error');
         next(err);
     }
@@ -129,14 +131,14 @@ exports.logoutMiddleware = function (req, res, next) {
  */
 exports.forgotPasswordMiddleware = function (req, res, next) {
     
-    if(req.body.email == null || req.body.email.length === 0 || req.body.email === undefined) 
+    if(req.body.data.email == null || req.body.data.email.length === 0 || req.body.data.email === undefined) 
     {
         console.log('Email Error');
         next(err);
     }
     else 
     {
-        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
+        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.data.email))
         {
             next();
         }

@@ -47,7 +47,7 @@ exports.registerController = function (req, res, next) {
         password : req.body.data.password1
     }
     console.log(typeof request);
-    // console.log('controller register',request);    
+    console.log('controller register',request);    
     
     try {
         userServices.registerService(request, (err, data) => {

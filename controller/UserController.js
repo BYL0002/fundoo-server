@@ -168,3 +168,92 @@ exports.logoutController = function (req, res, next) {
 // });
 
 // exports.emitter = eventEmitter;
+
+
+/**
+ * @description Controller for register & sending response to client
+ */
+exports.registerEventEmitterController = function (req, res, next) {
+
+    let request = {
+        token : req.body.token,
+        password : req.body.password1
+    }
+    console.log(typeof request);
+    // console.log('controller register',request);    
+    
+    try {
+        userservices.registerService(request, (err, data) => {
+
+            if (err) {
+                res.status(400).send(err);
+                // res.status(404).json({
+                //     success : true,
+                //     message: err
+                // });
+            }
+            else {
+                res.status(200).send(data);
+                // return res.status(404).json({
+                //     success : true,
+                //     message: data
+                //   });
+            }
+        })
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
+/**
+ * @description Controller for register & sending response to client
+ */
+exports.registerUserVerifyEventEmitterController = function (req, res, next) {
+
+    let request = {
+        email : req.body.email,
+        name : req.body.name
+    }
+    // console.log(typeof request);
+    // console.log(request);
+    
+    try {
+        userservices.registerUserVerifyServiceEmitter(request, (err, data) => {
+
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.status(200).send(data);
+            }
+        })
+    }
+    catch(err) {
+        next(err);
+    }
+}
+
+/**
+ * @description Controller for register & sending response to client
+ */
+exports.forgotPasswordEventEmitterController = function (req, res, next) {
+
+    // console.log(typeof req);
+    // console.log(req.body);
+    
+    try {
+        userservices.forgotPasswordService(req.body, (err, data) => {
+
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.status(200).send(data);
+            }
+        })
+    }
+    catch(err) {
+        next(err);
+    }
+}

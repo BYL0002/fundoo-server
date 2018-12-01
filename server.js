@@ -14,21 +14,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbUrl = require('./config/dbconfig');
 
-// const MongoClient = require('mongodb').MongoClient;
-
 /**
  * @description Parsing the request get by client
  */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(cors());
 
-
 app.use('/', routes);
-// app.get('/get',(req, res)=>{
-//     res.send("Hello")
-// })
 
 /**
  * @description cheking database connectivity
@@ -51,4 +44,6 @@ app.listen(8000, () => {
     startMongoDb(dbUrl);
     console.log('server is up and running on :',8000);
 });
-
+// app.get('/get',(req, res)=>{
+//     res.send("Hello")
+// })

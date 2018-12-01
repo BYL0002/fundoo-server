@@ -35,6 +35,22 @@ router.post('/registerUserVerify', middleware.registerUserVerifyMiddleware, cont
  * get for messages for chatting application
  */
 router.post('/forgotpassword', middleware.forgotPasswordMiddleware, controller.forgotPasswordController);
+/**
+ * post method of express to send controls to controller from routes through middleware
+ * post for registration
+ */
+router.post("/registerEmit", middleware.registerMiddleware, controller.registerEventEmitterController);
+/**
+ * get for messages for chatting application
+ */
+router.post('/registerUserVerifyEmit', middleware.registerUserVerifyMiddleware, controller.registerUserVerifyEventEmitterController);
+/**
+ * get for messages for chatting application
+ */
+router.post('/forgotpasswordEmit', middleware.forgotPasswordMiddleware, controller.forgotPasswordEventEmitterController);
+
+
+
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

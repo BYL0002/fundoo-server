@@ -4,7 +4,8 @@
  * @since 30/11/2018
  * @version 1.1
  */
-
+const utility = require('../utility/util');
+const usermodel = require('../app/models/UserModel')
 /**
  * @description login service
  */

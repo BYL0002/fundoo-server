@@ -82,20 +82,24 @@ exports.registerMiddleware = function (req, res, next) {
  * @description function formed as to perform middleware work for registration
  */
 exports.registerUserVerifyMiddleware = function (req, res, next) {
+    console.log('req on middleware');
+    console.log(req.body);        
+    console.log(req.body.data.email);
     
-    if(req.body.email == null || req.body.email.length === 0 || req.body.email === undefined) 
+    
+    if(req.body.data.email == null || req.body.data.email.length === 0 || req.body.data.email === undefined) 
     {
         console.log('Email Error');
         next(err);
     } 
-    else if (req.body.name === null || req.body.name.length === 0 || req.body.name === undefined) 
+    else if (req.body.data.name === null || req.body.data.name.length === 0 || req.body.data.name === undefined) 
     {
         console.log('Name Error');
         next(err);
     }
     else 
     {
-        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
+        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.data.email))
         {
             next();
         }

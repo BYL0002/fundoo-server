@@ -5,7 +5,8 @@
  * @version 1.1
  */
 
-const userservices = require('../services/UserServices');
+const userServices = require('../services/UserServices');
+const userServicesEmiteer = require('../services/userServicesEventEmitter');
 const utility = require('../utility/util');
 const EventEmitter = require('events');
 const eventEmitter = new EventEmitter();
@@ -13,7 +14,7 @@ const eventEmitter = new EventEmitter();
 exports.loginController = function (req, res, next) {
         
     try {
-        userservices.loginService(req.body, (err, data) => {
+        userServices.loginService(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send({
@@ -49,7 +50,7 @@ exports.registerController = function (req, res, next) {
     // console.log('controller register',request);    
     
     try {
-        userservices.registerService(request, (err, data) => {
+        userServices.registerService(request, (err, data) => {
 
             if (err) {
                 res.status(400).send(err);
@@ -78,14 +79,14 @@ exports.registerController = function (req, res, next) {
 exports.registerUserVerifyController = function (req, res, next) {
 
     let request = {
-        email : req.body.email,
-        name : req.body.name
+        email : req.body.data.email,
+        name : req.body.data.name
     }
     // console.log(typeof request);
     // console.log(request);
     
     try {
-        userservices.registerUserVerifyServiceEmitter(request, (err, data) => {
+        userServicesEmiteer.registerUserVerifyServiceEmitter(request, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)
@@ -109,7 +110,7 @@ exports.forgotPasswordController = function (req, res, next) {
     // console.log(req.body);
     
     try {
-        userservices.forgotPasswordService(req.body, (err, data) => {
+        userServices.forgotPasswordService(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)
@@ -129,7 +130,7 @@ exports.forgotPasswordController = function (req, res, next) {
  */
 exports.logoutController = function (req, res, next) {
     try {
-        userservices.logoutService(req.body, (err, data) => {
+        userServices.logoutService(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)
@@ -183,7 +184,7 @@ exports.registerEventEmitterController = function (req, res, next) {
     // console.log('controller register',request);    
     
     try {
-        userservices.registerService(request, (err, data) => {
+        userServices.registerService(request, (err, data) => {
 
             if (err) {
                 res.status(400).send(err);
@@ -219,7 +220,7 @@ exports.registerUserVerifyEventEmitterController = function (req, res, next) {
     // console.log(request);
     
     try {
-        userservices.registerUserVerifyServiceEmitter(request, (err, data) => {
+        userServices.registerUserVerifyServiceEmitter(request, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)
@@ -243,7 +244,7 @@ exports.forgotPasswordEventEmitterController = function (req, res, next) {
     // console.log(req.body);
     
     try {
-        userservices.forgotPasswordService(req.body, (err, data) => {
+        userServices.forgotPasswordService(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)

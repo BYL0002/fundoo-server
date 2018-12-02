@@ -14,12 +14,12 @@ exports.loginMiddleware = function login_middleware(req, res, next) {
     if(req.body.data.email === null || req.body.data.email.length === 0 || req.body.data.email === undefined) 
     {
         console.log('Email Error');
-        next(err);
+        next('error');
     } 
     else if (req.body.data.password === null || req.body.data.password.length === 0 || req.body.data.password === undefined) 
     {
         console.log('Password Error');
-        next(err);
+        next('error');
     } 
     else 
     {
@@ -55,12 +55,12 @@ exports.registerMiddleware = function (req, res, next) {
     if(req.body.data.token == null || req.body.data.token.length === 0 || req.body.data.token === undefined) 
     {
         console.log('Token Error');
-        next(err);
+        next('error');
     } 
     else if (req.body.data.password1 === null || req.body.data.password1.length === 0 || req.body.data.password1 === undefined) 
     {
         console.log('Password Error');
-        next(err);
+        next('error');
     }
     else 
     {
@@ -92,12 +92,12 @@ exports.registerUserVerifyMiddleware = function (req, res, next) {
     if(req.body.data.email == null || req.body.data.email.length === 0 || req.body.data.email === undefined) 
     {
         console.log('Email Error');
-        next(err);
+        next('error');
     } 
     else if (req.body.data.name === null || req.body.data.name.length === 0 || req.body.data.name === undefined) 
     {
         console.log('Name Error');
-        next(err);
+        next('error');
     }
     else 
     {
@@ -119,7 +119,7 @@ exports.logoutMiddleware = function (req, res, next) {
     
     if(req.body.data.email === null || req.body.data.email === undefined || req.body.data.email.length === 0) {
         console.log('Email Error');
-        next(err);
+        next('error');
     }
     else {
         next();
@@ -134,7 +134,7 @@ exports.forgotPasswordMiddleware = function (req, res, next) {
     if(req.body.data.email == null || req.body.data.email.length === 0 || req.body.data.email === undefined) 
     {
         console.log('Email Error');
-        next(err);
+        next('error');
     }
     else 
     {

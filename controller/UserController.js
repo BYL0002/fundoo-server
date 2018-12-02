@@ -8,8 +8,6 @@
 const userServices = require('../services/UserServices');
 const userServicesEmiteer = require('../services/userServicesEventEmitter');
 const utility = require('../utility/util');
-const EventEmitter = require('events');
-const eventEmitter = new EventEmitter();
 
 exports.loginController = function (req, res, next) {
         
@@ -163,30 +161,6 @@ exports.logoutController = function (req, res, next) {
 
 //---------------------------------------------------Event Emitter Operations----------------------------------------------------------
 
-// eventEmitter.on('list', function(msg) {
-//     console.log(msg);
-//     console.log('list event called --------------------------');
-// })
-
-// eventEmitter.addListener('FirstEvent', function (data) {
-//     console.log('First subscriber ----- : ' + data);
-// });
-
-// eventEmitter.on('FirstEvent', function (data) {
-//     console.log('First subscriber: ' + data);
-// });
-
-// eventEmitter.emit('FirstEvent', 'Test event emitter');
-// eventEmitter.emit('list', 'messages----');
-// eventEmitter.emit('list', 'messages----');
-
-// eventEmitter.on('x', function(data) {
-//     console.log(data);    
-// });
-
-// exports.emitter = eventEmitter;
-
-
 /**
  * @description Controller for register & sending response to client
  */
@@ -200,7 +174,7 @@ exports.registerEventEmitterController = function (req, res, next) {
     // console.log('controller register',request);    
     
     try {
-        userServices.registerService(request, (err, data) => {
+        userServicesEmiteer.eventEmitterObj.emit('register', request, (err, data) => {
 
             if (err) {
                 res.status(400).send(err);
@@ -236,7 +210,7 @@ exports.registerUserVerifyEventEmitterController = function (req, res, next) {
     // console.log(request);
     
     try {
-        userServices.registerUserVerifyServiceEmitter(request, (err, data) => {
+        userServicesEmiteer.eventEmitterObj.emit('userVerify', request, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)
@@ -260,7 +234,7 @@ exports.forgotPasswordEventEmitterController = function (req, res, next) {
     // console.log(req.body);
     
     try {
-        userServices.forgotPasswordService(req.body.data, (err, data) => {
+        userServicesEmiteer.eventEmitterObj.emit('forgotPassword', req.body.data, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)

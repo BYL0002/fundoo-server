@@ -5,9 +5,9 @@
  * @version 1.1
  */
 const jwt = require('jsonwebtoken');
-var util = require('util');
+var staticFile = require('../config/static');
 const EventEmitter = require('events');
-const eventEmitter = new EventEmitter();
+const eventEmitterObj = new EventEmitter();
 const nodemailer = require('nodemailer');
 // const mail = require('/')
 
@@ -19,18 +19,16 @@ let tokenGeneration = (user) => {
         user : user
     }
 
-    let privateKey = "privateKey";
+    let privateKey = staticFile.privateKey;
 
-    var i = 'bridgelabz';          // Issuer 
-    var s = `login - ${user}`;        // Subject 
-    var a = 'http://mysoftcorp.in'; // Audience
+    var subject = `login - ${user}`;        // Subject 
 
     // SIGNING OPTIONS
     var signOptions = {
-        issuer: i,
-        subject: s,
-        audience: a,
-        expiresIn: "1h"
+        issuer: staticFile.issuer,
+        subject: subject,
+        audience: staticFile.audience,
+        expiresIn: staticFile.expiresIn
     };
 
     let token = jwt.sign(payload, privateKey, signOptions);
@@ -44,10 +42,10 @@ let tokenGeneration = (user) => {
 let mailSender = (userDetails) => {
 
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: staticFile.service,
         auth: {
-            user: 'labzbridge02@gmail.com',
-            pass: 'bridge01!'
+            user: staticFile.user_id,
+            pass: staticFile.password
         }
     });
     
@@ -73,7 +71,7 @@ let mailSender = (userDetails) => {
 /**
  * @description Event Listener to send mails to users on different tasks
  */
-eventEmitter.on('userVerify', function(userDetails) {
+eventEmitterObj.on('userVerify', function(userDetails) {
     console.log('on called');
     mailSender(userDetails);
 })
@@ -82,25 +80,25 @@ eventEmitter.on('userVerify', function(userDetails) {
 /**
  * @description Event Listener to send mails to users on different tasks
  */
-eventEmitter.on('forgotPassword', function(userDetails) {
-    console.log('on called');
+eventEmitterObj.on('forgotPassword', function(userDetails) {
+    console.log('forgotPassword on called');
     mailSender(userDetails);
 })
 
 /**
  * @description Event Listener to send mails to users on different tasks
  */
-eventEmitter.on('login', function(userDetails) {
-    console.log('on called');
+eventEmitterObj.on('userVerify', function(userDetails) {
+    console.log('userVerify on called');
     mailSender(userDetails);
 })
 
 /**
  * @description Event Listener to send mails to users on different tasks
  */
-eventEmitter.on('register', function(userDetails) {
-    console.log('on called');
+eventEmitterObj.on('register', function(userDetails) {
+    console.log('register on called');
     mailSender(userDetails);
 })
 
-module.exports ={ eventEmitter, mailSender, tokenGeneration};
+module.exports ={ eventEmitterObj, mailSender, tokenGeneration};

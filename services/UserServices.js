@@ -7,6 +7,7 @@
 const EventEmitter = require('events');
 const eventEmitter = new EventEmitter();
 const utility = require('../utility/util');
+const staticFile = require('../config/static');
 const usermodel = require('../app/models/UserModel');
 // const async = require('async');
 
@@ -78,7 +79,7 @@ exports.registerUserVerifyService = function(req, callback) {
             let userDetails = {
                 to: req.email,
                 subject: 'Registration Link for Fundoo Notes',
-                html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>'
+                html: '<p>Click <a href = "'+ staticFile.url_setpassword + token+ '">here</a> to activate account.</p>'
             }
             utility.mailSender(userDetails);
             return callback(null, data);
@@ -108,7 +109,7 @@ exports.forgotPasswordService = function(req, callback) {
             let userDetails = {
                 to : req.email,
                 subject : 'Reset Password Link for Fundoo Notes',
-                html : '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>'
+                html : '<p>Click <a href = "'+ staticFile.url_setpassword + token+ '">here</a> to activate account.</p>'
             }
 
             utility.mailSender(userDetails);

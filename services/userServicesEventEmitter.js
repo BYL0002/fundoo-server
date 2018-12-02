@@ -5,33 +5,14 @@
  * @version 1.1
  */
 const utility = require('../utility/util');
-const usermodel = require('../app/models/UserModel')
-/**
- * @description login service
- */
-exports.loginServiceEmitter = function(req, callback) {
-    
-    usermodel.loginModel(req, (err, data) => {
-
-        if(err) {
-            return callback(err);
-        }
-        else {
-            let userDetails = {
-                to : data.email_id,
-                subject: 'Activity Review',
-                html: '<p>Account logged on Fundoo Notes !</p>'
-            }
-            utility.eventEmitter.emit("login", userDetails);
-            return callback(null, data);
-        }
-    });
-}
+const usermodel = require('../app/models/UserModel');
+const EventEmitter = require('events');
+const eventEmitterObj = new EventEmitter();
 
 /**
  * @description registration service
  */
-exports.registerServiceEmitter = function(req, callback) {
+eventEmitterObj.on('register', function(req, callback) {
 
     // console.log('req on service', req);
     
@@ -50,12 +31,12 @@ exports.registerServiceEmitter = function(req, callback) {
             return callback(null, data);
         }
     })    
-}
+})
 
 /**
  * @description registration service
  */
-exports.registerUserVerifyServiceEmitter = function(req, callback) {
+eventEmitterObj.on('userVerify', function(req, callback) {
 
     let token = utility.tokenGeneration(req.email);
     let requestContainToken = {
@@ -83,12 +64,12 @@ exports.registerUserVerifyServiceEmitter = function(req, callback) {
         }
 
     })
-}
+})
 
 /**
  * @description forgot password service
  */
-exports.forgotPasswordServiceEmitter = function(req, callback) {
+eventEmitterObj.on('forgotPassword', function(req, callback) {
 
     let token = utility.tokenGeneration(req.email);
     let requestContainToken = {
@@ -113,17 +94,6 @@ exports.forgotPasswordServiceEmitter = function(req, callback) {
         }
 
     })
-}
+})
 
-/**
- * @description registration service
- */
-exports.logoutServiceEmitter = function(req, callback) {
-
-    usermodel.logoutModel(req, (err, data) => {
-
-        if(err) return callback(err);
-        else return callback(null, data);
-
-    })
-}
+module.exports = {eventEmitterObj};

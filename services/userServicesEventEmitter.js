@@ -36,7 +36,7 @@ eventEmitterObj.on('register', function(req, callback) {
 /**
  * @description registration service
  */
-eventEmitterObj.on('userVerify', function(req, callback) {
+eventEmitterObj.on('userVerify', function(req) {
 
     let token = utility.tokenGeneration(req.email);
     let requestContainToken = {
@@ -48,7 +48,9 @@ eventEmitterObj.on('userVerify', function(req, callback) {
     usermodel.registerUserVerifyModel(requestContainToken, (err, data) => {
 
         if(err) {
-            return callback(err);
+            console.log('error on service emitter');
+            
+            // return callback(err);
         }
         else {
 
@@ -59,8 +61,10 @@ eventEmitterObj.on('userVerify', function(req, callback) {
                 subject: 'Registration Link for Fundoo Notes',
                 html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>'
             }
-            utility.eventEmitter.emit('userVerify', userDetails );
-            return callback(null, data);
+            utility.eventEmitterObj.emit('userVerify', userDetails );
+            console.log('success on service emitter');
+            
+            // return callback(null, data);
         }
 
     })

@@ -10,22 +10,22 @@ const userServicesEmiteer = require('../services/userServicesEventEmitter');
 const utility = require('../utility/util');
 
 exports.loginController = function (req, res, next) {
-        
+
     try {
         userServices.loginService(req.body.data, (err, data) => {
 
             if (err) {
                 res.status(400).send({
-                    status : false,
-                    message : err,
+                    status: false,
+                    message: err,
                 });
             }
-            else {                
+            else {
                 let token = utility.tokenGeneration(data.email_id);
                 res.status(200).send({
-                    status : true,
-                    message : data,
-                    token : token
+                    status: true,
+                    message: data,
+                    token: token
                 });
             }
         })
@@ -41,30 +41,30 @@ exports.loginController = function (req, res, next) {
 exports.registerController = function (req, res, next) {
 
     let request = {
-        token : req.body.data.token,
-        password : req.body.data.password1
+        token: req.body.data.token,
+        password: req.body.data.password1
     }
     console.log(typeof request);
-    console.log('controller register',request);    
-    
+    console.log('controller register', request);
+
     try {
         userServices.registerService(request, (err, data) => {
 
             if (err) {
                 res.status(400).send({
-                    status : false,
-                    message : err
+                    status: false,
+                    message: err
                 })
             }
             else {
                 res.status(200).send({
-                    status : true,
-                    message : data 
+                    status: true,
+                    message: data
                 })
             }
         })
     }
-    catch(err) {
+    catch (err) {
         next(err);
     }
 }
@@ -75,30 +75,30 @@ exports.registerController = function (req, res, next) {
 exports.registerUserVerifyController = function (req, res, next) {
 
     let request = {
-        email : req.body.data.email,
-        name : req.body.data.name
+        email: req.body.data.email,
+        name: req.body.data.name
     }
     // console.log(typeof request);
     // console.log(request);
-    
+
     try {
         userServicesEmiteer.registerUserVerifyServiceEmitter(request, (err, data) => {
 
             if (err) {
                 res.status(400).send({
-                    status : false,
-                    message : err
+                    status: false,
+                    message: err
                 })
             }
             else {
                 res.status(200).send({
-                    status : true,
-                    message : data
+                    status: true,
+                    message: data
                 });
             }
         })
     }
-    catch(err) {
+    catch (err) {
         next(err);
     }
 }
@@ -110,25 +110,25 @@ exports.forgotPasswordController = function (req, res, next) {
 
     // console.log(typeof req);
     // console.log(req.body);
-    
+
     try {
         userServices.forgotPasswordService(req.body.data, (err, data) => {
 
             if (err) {
                 res.status(400).send({
-                    status : false,
-                    message : err
+                    status: false,
+                    message: err
                 })
             }
             else {
                 res.status(200).send({
-                    status : true,
-                    message : data
+                    status: true,
+                    message: data
                 });
             }
         })
     }
-    catch(err) {
+    catch (err) {
         next(err);
     }
 }
@@ -142,14 +142,14 @@ exports.logoutController = function (req, res, next) {
 
             if (err) {
                 res.status(400).send({
-                    status : false,
-                    message : err
+                    status: false,
+                    message: err
                 })
             }
             else {
                 res.status(200).send({
-                    status : true,
-                    message : data
+                    status: true,
+                    message: data
                 });
             }
         })
@@ -167,12 +167,12 @@ exports.logoutController = function (req, res, next) {
 exports.registerEventEmitterController = function (req, res, next) {
 
     let request = {
-        token : req.body.data.token,
-        password : req.body.data.password1
+        token: req.body.data.token,
+        password: req.body.data.password1
     }
     console.log(typeof request);
     // console.log('controller register',request);    
-    
+
     try {
         userServicesEmiteer.eventEmitterObj.emit('register', request, (err, data) => {
 
@@ -192,7 +192,7 @@ exports.registerEventEmitterController = function (req, res, next) {
             }
         })
     }
-    catch(err) {
+    catch (err) {
         next(err);
     }
 }
@@ -202,25 +202,47 @@ exports.registerEventEmitterController = function (req, res, next) {
  */
 exports.registerUserVerifyEventEmitterController = function (req, res, next) {
 
-    let request = {
-        email : req.body.data.email,
-        name : req.body.data.name
-    }
-    // console.log(typeof request);
-    // console.log(request);
-    
-    try {
-        userServicesEmiteer.eventEmitterObj.emit('userVerify', request, (err, data) => {
+    console.log('req client');
+    // console.log(req);
 
-            if (err) {
-                res.status(400).send(err)
+    let request = {
+        email: req.body.data.email,
+        name: req.body.data.name
+    }
+    console.log(typeof request);
+    console.log(request);
+
+    try {
+        let promise = new Promise((resolve, reject) => {
+            let resultOfEmitter = userServicesEmiteer.eventEmitterObj.emit('userVerify', request)
+            if (resultOfEmitter) {
+                resolve(resultOfEmitter);
             }
             else {
-                res.status(200).send(data);
+                reject(resultOfEmitter);
             }
         })
+
+        promise.then((result) => {
+            if (result) {
+                console.log('controller promise success');
+                
+                res.status(200).send({
+                    status: true
+                })
+            }
+            else {
+                console.log('controller promise success failed');
+                
+                res.status(400).send({
+                    status: false
+                })
+            }
+        }).catch(err => {
+            console.log('error on promise event emitter');
+        })
     }
-    catch(err) {
+    catch (err) {
         next(err);
     }
 }
@@ -231,8 +253,8 @@ exports.registerUserVerifyEventEmitterController = function (req, res, next) {
 exports.forgotPasswordEventEmitterController = function (req, res, next) {
 
     // console.log(typeof req);
-    // console.log(req.body);
-    
+    console.log(req.body);
+
     try {
         userServicesEmiteer.eventEmitterObj.emit('forgotPassword', req.body.data, (err, data) => {
 
@@ -244,7 +266,7 @@ exports.forgotPasswordEventEmitterController = function (req, res, next) {
             }
         })
     }
-    catch(err) {
+    catch (err) {
         next(err);
     }
 }

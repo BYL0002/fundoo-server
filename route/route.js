@@ -43,7 +43,7 @@ router.post("/registerEmit", controller.registerEventEmitterController);
 /**
  * get for messages for chatting application
  */
-router.post('/registerUserVerifyEmit', controller.registerUserVerifyEventEmitterController);
+router.post('/registerUserVerifyEventEmitter', controller.registerUserVerifyEventEmitterController);
 /**
  * get for messages for chatting application
  */

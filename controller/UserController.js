@@ -78,11 +78,9 @@ exports.registerUserVerifyController = function (req, res, next) {
         email: req.body.data.email,
         name: req.body.data.name
     }
-    // console.log(typeof request);
-    // console.log(request);
-
+    
     try {
-        userServicesEmiteer.registerUserVerifyServiceEmitter(request, (err, data) => {
+        userServices.registerUserVerifyService(request, (err, data) => {
 
             if (err) {
                 res.status(400).send({
@@ -107,9 +105,6 @@ exports.registerUserVerifyController = function (req, res, next) {
  * @description Controller for register & sending response to client
  */
 exports.forgotPasswordController = function (req, res, next) {
-
-    // console.log(typeof req);
-    // console.log(req.body);
 
     try {
         userServices.forgotPasswordService(req.body.data, (err, data) => {
@@ -174,22 +169,33 @@ exports.registerEventEmitterController = function (req, res, next) {
     // console.log('controller register',request);    
 
     try {
-        userServicesEmiteer.eventEmitterObj.emit('register', request, (err, data) => {
 
-            if (err) {
-                res.status(400).send(err);
-                // res.status(404).json({
-                //     success : true,
-                //     message: err
-                // });
+        let promise = new Promise((resolve, reject) => {
+            let resultOfEmitter = userServicesEmiteer.eventEmitterObj.emit('register', request);
+            if (resultOfEmitter) {
+                resolve(resultOfEmitter);
             }
             else {
-                res.status(200).send(data);
-                // return res.status(404).json({
-                //     success : true,
-                //     message: data
-                //   });
+                reject(resultOfEmitter);
             }
+        })
+
+        promise.then((result) => {
+            if (result) {
+                console.log('controller promise success');
+                res.status(200).send({
+                    status: true
+                })
+            }
+            else {
+                console.log('controller promise success failed');
+                
+                res.status(400).send({
+                    status: false
+                })
+            }
+        }).catch(err => {
+            console.log('error on promise event emitter');
         })
     }
     catch (err) {
@@ -256,14 +262,34 @@ exports.forgotPasswordEventEmitterController = function (req, res, next) {
     console.log(req.body);
 
     try {
-        userServicesEmiteer.eventEmitterObj.emit('forgotPassword', req.body.data, (err, data) => {
 
-            if (err) {
-                res.status(400).send(err)
+        let promise = new Promise((resolve, reject) => {
+            let resultOfEmitter = userServicesEmiteer.eventEmitterObj.emit('forgotPassword', request)
+            if (resultOfEmitter) {
+                resolve(resultOfEmitter);
             }
             else {
-                res.status(200).send(data);
+                reject(resultOfEmitter);
             }
+        })
+
+        promise.then((result) => {
+            if (result) {
+                console.log('controller promise success');
+                
+                res.status(200).send({
+                    status: true
+                })
+            }
+            else {
+                console.log('controller promise success failed');
+                
+                res.status(400).send({
+                    status: false
+                })
+            }
+        }).catch(err => {
+            console.log('error on promise event emitter');
         })
     }
     catch (err) {

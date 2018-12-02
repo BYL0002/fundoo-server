@@ -19,7 +19,7 @@ eventEmitterObj.on('register', function(req, callback) {
     
     usermodel.findAndSaveTokenModel(req, (err, data) => {
         if (err) {
-            return callback(err);
+            // return callback(err);
         }
         else {
 
@@ -28,8 +28,8 @@ eventEmitterObj.on('register', function(req, callback) {
                 subject: 'Registration Successful on Fundoo Notes',
                 html: '<p>Your are most Welcome to Fundoo Notes anytime. Thank You!</p>'
             }
-            utility.eventEmitter.emit("register", userDetails);
-            return callback(null, data);
+            utility.eventEmitterObj.emit("register", userDetails);
+            // return callback(null, data);
         }
     })    
 })
@@ -84,7 +84,7 @@ eventEmitterObj.on('forgotPassword', function(req) {
     usermodel.forgotPasswordModel(requestContainToken, (err, data) => {
 
         if(err) {
-            return callback(err);
+            // return callback(err);
         }
         else {
             let token = utility.tokenGeneration(req.email);
@@ -93,8 +93,8 @@ eventEmitterObj.on('forgotPassword', function(req) {
                 subject : 'Reset Password Link for Fundoo Notes',
                 html : '<p>Click <a href = "'+ staticFile.url_setpassword + token+ '">here</a> to activate account.</p>'
             }
-            utility.eventEmitter.emit('forgotPassword', userDetails );
-            return callback(null, data);
+            utility.eventEmitterObj.emit('forgotPassword', userDetails );
+            // return callback(null, data);
         }
 
     })

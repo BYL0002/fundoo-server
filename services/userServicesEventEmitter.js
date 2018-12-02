@@ -5,6 +5,7 @@
  * @version 1.1
  */
 const utility = require('../utility/util');
+const staticFile = require('../config/static');
 const usermodel = require('../app/models/UserModel');
 const EventEmitter = require('events');
 const eventEmitterObj = new EventEmitter();
@@ -49,7 +50,6 @@ eventEmitterObj.on('userVerify', function(req) {
 
         if(err) {
             console.log('error on service emitter');
-            
             // return callback(err);
         }
         else {
@@ -73,7 +73,7 @@ eventEmitterObj.on('userVerify', function(req) {
 /**
  * @description forgot password service
  */
-eventEmitterObj.on('forgotPassword', function(req, callback) {
+eventEmitterObj.on('forgotPassword', function(req) {
 
     let token = utility.tokenGeneration(req.email);
     let requestContainToken = {
@@ -91,7 +91,7 @@ eventEmitterObj.on('forgotPassword', function(req, callback) {
             let userDetails = {
                 to : req.email,
                 subject : 'Reset Password Link for Fundoo Notes',
-                html : '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>'
+                html : '<p>Click <a href = "'+ staticFile.url_setpassword + token+ '">here</a> to activate account.</p>'
             }
             utility.eventEmitter.emit('forgotPassword', userDetails );
             return callback(null, data);

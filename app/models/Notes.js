@@ -7,23 +7,44 @@
 
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
-const EventEmitter = require('events');
-const eventEmitterObj = new EventEmitter();
 
 /**
  * @description Schema created via mongoose
  */
 const newSchema = new schema({
-  name: { type: String },
-  email_id: { type: String },
-  password: { type: String, default: "" },
-  token: { type: String }
+  title : {
+    type : String
+  },
+  description : {
+    type : String
+  },
+  reminder : {
+    type : Date
+  },
+  collaborator : {
+    type : { type: Schema.Types.ObjectId, ref: 'user' }
+  },
+  color : {
+    type : String
+  },
+  image : {
+    type : String
+  },
+  archive : {
+    type : Boolean
+  },
+  pin : {
+    type : Boolean
+  },
+  trash : {
+    type : Boolean
+  }
 })
 
 /**
  * @description Model creation on schema
  */
-const user = mongoose.model("user", newSchema);
+const note = mongoose.model("note", newSchema);
 const bcryptjs = require('bcryptjs');
 
 function userFunction() {

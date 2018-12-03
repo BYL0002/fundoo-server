@@ -4,7 +4,7 @@
  * @since 26/11/2018
  * @version 1.1
  */
-
+const expressValidator = require('express-validator');
 const userServices = require('../services/UserServices');
 const userServicesEmiteer = require('../services/userServicesEventEmitter');
 const utility = require('../utility/util');
@@ -12,6 +12,7 @@ const utility = require('../utility/util');
 exports.loginController = function (req, res, next) {
 
     try {
+        // check(req.body.data.email).isEmail()
         userServices.loginService(req.body.data, (err, data) => {
 
             if (err) {
@@ -260,6 +261,11 @@ exports.forgotPasswordEventEmitterController = function (req, res, next) {
 
     // console.log(typeof req);
     console.log(req.body);
+
+
+    let request = {
+        email: req.body.data.email,
+    }
 
     try {
 

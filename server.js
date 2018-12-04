@@ -21,6 +21,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+/**
+ * @description for routing
+ */
 app.use('/', routes);
 
 /**
@@ -34,12 +37,19 @@ function startMongoDb(dbUrl) {
     mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb on port : ' + dbUrl); });
 }
 
+/**
+ * @description Error Handling
+ */
 app.use(function (err, req, res, next) {
     // console.error(err.stack)
+    console.log('err');    
     console.log(err);  
     res.status(500).send('Something broke ! Internal Server Error')
 });
 
+/**
+ * @description Server Listening
+ */
 app.listen(8000, () => {
     startMongoDb(dbUrl);
     console.log('server is up and running on :',8000);

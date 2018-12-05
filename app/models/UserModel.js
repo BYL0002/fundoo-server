@@ -82,8 +82,8 @@ userFunction.prototype.loginModel = function (req, callback) {
     }
     else {
       bcryptjs.compare(req.password, result.password, function (err, resultFinal) {
-        if (resultFinal == null) {
-          return callback(null);
+        if (resultFinal == false) {
+          return callback(err);
         }
         else {
           console.log('resultFinal : ', resultFinal);

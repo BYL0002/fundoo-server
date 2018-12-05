@@ -23,7 +23,7 @@ exports.loginService = function(req, callback) {
         }
         else {
             let userDetails = {
-                to : data.email_id,
+                to : req.email,
                 subject: 'Activity Review',
                 html: '<p>Account logged on Fundoo Notes !</p>'
             }

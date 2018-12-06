@@ -18,8 +18,8 @@ exports.loginService = function(req, callback) {
     
     usermodel.loginModel(req, (err, data) => {
 
-        if(err) {
-            return callback(err);
+        if(err == false) {
+            return callback(false);
         }
         else {
             let userDetails = {

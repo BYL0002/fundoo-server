@@ -78,12 +78,14 @@ userFunction.prototype.loginModel = function (req, callback) {
   user.findOne({ email_id: req.email }, function (err, result) {
     if (result == null) {
       console.log('error in checking ', err);
-      return callback(err);
+      return callback(false);
     }
     else {
       bcryptjs.compare(req.password, result.password, function (err, resultFinal) {
         if (resultFinal == false) {
-          return callback(err);
+          console.log('resultFinal',resultFinal);
+          console.log('err',err);
+          return callback(false);
         }
         else {
           console.log('resultFinal : ', resultFinal);

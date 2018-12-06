@@ -27,14 +27,16 @@ exports.loginController = function (req, res, next) {
 
         userServices.loginService(req.body.data, (err, data) => {
 
-            if (err) {
+            if (err == false) {
+                // console.log('err controller login');
+                
                 res.status(400).send({
                     status: false,
                     message: err,
                 });
             }
             else {
-                let token = utility.tokenGeneration(data.email_id);
+                let token = utility.tokenGeneration(req.email);
                 res.status(200).send({
                     status: true,
                     message: data,

@@ -13,6 +13,10 @@ const utility = require('../utility/util');
 exports.loginController = function (req, res, next) {
 
     try {
+        console.log('login req server controller');
+        console.log(req.body.data);
+        
+        
         check(req.body.data.email).isEmail();
         check(req.body.data.password).isLength({ min: 5 })
 

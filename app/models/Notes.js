@@ -18,11 +18,11 @@ const newSchema = new schema({
   description : {
     type : String
   },
-  reminder : {
-    type : Date
-  },
   collaborator : {
     type : { type: Schema.Types.ObjectId, ref: 'user' }
+  },
+  reminder : {
+    type : Date
   },
   color : {
     type : String
@@ -30,10 +30,10 @@ const newSchema = new schema({
   image : {
     type : String
   },
-  archive : {
+  pin : {
     type : Boolean
   },
-  pin : {
+  archive : {
     type : Boolean
   },
   trash : {
@@ -47,21 +47,27 @@ const newSchema = new schema({
 const note = mongoose.model("note", newSchema);
 const bcryptjs = require('bcryptjs');
 
-function userFunction() {
+function noteFunction() {
 
 }
 
 /**
- * @description Register Process to get user details & send link to verify
+ * @description Note Save Mode
  */
-userFunction.prototype.registerUserVerifyModel = (req, callback) => {
-  let newUser = new user({
-    name: req.name,
-    email_id: req.email,
-    token: req.token
+noteFunction.prototype.noteSave = (req, callback) => {
+  let newNote = new note({
+    title : req.title,
+    description : req.description,
+    collaborator : req.collaborator,
+    reminder : req.reminder,
+    color : req.color,
+    image : req.imageUrl,
+    pin : req.pin,
+    archive : req.archive,
+    trash : req.trash
   })
 
-  newUser.save(function (err, result) {
+  newNote.save(function (err, result) {
     if (err) {
       return callback(err);
     }
@@ -182,4 +188,8 @@ userFunction.prototype.findAndSaveTokenModel = function (req, callback) {
     }
   })
 }
+
+/**
+ * @exports function to get database connected and get operation done on basis of request from client
+ */
 module.exports = new userFunction;

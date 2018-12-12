@@ -12,32 +12,35 @@ const schema = mongoose.Schema;
  * @description Schema created via mongoose
  */
 const newSchema = new schema({
-  title : {
-    type : String
+  sender: {
+    type: String
   },
-  description : {
-    type : String
+  title: {
+    type: String
   },
-  collaborator : {
-    type : { type: Schema.Types.ObjectId, ref: 'user' }
+  description: {
+    type: String
   },
-  reminder : {
-    type : Date
+  collaborator: {
+    type: { type: Schema.Types.ObjectId, ref: 'user' }
   },
-  color : {
-    type : String
+  reminder: {
+    type: Date
   },
-  image : {
-    type : String
+  color: {
+    type: String
   },
-  pin : {
-    type : Boolean
+  image: {
+    type: String
   },
-  archive : {
-    type : Boolean
+  pin: {
+    type: Boolean
   },
-  trash : {
-    type : Boolean
+  archive: {
+    type: Boolean
+  },
+  trash: {
+    type: Boolean
   }
 })
 
@@ -45,7 +48,6 @@ const newSchema = new schema({
  * @description Model creation on schema
  */
 const note = mongoose.model("note", newSchema);
-const bcryptjs = require('bcryptjs');
 
 function noteFunction() {
 
@@ -56,15 +58,16 @@ function noteFunction() {
  */
 noteFunction.prototype.noteSave = (req, callback) => {
   let newNote = new note({
-    title : req.title,
-    description : req.description,
-    collaborator : req.collaborator,
-    reminder : req.reminder,
-    color : req.color,
-    image : req.imageUrl,
-    pin : req.pin,
-    archive : req.archive,
-    trash : req.trash
+    sender : req.sender,
+    title: req.title,
+    description: req.description,
+    collaborator: req.collaborator,
+    reminder: req.reminder,
+    color: req.color,
+    image: req.imageUrl,
+    pin: req.pin,
+    archive: req.archive,
+    trash: req.trash
   })
 
   newNote.save(function (err, result) {
@@ -78,71 +81,21 @@ noteFunction.prototype.noteSave = (req, callback) => {
 }
 
 /**
- * @description 
- */
-userFunction.prototype.forgotPasswordModel = (req, callback) => {
-
-  user.findOneAndUpdate({ email_id: req.email }, { token: req.token }, function (err, result) {
-    user.findOne({ _id: result._id }, function (err, data) {
-      if (err) {
-        console.log(err);
-        return callback(err);
-      }
-      else {
-        console.log('Successful Token match');
-        console.log('Successful data retrieved is : ', data);
-        return callback(null, data);
-      }
-    })
-  })
-}
-
-
-/**
  * @description Finding data inside database
  * make this available to our users in our Node applications
  */
-userFunction.prototype.loginModel = function (req, callback) {
+userFunction.prototype.getNotesModel = function (req, callback) {
 
-  user.findOne({ email_id: req.email }, function (err, result) {
+  user.find(function (err, result) {
     if (result == null) {
       console.log('error in checking ', err);
       return callback(err);
     }
     else {
-      bcryptjs.compare(req.password, result.password, function (err, resultFinal) {
-        if (resultFinal == null) {
-          return callback(null);
-        }
-        else {
-          console.log('resultFinal : ', resultFinal);
-          return callback(null, result);
-        }
-      });
-    }
-
-  })
-}
-
-/**
- * @description Finding data inside database
- * make this available to our users in our Node applications
- */
-userFunction.prototype.logoutModel = function (req, callback) {
-
-  user.findOne({ email_id: req.loggedUser }, function (err, result) {
-    if (err) {
-
-      console.log(err);
-      return callback(err);
-    }
-    else {
-      console.log('Logout Successful');
       return callback(null, result);
     }
-  })
+  });
 }
-
 
 /**
  * @description Finding data inside database

@@ -14,6 +14,7 @@ const router = express.Router();
 const middleware = require('../middleware/UserMiddleware');
 const noteMiddleware = require('../middleware/NoteMiddleware');
 const controller = require('../controller/UserController');
+const noteController = require('../controller/NoteController');
 
 /**
  * post method of express to send controls to controller from routes through middleware
@@ -60,8 +61,12 @@ router.post('/forgotPasswordEventEmitter', controller.forgotPasswordEventEmitter
 /**
  * get for messages for chatting application
  */
-router.post('/noteAddition', noteMiddleware.notesAddMiddleware);
+router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.addNote );
 
+/**
+ * get for messages for chatting application
+ */
+router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
 
 
 /**

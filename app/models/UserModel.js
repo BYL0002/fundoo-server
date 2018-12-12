@@ -116,6 +116,27 @@ userFunction.prototype.logoutModel = function (req, callback) {
   })
 }
 
+/**
+ * @description Finding data inside database
+ * make this available to our users in our Node applications
+ */
+userFunction.prototype.FindOneModel = function (req, callback) {
+
+  user.findOne({ email_id : req }, function (err, result) {
+    if (err) {
+
+      console.log(err);
+      return callback(err);
+    }
+    else {
+      console.log('Found Successful');
+      console.log('result', result);
+      
+      return callback(null, result);
+    }
+  })
+}
+
 
 /**
  * @description Finding data inside database

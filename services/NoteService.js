@@ -9,26 +9,45 @@ const utility = require('../utility/util');
 const staticFile = require('../config/static');
 const usermodel = require('../app/models/UserModel');
 const noteModel = require('../app/models/NoteModel');
-// const async = require('async');
+const async = require('async');
 
 /**
  * @description notes save service
  */
-exports.NoteService = function(req, callback) {
-    
-    usermodel.loginModel(req, (err, data) => {
+exports.NoteAddService = function (req, callback) {
+    console.log('req on service', req);
 
-        if(err == false) {
-            return callback(false);
+    let sender = req.sender;
+    let resultFinal;
+    async.waterfall([
+        function (callback) {
+            usermodel.FindOneModel(sender, (err, data) => {
+                if (err) {
+                    callback(err);
+                }
+                else {
+                    callback(null, data._id);
+                }
+            })
         }
-        else {
-            let userDetails = {
-                to : req.email,
-                subject: 'Activity Review',
-                html: '<p>Account logged on Fundoo Notes !</p>'
+    ], function (err, result) {
+        console.log('fine result - ', result);
+        req.user_id = result;
+        noteModel.noteSave(req, (err, data) => {
+            if (err) {
+                resultFinal = false;
             }
-            utility.mailSender(userDetails);
-            return callback(null, data);
-        }
-    });
+            else {
+                resultFinal = true;
+            }
+        })
+    }
+    )
+
+    if (resultFinal) {
+        return callback(null, resultFinal);
+    }
+    else {
+        return callback(null)
+    }
 }

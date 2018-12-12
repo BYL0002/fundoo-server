@@ -13,6 +13,7 @@ const routes = require('./route/route.js');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbUrl = require('./config/dbconfig');
+require('dotenv').config();
 
 /**
  * @description Parsing the request get by client

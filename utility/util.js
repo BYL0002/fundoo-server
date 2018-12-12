@@ -31,7 +31,7 @@ let tokenGeneration = (user) => {
         expiresIn: staticFile.expiresIn
     };
 
-    let token = jwt.sign(payload, privateKey, signOptions);
+    let token = jwt.sign(payload, process.env.privateKey, signOptions);
     // console.log('token on util - ',token);
     return token;
 }
@@ -44,15 +44,17 @@ let mailSender = (userDetails) => {
     var transporter = nodemailer.createTransport({
         service: staticFile.service,
         auth: {
-            user: staticFile.user_id,
-            pass: staticFile.password
+            user: process.env.user_id,
+            pass: process.env.password
         }
     });
     
     let mailOptions;
+    // console.log(process.env.user_id);
+    // console.log(process.env.password);
 
     mailOptions = {
-        from: 'labzbridge02@gmail.com', // sender address
+        from: process.env.user_id, // sender address
         to: userDetails.to,
         subject: userDetails.subject,
         html: userDetails.html

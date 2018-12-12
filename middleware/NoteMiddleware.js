@@ -6,7 +6,6 @@
  * @version 8.2
  */
 const jwt = require('jsonwebtoken');
-const staticFile = require('../config/static');
 const AssertionError = require('assert').AssertionError;
 
 /**
@@ -16,8 +15,10 @@ exports.notesAddMiddleware = function noteAddMiddleware(req, res, next) {
     try {
         console.log('req token', req.body.header.token);
         
-        jwt.verify(req.body.header.token, staticFile.privateKey, function(err,token){
-            if(token) throw 'err'
+        jwt.verify(req.body.header.token, process.env.privateKey, function(err,token){
+            console.log('token result', token);
+            
+            if(err) throw 'err'
             {
               next();
             }

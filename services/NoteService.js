@@ -19,6 +19,7 @@ exports.NoteAddService = function (req, callback) {
 
     let sender = req.sender;
     let resultFinal;
+    let resultFinalData;
     async.waterfall([
         function (callback) {
             usermodel.FindOneModel(sender, (err, data) => {
@@ -36,18 +37,34 @@ exports.NoteAddService = function (req, callback) {
         noteModel.noteSave(req, (err, data) => {
             if (err) {
                 resultFinal = false;
+                resultFinalData = err;
             }
             else {
                 resultFinal = true;
+                resultFinalData = data;
             }
         })
     }
     )
 
     if (resultFinal) {
-        return callback(null, resultFinal);
+        return callback(null, resultFinalData);
     }
     else {
         return callback(null)
     }
+}
+
+exports.NoteDisplayService = function ( callback) {
+    console.log("req on service on note display");
+    noteModel.noteDisplay( (err, data) => {
+        if(err)
+        {
+            return callback(err);
+        }
+        else
+        {
+            return callback(null, data);
+        }
+    })
 }

@@ -13,12 +13,11 @@ const AssertionError = require('assert').AssertionError;
  */
 exports.notesAddMiddleware = function noteAddMiddleware(req, res, next) {
     try {
-        console.log('req token', req.body.header.token);
-        
-        jwt.verify(req.body.header.token, process.env.privateKey, function(err,token){
-            console.log('token result', token);
+
+        jwt.verify(req.headers.token, process.env.privateKey, function(err, result){
+            console.log('token result', err, result);
             
-            if(err) throw 'err'
+            if(err != null) throw 'err'
             {
               next();
             }

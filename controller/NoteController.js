@@ -10,7 +10,11 @@ const noteService = require('../services/NoteService');
 exports.addNote = function(req, res, next) {
 
     try{
-        noteService.NoteAddService(req.body.data, (err, result) => {
+        // console.log('req on controller -----------------', req);
+        // console.log('------------------------------------------------------------------------------------');
+        
+        
+        noteService.NoteAddService(req.body, (err, result) => {
             if(err)
             {
                 res.status(400).send({
@@ -35,9 +39,11 @@ exports.addNote = function(req, res, next) {
 }
 
 exports.displayNote = function(req, res, next) {
+    console.log('controller display notes');
+    
     try
     {
-        noteService.NoteDisplayService((err, result) => {
+        noteService.NoteDisplayService( (err, result) => {
             if(err)
             {
                 res.status(400).send({

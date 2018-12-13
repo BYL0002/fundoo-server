@@ -2,7 +2,7 @@
  * @description Services for operaions on request by user as client
  * @author Yash
  * @since   11/12/2018
- * @version 1.1
+ * @version 1.3
  */
 
 const mongoose = require('mongoose');
@@ -61,7 +61,7 @@ function noteFunction() {
 }
 
 /**
- * @description Note Save Mode
+ * @description Note Save
  */
 noteFunction.prototype.noteSave = (req, callback) => {
   let newNote = new note({
@@ -83,6 +83,24 @@ noteFunction.prototype.noteSave = (req, callback) => {
       return callback(err);
     }
     else {
+      return callback(null, result);
+    }
+  })
+}
+
+/**
+ * @description Notes Retrieve
+ */
+noteFunction.prototype.noteDisplay = ( callback) => {
+  note.find(function(err, result) {
+    if(err)
+    {
+      console.log('err of display on model', err);
+      return callback(err);
+    }
+    else
+    {
+      console.log('result from db', result);
       return callback(null, result);
     }
   })

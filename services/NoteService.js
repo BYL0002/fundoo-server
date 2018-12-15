@@ -32,8 +32,11 @@ exports.NoteAddService = function (req, callback) {
             })
         }
     ], function (err, result) {
-        console.log('fine result - ', result);
+        console.log('_id result ----------- ', result);
+        console.log('user_id -------------',req.user_id);
+        
         req.user_id = result;
+        console.log('user_id -------------',req.user_id);
         noteModel.noteSave(req, (err, data) => {
             if (err) {
                 resultFinal = false;

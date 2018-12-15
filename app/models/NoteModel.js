@@ -80,9 +80,13 @@ noteFunction.prototype.noteSave = (req, callback) => {
 
   newNote.save(function (err, result) {
     if (err) {
+      console.log('note saved error');
+      
       return callback(err);
     }
     else {
+      console.log('note saved successful');
+      
       return callback(null, result);
     }
   })

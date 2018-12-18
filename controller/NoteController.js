@@ -39,11 +39,36 @@ exports.addNote = function(req, res, next) {
 }
 
 exports.displayNote = function(req, res, next) {
-    console.log('controller display notes');
+    // console.log('controller display notes');
     
     try
     {
         noteService.NoteDisplayService( (err, result) => {
+            if(err)
+            {
+                res.status(400).send({
+                    status : false,
+                    message : 'error'
+                })
+            }
+            else
+            {
+                res.status(200).send({
+                    status : true,
+                    message : result
+                })
+            }
+        })
+    }
+    catch(err)
+    {
+        next(err);
+    }
+}
+
+exports.updateNote = (req, res, next) => {
+    try{
+        noteService.noteUpdateService (req, (err, data) => {
             if(err)
             {
                 res.status(400).send({

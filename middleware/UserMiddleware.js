@@ -130,7 +130,7 @@ exports.registerUserVerifyMiddleware = function (req, res, next) {
  * @description function formed as to perform middleware work for registration
  */
 exports.logoutMiddleware = function (req, res, next) {
-    console.log('middleware logout', req.body.data.email);
+    // console.log('middleware logout', req.body.data.email);
 
     try {
         if (req.body.data.email === null || req.body.data.email === undefined || req.body.data.email.length === 0) throw ' email empty'

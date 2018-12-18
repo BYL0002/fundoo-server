@@ -63,7 +63,7 @@ function noteFunction() {
 /**
  * @description Note Save
  */
-noteFunction.prototype.noteSave = (req, callback) => {
+noteFunction.prototype.noteSaveModel = (req, callback) => {
   let newNote = new note({
     sender : req.sender,
     user_id : req.user_id,
@@ -92,10 +92,11 @@ noteFunction.prototype.noteSave = (req, callback) => {
   })
 }
 
+
 /**
  * @description Notes Retrieve
  */
-noteFunction.prototype.noteDisplay = ( callback) => {
+noteFunction.prototype.noteDisplayModel = ( callback) => {
   note.find(function(err, result) {
     if(err)
     {
@@ -104,11 +105,31 @@ noteFunction.prototype.noteDisplay = ( callback) => {
     }
     else
     {
-      console.log('result from db', result);
+      // console.log('result from db', result);
       return callback(null, result);
     }
   })
 }
+
+
+/**
+ * @description Notes Updation
+ */
+noteFunction.prototype.noteUpdateModel = (req, callback) => {
+
+  note.findByIdAndUpdate(req._id, req, (err, result) => {
+    if(err)
+    {
+      console.log('error occured while updation', err);
+    }
+    else
+    {
+      console.log('update successful', result);      
+    }
+  })
+
+}
+
 
 /**
  * @exports function to get database connected and get operation done on basis of request from client

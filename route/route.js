@@ -28,17 +28,17 @@ router.post("/register", middleware.registerMiddleware, controller.registerContr
 router.post('/login', middleware.loginMiddleware , controller.loginController);
 
 /**
- * get for messages for chatting application
+ * post for messages for chatting application
  */
 router.post('/logout', middleware.logoutMiddleware, controller.logoutController);
 
 /**
- * get for messages for chatting application
+ * post for messages for chatting application
  */
 router.post('/registerUserVerify', middleware.registerUserVerifyMiddleware, controller.registerUserVerifyController);
 
 /**
- * get for messages for chatting application
+ * post for messages for chatting application
  */
 router.post('/forgotpassword', middleware.forgotPasswordMiddleware, controller.forgotPasswordController);
 
@@ -49,17 +49,17 @@ router.post('/forgotpassword', middleware.forgotPasswordMiddleware, controller.f
 router.post("/registerEventEmitter", controller.registerEventEmitterController);
 
 /**
- * get for messages for chatting application
+ * post for messages for chatting application
  */
 router.post('/registerUserVerifyEventEmitter', controller.registerUserVerifyEventEmitterController);
 
 /**
- * get for messages for chatting application
+ * post for messages for chatting application
  */
 router.post('/forgotPasswordEventEmitter', controller.forgotPasswordEventEmitterController);
 
 /**
- * get for messages for chatting application
+ * post for messages for chatting application
  */
 router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.addNote );
 
@@ -67,6 +67,11 @@ router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.a
  * get for messages for chatting application
  */
 router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
+
+/**
+ * post for messages for chatting application
+ */
+router.post('/updateNote', noteMiddleware.notesAddMiddleware, noteController.displayNote );
 
 
 /**

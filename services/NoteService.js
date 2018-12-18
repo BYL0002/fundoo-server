@@ -15,7 +15,7 @@ const async = require('async');
  * @description notes save service
  */
 exports.NoteAddService = function (req, callback) {
-    console.log('req on service', req);
+    // console.log('req on service', req);
 
     let sender = req.sender;
     let resultFinal;
@@ -32,12 +32,13 @@ exports.NoteAddService = function (req, callback) {
             })
         }
     ], function (err, result) {
-        console.log('_id result ----------- ', result);
-        console.log('user_id -------------',req.user_id);
+        // console.log('_id result ----------- ', result);
+        // console.log('user_id -------------',req.user_id);
         
         req.user_id = result;
-        console.log('user_id -------------',req.user_id);
-        noteModel.noteSave(req, (err, data) => {
+        // console.log('user_id -------------',req.user_id);
+
+        noteModel.noteSaveModel (req, (err, data) => {
             if (err) {
                 resultFinal = false;
                 resultFinalData = err;
@@ -59,8 +60,9 @@ exports.NoteAddService = function (req, callback) {
 }
 
 exports.NoteDisplayService = function ( callback) {
-    console.log("req on service on note display");
-    noteModel.noteDisplay( (err, data) => {
+    // console.log("req on service on note display");
+    
+    noteModel.noteDisplayModel ( (err, data) => {
         if(err)
         {
             return callback(err);
@@ -70,4 +72,20 @@ exports.NoteDisplayService = function ( callback) {
             return callback(null, data);
         }
     })
+}
+
+exports.noteUpdateService = function (req, callback) {
+    // console.log("req on service on note display");
+    
+    noteModel.noteUpdateModel(req, (err, data) => {
+        if(err)
+        {
+            return callback(err);
+        }
+        else
+        {
+            return callback(null, data);
+        }
+    })
+
 }

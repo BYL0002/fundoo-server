@@ -94,6 +94,7 @@ exports.registerUserVerifyService = function(req, callback) {
 exports.forgotPasswordService = function(req, callback) {
 
     let token = utility.tokenGeneration(req.email);
+
     let requestContainToken = {
         email : req.email,
         token : token
@@ -109,10 +110,11 @@ exports.forgotPasswordService = function(req, callback) {
             let userDetails = {
                 to : req.email,
                 subject : 'Reset Password Link for Fundoo Notes',
-                html : '<p>Click <a href = "'+ staticFile.url_setpassword + token+ '">here</a> to activate account.</p>'
+                html : '<p>Click <a href = "'+ staticFile.url_setpassword + token+ '">here</a> to set new password.</p>'
             }
 
             utility.mailSender(userDetails);
+
             return callback(null, data);
         }
 

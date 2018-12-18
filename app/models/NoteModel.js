@@ -33,7 +33,7 @@ const newSchema = new schema({
      }
   },
   reminder : {
-    type : Date
+    type : String
   },
   color : {
     type : String

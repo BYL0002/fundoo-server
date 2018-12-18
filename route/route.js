@@ -71,7 +71,7 @@ router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.dis
 /**
  * post for messages for chatting application
  */
-router.post('/updateNote', noteMiddleware.notesAddMiddleware, noteController.displayNote );
+router.post('/updateNote', noteMiddleware.notesAddMiddleware, noteController.updateNote );
 
 
 /**

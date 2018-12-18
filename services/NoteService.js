@@ -5,8 +5,6 @@
  * @version 1.1
  */
 
-const utility = require('../utility/util');
-const staticFile = require('../config/static');
 const usermodel = require('../app/models/UserModel');
 const noteModel = require('../app/models/NoteModel');
 const async = require('async');
@@ -21,7 +19,9 @@ exports.NoteAddService = function (req, callback) {
     let resultFinal;
     let resultFinalData;
     async.waterfall([
+
         function (callback) {
+
             usermodel.FindOneModel(sender, (err, data) => {
                 if (err) {
                     callback(err);
@@ -31,23 +31,29 @@ exports.NoteAddService = function (req, callback) {
                 }
             })
         }
-    ], function (err, result) {
-        // console.log('_id result ----------- ', result);
-        // console.log('user_id -------------',req.user_id);
-        
-        req.user_id = result;
-        // console.log('user_id -------------',req.user_id);
 
-        noteModel.noteSaveModel (req, (err, data) => {
-            if (err) {
-                resultFinal = false;
-                resultFinalData = err;
-            }
-            else {
-                resultFinal = true;
-                resultFinalData = data;
-            }
-        })
+    ], function (err, result) {
+
+        if (err) {
+
+            resultFinal = false;
+            resultFinalData = err;
+        }
+        else {
+            req.user_id = result;
+
+            noteModel.noteSaveModel(req, (err, data) => {
+                if (err) {
+                    resultFinal = false;
+                    resultFinalData = err;
+                }
+                else {
+                    resultFinal = true;
+                    resultFinalData = data;
+                }
+            })
+        }
+
     }
     )
 
@@ -59,31 +65,32 @@ exports.NoteAddService = function (req, callback) {
     }
 }
 
-exports.NoteDisplayService = function ( callback) {
-    // console.log("req on service on note display");
-    
-    noteModel.noteDisplayModel ( (err, data) => {
-        if(err)
-        {
+/**
+ * @description Note Display Service
+ */
+exports.NoteDisplayService = function (callback) {
+
+    noteModel.noteDisplayModel((err, data) => {
+        if (err) {
             return callback(err);
         }
-        else
-        {
+        else {
             return callback(null, data);
         }
     })
 }
 
+/**
+ * @description Note Generic Update Service
+ */
 exports.noteUpdateService = function (req, callback) {
-    // console.log("req on service on note display");
-    
+    // console.log("req on service on note display", req);
+
     noteModel.noteUpdateModel(req, (err, data) => {
-        if(err)
-        {
+        if (err) {
             return callback(err);
         }
-        else
-        {
+        else {
             return callback(null, data);
         }
     })

@@ -68,7 +68,9 @@ exports.displayNote = function(req, res, next) {
 
 exports.updateNote = (req, res, next) => {
     try{
-        noteService.noteUpdateService (req, (err, data) => {
+        // console.log('req body on controller', req.body);
+        
+        noteService.noteUpdateService (req.body.note, (err, data) => {
             if(err)
             {
                 res.status(400).send({
@@ -78,9 +80,12 @@ exports.updateNote = (req, res, next) => {
             }
             else
             {
+                // console.log('data on controller on exit');
+                // console.log(data);
+                
                 res.status(200).send({
                     status : true,
-                    message : result
+                    message : data
                 })
             }
         })

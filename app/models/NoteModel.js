@@ -7,6 +7,7 @@
 
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
+mongoose.set('useFindAndModify', false);
 
 /**
  * @description Schema created via mongoose
@@ -111,6 +112,25 @@ noteFunction.prototype.noteDisplayModel = ( callback) => {
   })
 }
 
+/**
+ * @description Notes Retrieve
+ */
+noteFunction.prototype.noteFindOneNoteModel = (reqNoteId, callback) => {
+  
+  note.findOne({_id : reqNoteId}, function(err, result) {
+    if(err)
+    {
+      console.log('err of searching note on model ', err);
+      return callback(err);
+    }
+    else
+    {
+      console.log('result of searching of note ', result);
+      return callback(null, result);
+    }
+  })
+}
+
 
 /**
  * @description Notes Updation
@@ -121,10 +141,13 @@ noteFunction.prototype.noteUpdateModel = (req, callback) => {
     if(err)
     {
       console.log('error occured while updation', err);
+      return callback(err);
     }
     else
     {
-      console.log('update successful', result);      
+      // console.log('update successful', result);
+      console.log('update successful');
+      return callback(null, result);
     }
   })
 

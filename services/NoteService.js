@@ -96,3 +96,20 @@ exports.noteUpdateService = function (req, callback) {
     })
 
 }
+
+/**
+ * @description Note Generic Update Service
+ */
+exports.noteUpdateColorService = function (req, callback) {
+    console.log("req on service on note display", req);
+
+    noteModel.noteUpdateColorModel(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, data);
+        }
+    })
+
+}

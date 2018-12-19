@@ -113,7 +113,7 @@ noteFunction.prototype.noteDisplayModel = ( callback) => {
 }
 
 /**
- * @description Notes Retrieve
+ * @description Notes Find One
  */
 noteFunction.prototype.noteFindOneNoteModel = (reqNoteId, callback) => {
   
@@ -136,6 +136,28 @@ noteFunction.prototype.noteFindOneNoteModel = (reqNoteId, callback) => {
  * @description Notes Updation
  */
 noteFunction.prototype.noteUpdateModel = (req, callback) => {
+
+  note.findByIdAndUpdate(req._id, req, (err, result) => {
+    if(err)
+    {
+      console.log('error occured while updation', err);
+      return callback(err);
+    }
+    else
+    {
+      // console.log('update successful', result);
+      console.log('update successful');
+      return callback(null, result);
+    }
+  })
+
+}
+
+
+/**
+ * @description Notes Updation
+ */
+noteFunction.prototype.noteUpdateColorModel = (req, callback) => {
 
   note.findByIdAndUpdate(req._id, req, (err, result) => {
     if(err)

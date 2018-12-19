@@ -95,3 +95,33 @@ exports.updateNote = (req, res, next) => {
         next(err);
     }
 }
+
+exports.updateNoteColor = (req, res, next) => {
+    try{
+        // console.log('req body on controller', req.body);
+        
+        noteService.noteUpdateColorService (req.body.note, (err, data) => {
+            if(err)
+            {
+                res.status(400).send({
+                    status : false,
+                    message : 'error'
+                })
+            }
+            else
+            {
+                // console.log('data on controller on exit');
+                // console.log(data);
+                
+                res.status(200).send({
+                    status : true,
+                    message : data
+                })
+            }
+        })
+    }
+    catch(err)
+    {
+        next(err);
+    }
+}

@@ -73,6 +73,10 @@ router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.dis
  */
 router.post('/updateNote', noteMiddleware.notesAddMiddleware, noteController.updateNote );
 
+/**
+ * post for messages for chatting application
+ */
+router.post('/updateNoteColor', noteMiddleware.notesAddMiddleware, noteController.updateNoteColor );
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

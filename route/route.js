@@ -28,17 +28,17 @@ router.post("/register", middleware.registerMiddleware, controller.registerContr
 router.post('/login', middleware.loginMiddleware , controller.loginController);
 
 /**
- * post for messages for chatting application
+ * post for logout
  */
 router.post('/logout', middleware.logoutMiddleware, controller.logoutController);
 
 /**
- * post for messages for chatting application
+ * post for registering user and verifying
  */
 router.post('/registerUserVerify', middleware.registerUserVerifyMiddleware, controller.registerUserVerifyController);
 
 /**
- * post for messages for chatting application
+ * post for forgot password linking
  */
 router.post('/forgotpassword', middleware.forgotPasswordMiddleware, controller.forgotPasswordController);
 
@@ -49,34 +49,55 @@ router.post('/forgotpassword', middleware.forgotPasswordMiddleware, controller.f
 router.post("/registerEventEmitter", controller.registerEventEmitterController);
 
 /**
- * post for messages for chatting application
+ * post for register user verification & Through Event Emitter
  */
 router.post('/registerUserVerifyEventEmitter', controller.registerUserVerifyEventEmitterController);
 
 /**
- * post for messages for chatting application
+ * post for forgot password through Event Emitter
  */
 router.post('/forgotPasswordEventEmitter', controller.forgotPasswordEventEmitterController);
 
 /**
- * post for messages for chatting application
+ * post for NoteAddition
  */
 router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.addNote );
 
 /**
- * get for messages for chatting application
+ * get for Notes Display
  */
 router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
 
 /**
- * post for messages for chatting application
+ * post for Note Updation Via Generic Nature
  */
 router.post('/updateNote', noteMiddleware.notesAddMiddleware, noteController.updateNote );
 
 /**
- * post for messages for chatting application
+ * post for Note Updation for Color via individual api
  */
 router.post('/updateNoteColor', noteMiddleware.notesAddMiddleware, noteController.updateNoteColor );
+
+/**
+ * post for Note Updation for Reminder via individual api
+ */
+router.post('/updateNoteReminder', noteMiddleware.notesAddMiddleware, noteController.updateNoteReminder );
+
+/**
+ * post for Note Updation for Pin via individual api
+ */
+router.post('/updateNotePin', noteMiddleware.notesAddMiddleware, noteController.updateNotePin );
+
+/**
+ * post for Note Updation for Trash via individual api
+ */
+router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteController.updateNoteTrash );
+
+/**
+ * post for Note Updation for Image via individual api
+ */
+// router.post('/updateNoteImage', noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
+
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

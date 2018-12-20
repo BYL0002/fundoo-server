@@ -7,6 +7,9 @@
 
 const noteService = require('../services/NoteService');
 
+/**
+ * @description Note Addition Controller
+ */
 exports.addNote = function(req, res, next) {
 
     try{
@@ -38,6 +41,9 @@ exports.addNote = function(req, res, next) {
     
 }
 
+/**
+ * @description Note Display Controller
+ */
 exports.displayNote = function(req, res, next) {
     // console.log('controller display notes');
     
@@ -66,6 +72,9 @@ exports.displayNote = function(req, res, next) {
     }
 }
 
+/**
+ * @description Note Updation Generic Controller
+ */
 exports.updateNote = (req, res, next) => {
     try{
         // console.log('req body on controller', req.body);
@@ -96,11 +105,113 @@ exports.updateNote = (req, res, next) => {
     }
 }
 
+/**
+ * @description Note Update Color Controller
+ */
 exports.updateNoteColor = (req, res, next) => {
     try{
         // console.log('req body on controller', req.body);
         
         noteService.noteUpdateColorService (req.body.note, (err, data) => {
+            if(err)
+            {
+                res.status(400).send({
+                    status : false,
+                    message : 'error'
+                })
+            }
+            else
+            {
+                // console.log('data on controller on exit');
+                // console.log(data);
+                
+                res.status(200).send({
+                    status : true,
+                    message : data
+                })
+            }
+        })
+    }
+    catch(err)
+    {
+        next(err);
+    }
+}
+
+/**
+ * @description Note Update Reminder Controller
+ */
+exports.updateNoteReminder = (req, res, next) => {
+    try{
+        // console.log('req body on controller', req.body);
+        
+        noteService.noteUpdateReminderService (req.body.note, (err, data) => {
+            if(err)
+            {
+                res.status(400).send({
+                    status : false,
+                    message : 'error'
+                })
+            }
+            else
+            {
+                // console.log('data on controller on exit');
+                // console.log(data);
+                
+                res.status(200).send({
+                    status : true,
+                    message : data
+                })
+            }
+        })
+    }
+    catch(err)
+    {
+        next(err);
+    }
+}
+
+/**
+ * @description Note Update Reminder Controller
+ */
+exports.updateNotePin = (req, res, next) => {
+    try{
+        // console.log('req body on controller', req.body);
+        
+        noteService.noteUpdatePinService (req.body.note, (err, data) => {
+            if(err)
+            {
+                res.status(400).send({
+                    status : false,
+                    message : 'error'
+                })
+            }
+            else
+            {
+                // console.log('data on controller on exit');
+                // console.log(data);
+                
+                res.status(200).send({
+                    status : true,
+                    message : data
+                })
+            }
+        })
+    }
+    catch(err)
+    {
+        next(err);
+    }
+}
+
+/**
+ * @description Note Update Reminder Controller
+ */
+exports.updateNoteTrash = (req, res, next) => {
+    try{
+        // console.log('req body on controller', req.body);
+        
+        noteService.noteUpdateTrashService (req.body.note, (err, data) => {
             if(err)
             {
                 res.status(400).send({

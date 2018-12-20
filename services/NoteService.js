@@ -113,3 +113,54 @@ exports.noteUpdateColorService = function (req, callback) {
     })
 
 }
+
+/**
+ * @description Note Generic Update Service
+ */
+exports.noteUpdateReminderService = function (req, callback) {
+    console.log("req on service on note display", req);
+
+    noteModel.noteUpdateReminderModel(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, data);
+        }
+    })
+
+}
+
+/**
+ * @description Note Generic Update Service
+ */
+exports.noteUpdatePinService = function (req, callback) {
+    console.log("req on service on note display", req);
+
+    noteModel.noteUpdatePinModel(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, data);
+        }
+    })
+
+}
+
+/**
+ * @description Note Generic Update Service
+ */
+exports.noteUpdateTrashService = function (req, callback) {
+    console.log("req on service on note display", req);
+
+    noteModel.noteUpdateTrashModel(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, data);
+        }
+    })
+
+}

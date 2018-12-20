@@ -133,7 +133,29 @@ noteFunction.prototype.noteFindOneNoteModel = (reqNoteId, callback) => {
 
 
 /**
- * @description Notes Updation
+ * @description Notes Updation Generic Model
+ */
+noteFunction.prototype.noteUpdateEverythingModel = (req, callback) => {
+
+  note.findByIdAndUpdate(req._id, req, (err, result) => {
+    if(err)
+    {
+      console.log('error occured while updation', err);
+      return callback(err);
+    }
+    else
+    {
+      // console.log('update successful', result);
+      console.log('update successful');
+      return callback(null, result);
+    }
+  })
+
+}
+
+
+/**
+ * @description Notes Updation for all individual 
  */
 noteFunction.prototype.noteUpdateModel = (req, callback) => {
 
@@ -152,92 +174,6 @@ noteFunction.prototype.noteUpdateModel = (req, callback) => {
   })
 
 }
-
-
-/**
- * @description Notes Color Updation
- */
-noteFunction.prototype.noteUpdateColorModel = (req, callback) => {
-
-  note.findByIdAndUpdate(req._id, req, (err, result) => {
-    if(err)
-    {
-      console.log('error occured while updation', err);
-      return callback(err);
-    }
-    else
-    {
-      // console.log('update successful', result);
-      console.log('update successful');
-      return callback(null, result);
-    }
-  })
-
-}
-
-/**
- * @description Notes Reminder Updation
- */
-noteFunction.prototype.noteUpdateReminderModel = (req, callback) => {
-
-  note.findByIdAndUpdate(req._id, req, (err, result) => {
-    if(err)
-    {
-      console.log('error occured while updation', err);
-      return callback(err);
-    }
-    else
-    {
-      // console.log('update successful', result);
-      console.log('update successful');
-      return callback(null, result);
-    }
-  })
-
-}
-
-/**
- * @description Notes Pin Updation
- */
-noteFunction.prototype.noteUpdatePinModel = (req, callback) => {
-
-  note.findByIdAndUpdate(req._id, req, (err, result) => {
-    if(err)
-    {
-      console.log('error occured while updation', err);
-      return callback(err);
-    }
-    else
-    {
-      // console.log('update successful', result);
-      console.log('update successful');
-      return callback(null, result);
-    }
-  })
-
-}
-
-/**
- * @description Notes Trash Updation
- */
-noteFunction.prototype.noteUpdateTrashModel = (req, callback) => {
-
-  note.findByIdAndUpdate(req._id, req, (err, result) => {
-    if(err)
-    {
-      console.log('error occured while updation', err);
-      return callback(err);
-    }
-    else
-    {
-      // console.log('update successful', result);
-      console.log('update successful');
-      return callback(null, result);
-    }
-  })
-
-}
-
 
 /**
  * @exports function to get database connected and get operation done on basis of request from client

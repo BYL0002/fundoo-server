@@ -86,6 +86,23 @@ exports.NoteDisplayService = function (callback) {
 exports.noteUpdateService = function (req, callback) {
     // console.log("req on service on note display", req);
 
+    noteModel.noteUpdateEverythingModel(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, data);
+        }
+    })
+
+}
+
+/**
+ * @description Note Color Update Service
+ */
+exports.noteUpdateColorService = function (req, callback) {
+    // console.log("req on service on note display", req);
+
     noteModel.noteUpdateModel(req, (err, data) => {
         if (err) {
             return callback(err);
@@ -98,29 +115,12 @@ exports.noteUpdateService = function (req, callback) {
 }
 
 /**
- * @description Note Generic Update Service
- */
-exports.noteUpdateColorService = function (req, callback) {
-    console.log("req on service on note display", req);
-
-    noteModel.noteUpdateColorModel(req, (err, data) => {
-        if (err) {
-            return callback(err);
-        }
-        else {
-            return callback(null, data);
-        }
-    })
-
-}
-
-/**
- * @description Note Generic Update Service
+ * @description Note Reminder Update Service
  */
 exports.noteUpdateReminderService = function (req, callback) {
-    console.log("req on service on note display", req);
+    // console.log("req on service on note display", req);
 
-    noteModel.noteUpdateReminderModel(req, (err, data) => {
+    noteModel.noteUpdateModel(req, (err, data) => {
         if (err) {
             return callback(err);
         }
@@ -132,12 +132,12 @@ exports.noteUpdateReminderService = function (req, callback) {
 }
 
 /**
- * @description Note Generic Update Service
+ * @description Note Pin Update Service
  */
 exports.noteUpdatePinService = function (req, callback) {
-    console.log("req on service on note display", req);
+    // console.log("req on service on note display", req);
 
-    noteModel.noteUpdatePinModel(req, (err, data) => {
+    noteModel.noteUpdateModel(req, (err, data) => {
         if (err) {
             return callback(err);
         }
@@ -149,12 +149,12 @@ exports.noteUpdatePinService = function (req, callback) {
 }
 
 /**
- * @description Note Generic Update Service
+ * @description Note Trash Update Service
  */
 exports.noteUpdateTrashService = function (req, callback) {
-    console.log("req on service on note display", req);
+    // console.log("req on service on note display", req);
 
-    noteModel.noteUpdateTrashModel(req, (err, data) => {
+    noteModel.noteUpdateModel(req, (err, data) => {
         if (err) {
             return callback(err);
         }

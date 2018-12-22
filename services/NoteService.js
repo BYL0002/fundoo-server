@@ -40,7 +40,7 @@ exports.NoteAddService = function (req, callback) {
             resultFinalData = err;
         }
         else {
-            req.user_id = result;
+            req.userId = result;
 
             noteModel.noteSaveModel(req, (err, data) => {
                 if (err) {
@@ -68,9 +68,9 @@ exports.NoteAddService = function (req, callback) {
 /**
  * @description Note Display Service
  */
-exports.NoteDisplayService = function (callback) {
+exports.NoteDisplayService = function (req, callback) {
 
-    noteModel.noteDisplayModel((err, data) => {
+    noteModel.noteDisplayModel(req, (err, data) => {
         if (err) {
             return callback(err);
         }

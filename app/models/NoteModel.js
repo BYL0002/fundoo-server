@@ -16,7 +16,7 @@ const newSchema = new schema({
   sender : {
     type : String
   },
-  user_id : {
+  userId : {
     type : schema.Types.ObjectId,
     ref : 'user'
   },
@@ -65,9 +65,13 @@ function noteFunction() {
  * @description Note Save
  */
 noteFunction.prototype.noteSaveModel = (req, callback) => {
+
+  console.log('req to save --------', req);
+  
+
   let newNote = new note({
     sender : req.sender,
-    user_id : req.user_id,
+    userId : req.userId,
     title: req.title,
     description: req.description,
     collaborator: req.collaborator,
@@ -97,8 +101,10 @@ noteFunction.prototype.noteSaveModel = (req, callback) => {
 /**
  * @description Notes Retrieve
  */
-noteFunction.prototype.noteDisplayModel = ( callback) => {
-  note.find(function(err, result) {
+noteFunction.prototype.noteDisplayModel = (req, callback) => {
+  console.log('req for data retrieval----',req);
+  
+  note.find({userId : req.userID}, function(err, result) {
     if(err)
     {
       console.log('err of display on model', err);

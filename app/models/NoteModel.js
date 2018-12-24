@@ -104,7 +104,7 @@ noteFunction.prototype.noteSaveModel = (req, callback) => {
 noteFunction.prototype.noteDisplayModel = (req, callback) => {
   console.log('req for data retrieval----',req);
   
-  note.find({userId : req.userID}, function(err, result) {
+  note.find({userId : req}, function(err, result) {
     if(err)
     {
       console.log('err of display on model', err);
@@ -112,7 +112,7 @@ noteFunction.prototype.noteDisplayModel = (req, callback) => {
     }
     else
     {
-      // console.log('result from db', result);
+      console.log('result from db', result);
       return callback(null, result);
     }
   })

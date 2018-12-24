@@ -13,9 +13,6 @@ const utility = require('../utility/util');
 exports.loginController = function (req, res, next) {
 
     try {
-        // console.log('login req server controller');
-        // console.log(req.body.data);
-        
         
         check(req.body.data.email).isEmail();
         check(req.body.data.password).isLength({ min: 5 })
@@ -32,7 +29,6 @@ exports.loginController = function (req, res, next) {
         userServices.loginService(req.body.data, (err, data) => {
 
             if (err == false) {
-                // console.log('err controller login');
                 
                 res.status(400).send({
                     status: false,
@@ -40,7 +36,8 @@ exports.loginController = function (req, res, next) {
                 });
             }
             else {
-                let token = utility.tokenGeneration(req.email);
+                
+                let token = utility.tokenGeneration(data._id);
                 res.status(200).send({
                     status: true,
                     message: data,

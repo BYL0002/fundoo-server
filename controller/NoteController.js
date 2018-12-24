@@ -45,12 +45,11 @@ exports.addNote = function(req, res, next) {
  * @description Note Display Controller
  */
 exports.displayNote = function(req, res, next) {
-    console.log('controller display notes', req);
-    console.log('controller display notes --- userID', req.params);
+    // console.log('controller display notes', req);
     
     try
     {
-        noteService.NoteDisplayService( req.body, (err, result) => {
+        noteService.NoteDisplayService( req.headers.token, (err, result) => {
             if(err)
             {
                 res.status(400).send({

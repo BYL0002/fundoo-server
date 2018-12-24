@@ -15,11 +15,11 @@ const nodemailer = require('nodemailer');
  * @description Token generation code method
  */
 let tokenGeneration = (user) => {
+    console.log('user for payload', user);
+    
     let payload = {
-        user : user
+        userId : user
     }
-
-    let privateKey = staticFile.privateKey;
 
     var subject = `login - ${user}`;        // Subject 
 

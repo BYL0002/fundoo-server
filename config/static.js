@@ -3,6 +3,6 @@ module.exports = {
     audience: 'http://mysoftcorp.in',
     expiresIn: '1d',
     service: 'gmail',
-    subject: 'http://mysoftcorp.in',
+    subject: 'ANYthing',
     url_setpassword : 'http://localhost:3000/setpassword/'
 }

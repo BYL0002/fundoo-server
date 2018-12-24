@@ -66,9 +66,6 @@ function noteFunction() {
  */
 noteFunction.prototype.noteSaveModel = (req, callback) => {
 
-  console.log('req to save --------', req);
-  
-
   let newNote = new note({
     sender : req.sender,
     userId : req.userId,
@@ -90,7 +87,7 @@ noteFunction.prototype.noteSaveModel = (req, callback) => {
       return callback(err);
     }
     else {
-      console.log('note saved successful');
+      // console.log('note saved successful', result);
       
       return callback(null, result);
     }
@@ -102,7 +99,7 @@ noteFunction.prototype.noteSaveModel = (req, callback) => {
  * @description Notes Retrieve
  */
 noteFunction.prototype.noteDisplayModel = (req, callback) => {
-  console.log('req for data retrieval----',req);
+  // console.log('req for data retrieval----',req);
   
   note.find({userId : req}, function(err, result) {
     if(err)
@@ -112,7 +109,7 @@ noteFunction.prototype.noteDisplayModel = (req, callback) => {
     }
     else
     {
-      console.log('result from db', result);
+      // console.log('result from db', result);
       return callback(null, result);
     }
   })

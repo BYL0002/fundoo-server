@@ -130,7 +130,7 @@ userFunction.prototype.FindOneModel = function (req, callback) {
     }
     else {
       console.log('Found Successful');
-      console.log('result', result);
+      // console.log('result', result);
       
       return callback(null, result);
     }

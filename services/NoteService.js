@@ -30,39 +30,31 @@ exports.NoteAddService = function (req, callback) {
                     callback(null, data._id);
                 }
             })
+        },
+    ],
+
+        function (err, result) {
+
+            if (err) {
+                return callback(err);
+            }
+            else {
+                req.userId = result;
+
+                noteModel.noteSaveModel(req, (err, data) => {
+                    if (err) {
+                        return callback(err);
+                    }
+                    else {
+                        // console.log('services note saved---', data);
+                        
+                        return callback(null, data);
+                    }
+                })
+            }
+
         }
-
-    ], function (err, result) {
-
-        if (err) {
-
-            resultFinal = false;
-            resultFinalData = err;
-        }
-        else {
-            req.userId = result;
-
-            noteModel.noteSaveModel(req, (err, data) => {
-                if (err) {
-                    resultFinal = false;
-                    resultFinalData = err;
-                }
-                else {
-                    resultFinal = true;
-                    resultFinalData = data;
-                }
-            })
-        }
-
-    }
     )
-
-    if (resultFinal) {
-        return callback(null, resultFinalData);
-    }
-    else {
-        return callback(null)
-    }
 }
 
 /**

@@ -27,6 +27,8 @@ exports.addNote = function(req, res, next) {
             }
             else
             {
+                // console.log('note saved controller', result);
+                
                 res.status(200).send({
                     status : true,
                     message : result

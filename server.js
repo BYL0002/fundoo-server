@@ -9,6 +9,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+// var cache = require('express-redis-cache')();
 const routes = require('./route/route.js');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');

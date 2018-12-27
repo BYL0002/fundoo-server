@@ -10,6 +10,8 @@
  * importing express
  */
 const express = require('express');
+const app = express();
+// var cache = require('express-redis-cache')();
 const router = express.Router();
 const middleware = require('../middleware/UserMiddleware');
 const noteMiddleware = require('../middleware/NoteMiddleware');
@@ -67,6 +69,11 @@ router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.a
  * get for Notes Display
  */
 router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
+
+// app.get('/',
+//   cache.route(),
+//   function (req, res)  { ... });
+
 
 /**
  * post for Note Updation Via Generic Nature

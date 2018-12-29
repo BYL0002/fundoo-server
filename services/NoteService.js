@@ -16,8 +16,6 @@ exports.NoteAddService = function (req, callback) {
     // console.log('req on service', req);
 
     let sender = req.sender;
-    let resultFinal;
-    let resultFinalData;
     async.waterfall([
 
         function (callback) {
@@ -46,7 +44,6 @@ exports.NoteAddService = function (req, callback) {
                         return callback(err);
                     }
                     else {
-                        // console.log('services note saved---', data);
                         
                         return callback(null, data);
                     }
@@ -76,7 +73,6 @@ exports.NoteDisplayService = function (req, callback) {
  * @description Note Generic Update Service
  */
 exports.noteUpdateService = function (req, callback) {
-    // console.log("req on service on note display", req);
 
     noteModel.noteUpdateEverythingModel(req, (err, data) => {
         if (err) {
@@ -147,6 +143,23 @@ exports.noteUpdateTrashService = function (req, callback) {
     // console.log("req on service on note display", req);
 
     noteModel.noteUpdateModel(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, data);
+        }
+    })
+
+}
+
+/**
+ * @description Note Trash Update Service
+ */
+exports.noteDeletionService = function (req, callback) {
+    console.log("req on service on note display", req);
+
+    noteModel.noteDeletionModel(req, (err, data) => {
         if (err) {
             return callback(err);
         }

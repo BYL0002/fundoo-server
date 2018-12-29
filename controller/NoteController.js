@@ -13,9 +13,6 @@ const noteService = require('../services/NoteService');
 exports.addNote = function(req, res, next) {
 
     try{
-        // console.log('req on controller -----------------', req);
-        // console.log('------------------------------------------------------------------------------------');
-        
         
         noteService.NoteAddService(req.body, (err, result) => {
             if(err)
@@ -27,7 +24,6 @@ exports.addNote = function(req, res, next) {
             }
             else
             {
-                // console.log('note saved controller', result);
                 
                 res.status(200).send({
                     status : true,
@@ -47,7 +43,6 @@ exports.addNote = function(req, res, next) {
  * @description Note Display Controller
  */
 exports.displayNote = function(req, res, next) {
-    // console.log('controller display notes', req);
     
     try
     {
@@ -79,7 +74,6 @@ exports.displayNote = function(req, res, next) {
  */
 exports.updateNote = (req, res, next) => {
     try{
-        // console.log('req body on controller', req.body);
         
         noteService.noteUpdateService (req.body.note, (err, data) => {
             if(err)
@@ -91,9 +85,6 @@ exports.updateNote = (req, res, next) => {
             }
             else
             {
-                // console.log('data on controller on exit');
-                // console.log(data);
-                
                 res.status(200).send({
                     status : true,
                     message : data
@@ -112,7 +103,6 @@ exports.updateNote = (req, res, next) => {
  */
 exports.updateNoteColor = (req, res, next) => {
     try{
-        // console.log('req body on controller', req.body);
         
         noteService.noteUpdateColorService (req.body.note, (err, data) => {
             if(err)
@@ -124,9 +114,6 @@ exports.updateNoteColor = (req, res, next) => {
             }
             else
             {
-                // console.log('data on controller on exit');
-                // console.log(data);
-                
                 res.status(200).send({
                     status : true,
                     message : data
@@ -145,7 +132,6 @@ exports.updateNoteColor = (req, res, next) => {
  */
 exports.updateNoteReminder = (req, res, next) => {
     try{
-        // console.log('req body on controller', req.body);
         
         noteService.noteUpdateReminderService (req.body.note, (err, data) => {
             if(err)
@@ -157,8 +143,6 @@ exports.updateNoteReminder = (req, res, next) => {
             }
             else
             {
-                // console.log('data on controller on exit');
-                // console.log(data);
                 
                 res.status(200).send({
                     status : true,
@@ -178,7 +162,6 @@ exports.updateNoteReminder = (req, res, next) => {
  */
 exports.updateNotePin = (req, res, next) => {
     try{
-        // console.log('req body on controller', req.body);
         
         noteService.noteUpdatePinService (req.body.note, (err, data) => {
             if(err)
@@ -190,8 +173,6 @@ exports.updateNotePin = (req, res, next) => {
             }
             else
             {
-                // console.log('data on controller on exit');
-                // console.log(data);
                 
                 res.status(200).send({
                     status : true,
@@ -211,7 +192,7 @@ exports.updateNotePin = (req, res, next) => {
  */
 exports.updateNoteTrash = (req, res, next) => {
     try{
-        // console.log('req body on controller', req.body);
+        
         
         noteService.noteUpdateTrashService (req.body.note, (err, data) => {
             if(err)
@@ -223,8 +204,37 @@ exports.updateNoteTrash = (req, res, next) => {
             }
             else
             {
-                // console.log('data on controller on exit');
-                // console.log(data);
+                
+                res.status(200).send({
+                    status : true,
+                    message : data
+                })
+            }
+        })
+    }
+    catch(err)
+    {
+        next(err);
+    }
+}
+
+
+/**
+ * @description Note Deletion Controller
+ */
+exports.deleteNote = (req, res, next) => {
+    try{
+        
+        noteService.noteDeletionService (req.body.note, (err, data) => {
+            if(err)
+            {
+                res.status(400).send({
+                    status : false,
+                    message : 'error'
+                })
+            }
+            else
+            {
                 
                 res.status(200).send({
                     status : true,

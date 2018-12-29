@@ -100,6 +100,11 @@ router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteControlle
  */
 // router.post('/updateNoteImage', noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
 
+/**
+ * post for Note Updation for Trash via individual api
+ */
+router.post('/deleteNote', noteMiddleware.notesAddMiddleware, noteController.deleteNote );
+
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

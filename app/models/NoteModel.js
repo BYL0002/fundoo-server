@@ -13,42 +13,42 @@ mongoose.set('useFindAndModify', false);
  * @description Schema created via mongoose
  */
 const newSchema = new schema({
-  sender : {
-    type : String
-  },
-  userId : {
-    type : schema.Types.ObjectId,
-    ref : 'user'
-  },
-  title : {
+  sender: {
     type: String
   },
-  description : {
-    type : String
+  userId: {
+    type: schema.Types.ObjectId,
+    ref: 'user'
   },
-  collaborator : {
-    type : { 
-      type : schema.Types.ObjectId,
-      ref : 'user'
-     }
+  title: {
+    type: String
   },
-  reminder : {
-    type : String
+  description: {
+    type: String
   },
-  color : {
-    type : String
+  collaborator: {
+    type: {
+      type: schema.Types.ObjectId,
+      ref: 'user'
+    }
   },
-  image : {
-    type : String
+  reminder: {
+    type: String
   },
-  pin : {
-    type : Boolean
+  color: {
+    type: String
   },
-  archive : {
-    type : Boolean
+  image: {
+    type: String
   },
-  trash : {
-    type : Boolean
+  pin: {
+    type: Boolean
+  },
+  archive: {
+    type: Boolean
+  },
+  trash: {
+    type: Boolean
   }
 })
 
@@ -67,8 +67,8 @@ function noteFunction() {
 noteFunction.prototype.noteSaveModel = (req, callback) => {
 
   let newNote = new note({
-    sender : req.sender,
-    userId : req.userId,
+    sender: req.sender,
+    userId: req.userId,
     title: req.title,
     description: req.description,
     collaborator: req.collaborator,
@@ -83,12 +83,11 @@ noteFunction.prototype.noteSaveModel = (req, callback) => {
   newNote.save(function (err, result) {
     if (err) {
       console.log('note saved error');
-      
+
       return callback(err);
     }
     else {
-      // console.log('note saved successful', result);
-      
+
       return callback(null, result);
     }
   })
@@ -100,16 +99,14 @@ noteFunction.prototype.noteSaveModel = (req, callback) => {
  */
 noteFunction.prototype.noteDisplayModel = (req, callback) => {
   // console.log('req for data retrieval----',req);
-  
-  note.find({userId : req}, function(err, result) {
-    if(err)
-    {
+
+  note.find({ userId: req }, function (err, result) {
+    if (err) {
       console.log('err of display on model', err);
       return callback(err);
     }
-    else
-    {
-      // console.log('result from db', result);
+    else {
+      
       return callback(null, result);
     }
   })
@@ -119,15 +116,13 @@ noteFunction.prototype.noteDisplayModel = (req, callback) => {
  * @description Notes Find One
  */
 noteFunction.prototype.noteFindOneNoteModel = (reqNoteId, callback) => {
-  
-  note.findOne({_id : reqNoteId}, function(err, result) {
-    if(err)
-    {
+
+  note.findOne({ _id: reqNoteId }, function (err, result) {
+    if (err) {
       console.log('err of searching note on model ', err);
       return callback(err);
     }
-    else
-    {
+    else {
       console.log('result of searching of note ', result);
       return callback(null, result);
     }
@@ -141,15 +136,12 @@ noteFunction.prototype.noteFindOneNoteModel = (reqNoteId, callback) => {
 noteFunction.prototype.noteUpdateEverythingModel = (req, callback) => {
 
   note.findByIdAndUpdate(req._id, req, (err, result) => {
-    if(err)
-    {
+    if (err) {
       console.log('error occured while updation', err);
       return callback(err);
     }
-    else
-    {
-      // console.log('update successful', result);
-      console.log('update successful');
+    else {
+      
       return callback(null, result);
     }
   })
@@ -163,19 +155,33 @@ noteFunction.prototype.noteUpdateEverythingModel = (req, callback) => {
 noteFunction.prototype.noteUpdateModel = (req, callback) => {
 
   note.findByIdAndUpdate(req._id, req, (err, result) => {
-    if(err)
-    {
+    if (err) {
       console.log('error occured while updation', err);
       return callback(err);
     }
-    else
-    {
-      // console.log('update successful', result);
-      console.log('update successful');
+    else {
+
       return callback(null, result);
     }
   })
 
+}
+
+/**
+ * @description Notes Deletion
+ */
+noteFunction.prototype.noteDeletionModel = (req, callback) => {
+
+  note.deleteOne({ _id: req }, function (err, result) {
+    if (err) {
+
+      return callback(err);
+    }
+    else {
+
+      return callback(null, result);
+    }
+  })
 }
 
 /**

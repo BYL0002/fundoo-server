@@ -67,8 +67,8 @@ router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.a
 /**
  * get for Notes Display
  */
-// router.get('/noteDisplay',cache.route(), noteMiddleware.notesAddMiddleware, noteController.displayNote );
-router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
+router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getNotes', expire: 60}), noteController.displayNote );
+// router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
 
 /**
  * post for Note Updation Via Generic Nature

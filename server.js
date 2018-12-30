@@ -9,7 +9,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-// var cache = require('express-redis-cache')();
+var cache = require('express-redis-cache')();
 const routes = require('./route/route.js');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -27,6 +27,18 @@ app.use(cors());
  * @description for routing
  */
 app.use('/', routes);
+
+cache.on('connected', ()=> {
+    console.log('cache connected');
+})
+
+cache.on('error', ()=> {
+    console.log('cache error');
+})
+
+cache.on('disconnected', ()=> {
+    console.log('cache disconnected');
+})
 
 /**
  * @description cheking database connectivity

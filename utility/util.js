@@ -15,7 +15,7 @@ const nodemailer = require('nodemailer');
  * @description Token generation code method
  */
 let tokenGeneration = (user) => {
-    console.log('user for payload', user);
+    // console.log('user for payload', user);
     
     let payload = {
         userId : user

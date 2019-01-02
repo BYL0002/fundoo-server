@@ -148,7 +148,6 @@ noteFunction.prototype.noteUpdateEverythingModel = (req, callback) => {
 
 }
 
-
 /**
  * @description Notes Updation for all individual 
  */
@@ -160,7 +159,7 @@ noteFunction.prototype.noteUpdateModel = (req, callback) => {
       return callback(err);
     }
     else {
-
+      
       return callback(null, result);
     }
   })

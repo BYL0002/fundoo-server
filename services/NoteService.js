@@ -169,3 +169,20 @@ exports.noteDeletionService = function (req, callback) {
     })
 
 }
+
+/**
+ * @description Note Title or Description Update Service
+ */
+exports.noteUpdateTitleDescriptionService = function (req, callback) {
+    // console.log("req on service on note display", req);
+
+    noteModel.noteUpdateModel(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, data);
+        }
+    })
+
+}

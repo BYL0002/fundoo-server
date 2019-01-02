@@ -98,7 +98,7 @@ router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteControlle
 /**
  * post for Note Updation for Image via individual api
  */
-// router.post('/updateNoteImage', noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
+router.post('/updateNoteImage', noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
 
 /**
  * post for Note Updation for Trash via individual api

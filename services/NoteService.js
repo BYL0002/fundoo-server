@@ -157,7 +157,7 @@ exports.noteUpdateTrashService = function (req, callback) {
  * @description Note Trash Update Service
  */
 exports.noteDeletionService = function (req, callback) {
-    console.log("req on service on note display", req);
+    // console.log("req on service on note display", req);
 
     noteModel.noteDeletionModel(req, (err, data) => {
         if (err) {
@@ -174,6 +174,24 @@ exports.noteDeletionService = function (req, callback) {
  * @description Note Title or Description Update Service
  */
 exports.noteUpdateTitleDescriptionService = function (req, callback) {
+    // console.log("req on service on note display", req);
+
+    noteModel.noteUpdateModel(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            return callback(null, data);
+        }
+    })
+
+}
+
+
+/**
+ * @description Note Title or Description Update Service
+ */
+exports.noteUpdateImageService = function (req, callback) {
     // console.log("req on service on note display", req);
 
     noteModel.noteUpdateModel(req, (err, data) => {

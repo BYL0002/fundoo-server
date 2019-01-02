@@ -250,12 +250,43 @@ exports.deleteNote = (req, res, next) => {
 }
 
 /**
- * @description Note Deletion Controller
+ * @description Note Title Description Update Controller
  */
 exports.UpdateNoteTitleDescription = (req, res, next) => {
     try{
         
         noteService.noteUpdateTitleDescriptionService (req.body.note, (err, data) => {
+            if(err)
+            {
+                res.status(400).send({
+                    status : false,
+                    message : 'error'
+                })
+            }
+            else
+            {
+                
+                res.status(200).send({
+                    status : true,
+                    message : data
+                })
+            }
+        })
+    }
+    catch(err)
+    {
+        next(err);
+    }
+}
+
+
+/**
+ * @description Note Image Update Controller
+ */
+exports.updateNoteImage = (req, res, next) => {
+    try{
+        
+        noteService.noteUpdateImageService (req.body.note, (err, data) => {
             if(err)
             {
                 res.status(400).send({

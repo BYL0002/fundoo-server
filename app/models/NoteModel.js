@@ -74,7 +74,7 @@ noteFunction.prototype.noteSaveModel = (req, callback) => {
     collaborator: req.collaborator,
     reminder: req.reminder,
     color: req.color,
-    image: req.imageUrl,
+    image: req.image,
     pin: req.pin,
     archive: req.archive,
     trash: req.trash
@@ -159,7 +159,7 @@ noteFunction.prototype.noteUpdateModel = (req, callback) => {
       return callback(err);
     }
     else {
-      
+      console.log('updated');      
       return callback(null, result);
     }
   })

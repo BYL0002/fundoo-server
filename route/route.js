@@ -16,6 +16,8 @@ const middleware = require('../middleware/UserMiddleware');
 const noteMiddleware = require('../middleware/NoteMiddleware');
 const controller = require('../controller/UserController');
 const noteController = require('../controller/NoteController');
+const multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
 
 /**
  * post method of express to send controls to controller from routes through middleware
@@ -62,7 +64,11 @@ router.post('/forgotPasswordEventEmitter', controller.forgotPasswordEventEmitter
 /**
  * post for NoteAddition
  */
-router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.addNote );
+router.post('/noteAddition', upload.single('file'), function (req, res, next) {
+   console.log('file', req.file);
+//    console.log('file', req);
+    next();
+  }, noteMiddleware.notesAddMiddleware, noteController.addNote );
 
 /**
  * get for Notes Display

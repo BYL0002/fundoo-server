@@ -13,7 +13,6 @@ const AssertionError = require('assert').AssertionError;
  */
 exports.notesAddMiddleware = function noteAddMiddleware(req, res, next) {
     try {
-        console.log('userid middleware', req.headers.token);
         
         jwt.verify(req.headers.token, process.env.privateKey, function(err, result){
             

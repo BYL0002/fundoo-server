@@ -129,27 +129,8 @@ noteFunction.prototype.noteFindOneNoteModel = (reqNoteId, callback) => {
   })
 }
 
-
 /**
- * @description Notes Updation Generic Model
- */
-noteFunction.prototype.noteUpdateEverythingModel = (req, callback) => {
-
-  note.findByIdAndUpdate(req._id, req, (err, result) => {
-    if (err) {
-      console.log('error occured while updation', err);
-      return callback(err);
-    }
-    else {
-      
-      return callback(null, result);
-    }
-  })
-
-}
-
-/**
- * @description Notes Updation for all individual 
+ * @description Notes Updation
  */
 noteFunction.prototype.noteUpdateModel = (req, callback) => {
 
@@ -182,6 +163,26 @@ noteFunction.prototype.noteDeletionModel = (req, callback) => {
     }
   })
 }
+
+/**
+ * @description Notes Label Updation
+ */
+noteFunction.prototype.noteLabelEdittionModel = (req, callback) => {
+
+  note.findById({ _id: req.noteId }, function (err, result) {
+    if (err) {
+
+      return callback(err);
+    }
+    else {
+
+      result.label.push(req.label);
+      return callback(null, result);
+    }
+  })
+}
+
+
 
 /**
  * @exports function to get database connected and get operation done on basis of request from client

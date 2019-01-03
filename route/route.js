@@ -12,10 +12,14 @@
 const express = require('express');
 var cache = require('express-redis-cache')();
 const router = express.Router();
+
 const middleware = require('../middleware/UserMiddleware');
 const noteMiddleware = require('../middleware/NoteMiddleware');
+
 const controller = require('../controller/UserController');
 const noteController = require('../controller/NoteController');
+const labelController = require('../controller/LabelController');
+
 const multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
@@ -115,6 +119,26 @@ router.post('/deleteNote', noteMiddleware.notesAddMiddleware, noteController.del
  * post for Note Updation of Title or Description for Trash via individual api
  */
 router.post('/updateNoteTitleDescription', noteMiddleware.notesAddMiddleware, noteController.UpdateNoteTitleDescription );
+
+/**
+ * post for Label Addition
+ */
+router.post('/AddLabel', noteMiddleware.notesAddMiddleware, labelController.addLabel );
+
+/**
+ * post for Label Updation
+ */
+router.post('/updateLabel', noteMiddleware.notesAddMiddleware, labelController.updateLabel );
+
+/**
+ * post for Label Deletion
+ */
+router.post('/deleteLabel', noteMiddleware.notesAddMiddleware, labelController.deleteLabel );
+
+/**
+ * get for Label Display
+ */
+router.get('/labelDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getLabel', expire: 60}), labelController.displayLabel );
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

@@ -13,18 +13,11 @@ mongoose.set('useFindAndModify', false);
  * @description Schema created via mongoose
  */
 const newSchema = new schema({
-  sender: {
-    type: String
-  },
   userId: {
     type: schema.Types.ObjectId,
     ref: 'user'
   },
-  noteId: {
-    type: schema.Types.ObjectId,
-    ref: 'note'
-  },
-  label: {
+  labels: {
     type: String
   }
 })
@@ -43,21 +36,23 @@ function labelFunction() {
  */
 labelFunction.prototype.labelSaveModel = (req, callback) => {
 
+  console.log('req', req);
+  
   let newLabel = new label({
     sender: req.sender,
     userId: req.userId,
-    noteId: req.noteId,
-    label: req.label
+    labels: req.label
   })
 
   newLabel.save(function (err, result) {
     if (err) {
-      console.log('note saved error');
+      console.log('label saved error');
 
       return callback(err);
     }
     else {
-
+      console.log('label saved');
+      
       return callback(null, result);
     }
   })
@@ -85,7 +80,7 @@ labelFunction.prototype.labelDisplayModel = (req, callback) => {
 /**
  * @description label Find One
  */
-labelFunction.prototype.labelFindOneNoteModel = (reqLabelId, callback) => {
+labelFunction.prototype.labelFindOneLabelModel = (reqLabelId, callback) => {
 
   note.findOne({ _id: reqLabelId }, function (err, result) {
     if (err) {
@@ -117,6 +112,26 @@ labelFunction.prototype.labelUpdateModel = (req, callback) => {
   })
 
 }
+
+
+/**
+ * @description labels Updation Model
+ */
+labelFunction.prototype.labelUpdateCreateModel = (req, callback) => {
+
+  label.findOneAndUpdate({ userId : req.userId }, { $push: { labels: req.label } }, (err, result) => {
+    if (err) {
+      console.log('error occured while updation', err);
+      return callback(err);
+    }
+    else {
+      
+      return callback(null, result);
+    }
+  })
+
+}
+
 
 /**
  * @description Notes Deletion

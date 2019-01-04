@@ -31,37 +31,32 @@ exports.LabelAddService = function (req, callback) {
         },
         function (result, callback) {
             req.userId = result;
-            if (req.noteId == "") {
-                callback(null, result);
-            }
-            else {
-                noteModel.noteFindOneNoteModel(req.noteId, (err, data) => {
-                    if (err) {
-                        callback(err);
-                    }
-                    else {
-                        req.noteId = data._id;
-                        let count = 0;
-                        for (let i = 0; i < data.label.length; i++) {
-                            if (data.label[i] == req.label) {
-                                count++;
-                            }
-                        }
 
-                        if (count == 0) {
-                            noteModel.noteLabelEdittionModel(req, (err, data) => {
-                                if (err) {
-                                    callback(err);
-                                }
-                                else {
-                                    callback(null, data);
-                                }
-                            })
-                        }
-                    }
-                })
-            }
+            labelModel.labelSaveModel(req, (err, data) => {
+                if (err) {
+                    callback(err);
+                }
+                else {
+                    // req.noteId = data._id;
+                    // let count = 0;
+                    // for (let i = 0; i < data.label.length; i++) {
+                    //     if (data.label[i] == req.label) {
+                    //         count++;
+                    //     }
+                    // }
 
+                    // if (count == 0) {
+                    //     noteModel.noteLabelEdittionModel(req, (err, data) => {
+                    //         if (err) {
+                    //             callback(err);
+                    //         }
+                    //         else {
+                                callback(null, data);
+                        //     }
+                        // })
+                    }
+                // }
+            })
         }
     ],
 
@@ -69,34 +64,52 @@ exports.LabelAddService = function (req, callback) {
 
             // req.noteId = result._id;
 
-            labelModel.labelFindOneNoteModel(req.labelId, (err, data) => {
+            // noteModel.noteFindOneNoteModel(req.labelId, (err, data) => {
+            //     if (err) {
+            //         callback(err);
+            //     }
+            //     else {
+
+            //         let count = 0;
+
+            //         for (let i = 0; i < data.noteId.length; i++) {
+            //             if (data.noteId[i] == req.noteId) {
+            //                 count++;
+            //             }
+            //         }
+
+            //         if (count == 0) {
+
+            //             labelModel.labelNoteEdittionModel(req, (err, data) => {
+            //                 if (err) {
+            //                     callback(err);
+            //                 }
+            //                 else {
+            //                     callback(null, data);
+            //                 }
+            //             })
+            //         }
+
+            //     }
+            // })
+
+            // labelModel.labelUpdateCreateModel(req, (err, data) => {
+            //     if (err) {
+            //         return callback(err);
+            //     }
+            //     else {
+            //         return callback(null, data);
+            //     }
+            // })
+
+            // labelModel.labelSaveModel(req, (err, data) => {
                 if (err) {
-                    callback(err);
+                    return callback(err);
                 }
                 else {
-
-                    let count = 0;
-
-                    for (let i = 0; i < data.noteId.length; i++) {
-                        if (data.noteId[i] == req.noteId) {
-                            count++;
-                        }
-                    }
-
-                    if (count == 0) {
-
-                        labelModel.labelNoteEdittionModel(req, (err, data) => {
-                            if (err) {
-                                callback(err);
-                            }
-                            else {
-                                callback(null, data);
-                            }
-                        })
-                    }
-
+                    return callback(null, result);
                 }
-            })
+            // })
         }
     )
 }

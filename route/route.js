@@ -68,8 +68,8 @@ router.post('/forgotPasswordEventEmitter', controller.forgotPasswordEventEmitter
 /**
  * post for NoteAddition
  */
-router.post('/noteAddition', upload.single('file'), function (req, res, next) {
-   console.log('file', req.file);
+router.post('/noteAddition', upload.single('image'), function (req, res, next) {
+   console.log('image file', req.file, req.body);
 //    console.log('file', req);
     next();
   }, noteMiddleware.notesAddMiddleware, noteController.addNote );

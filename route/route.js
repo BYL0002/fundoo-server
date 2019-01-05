@@ -110,7 +110,7 @@ router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteControlle
  */
 router.post('/updateNoteImage', upload.single('image'), (req, res, next) => {
   console.log('req.file', req.file);
-  
+  next();
 } , noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
 
 /**

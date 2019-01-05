@@ -285,6 +285,7 @@ exports.UpdateNoteTitleDescription = (req, res, next) => {
  */
 exports.updateNoteImage = (req, res, next) => {
     try{
+        console.log('req body', req.body);
         
         noteService.noteUpdateImageService (req.body.note, (err, data) => {
             if(err)

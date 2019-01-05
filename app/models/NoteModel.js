@@ -148,6 +148,26 @@ noteFunction.prototype.noteUpdateModel = (req, callback) => {
 }
 
 /**
+ * @description Notes Updation of image
+ */
+noteFunction.prototype.noteUpdateImageModel = (reqBody, reqFile, callback) => {
+
+  console.log("image", reqBody, ''+reqFile);
+  
+  note.findByIdAndUpdate(reqBody._id, {image : reqFile}, (err, result) => {
+    if (err) {
+      console.log('error occured while updation', err);
+      return callback(err);
+    }
+    else {
+      console.log('updated');      
+      return callback(null, result);
+    }
+  })
+
+}
+
+/**
  * @description Notes Deletion
  */
 noteFunction.prototype.noteDeletionModel = (req, callback) => {

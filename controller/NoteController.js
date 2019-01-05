@@ -6,6 +6,7 @@
  */
 
 const noteService = require('../services/NoteService');
+const fs = require('fs');
 
 /**
  * @description Note Addition Controller
@@ -286,8 +287,13 @@ exports.UpdateNoteTitleDescription = (req, res, next) => {
 exports.updateNoteImage = (req, res, next) => {
     try{
         console.log('req body', req.body);
-        
-        noteService.noteUpdateImageService (req.body.note, (err, data) => {
+        console.log('req file', req.file);
+        let file = new Buffer(fs.readFileSync(req.file.path)).toString("base64");
+        let fileFinal ='data:image/jpg;base64, '+file; 
+        // var dataToUpdate = {
+        //     image: fileFinal
+        // }
+        noteService.noteUpdateImageService (req.body, fileFinal, (err, data) => {
             if(err)
             {
                 res.status(400).send({

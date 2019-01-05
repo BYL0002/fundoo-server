@@ -167,7 +167,6 @@ exports.noteDeletionService = function (req, callback) {
             return callback(null, data);
         }
     })
-
 }
 
 /**
@@ -191,10 +190,10 @@ exports.noteUpdateTitleDescriptionService = function (req, callback) {
 /**
  * @description Note Title or Description Update Service
  */
-exports.noteUpdateImageService = function (req, callback) {
+exports.noteUpdateImageService = function (reqBody, reqFile, callback) {
     // console.log("req on service on note display", req);
 
-    noteModel.noteUpdateModel(req, (err, data) => {
+    noteModel.noteUpdateImageModel(reqBody, reqFile, (err, data) => {
         if (err) {
             return callback(err);
         }

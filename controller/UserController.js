@@ -20,6 +20,8 @@ exports.loginController = function (req, res, next) {
         // Finds the validation errors in this request and wraps them in an object with handy functions
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            console.log("errors----",errors);
+            
             return res.status(422).send({
                 status: false,
                 message: err,

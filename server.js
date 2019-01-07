@@ -58,7 +58,7 @@ app.use(function (err, req, res, next) {
     // console.error(err.stack)
     console.log('err');    
     console.log(err);  
-    res.status(500).send('Something broke ! Internal Server Error')
+    res.status(500).send(err)
 });
 
 /**

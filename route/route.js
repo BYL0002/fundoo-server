@@ -32,7 +32,7 @@ router.post("/register", middleware.registerMiddleware, controller.registerContr
 /**
  * post for login
  */
-router.post('/login', middleware.loginMiddleware , controller.loginController);
+router.post('/login',controller.loginController);
 
 /**
  * post for logout

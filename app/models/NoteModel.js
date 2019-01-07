@@ -26,7 +26,7 @@ const newSchema = new schema({
   description: {
     type: String
   },
-  collaborator: {
+  collabId: {
     type: {
       type: schema.Types.ObjectId,
       ref: 'user'

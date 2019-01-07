@@ -117,7 +117,7 @@ userFunction.prototype.logoutModel = function (req, callback) {
 }
 
 /**
- * @description Finding data inside database
+ * @description Finding ONE data inside database
  * make this available to our users in our Node applications
  */
 userFunction.prototype.FindOneModel = function (req, callback) {
@@ -137,6 +137,26 @@ userFunction.prototype.FindOneModel = function (req, callback) {
   })
 }
 
+/**
+ * @description Finding ALL data inside database
+ * make this available to our users in our Node applications
+ */
+userFunction.prototype.FindAllModel = function (req, callback) {
+
+  user.find((err, result) => {
+    if (err) {
+
+      console.log(err);
+      return callback(err);
+    }
+    else {
+      console.log('Found all Successful', result);
+      // console.log('result', result);
+      
+      return callback(null, result);
+    }
+  })
+}
 
 /**
  * @description Finding data inside database

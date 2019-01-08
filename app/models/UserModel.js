@@ -15,7 +15,8 @@ const newSchema = new schema({
   name: { type: String },
   email_id: { type: String },
   password: { type: String, default: "" },
-  token: { type: String }
+  token: { type: String },
+  profilePic:{type : String }
 })
 
 /**

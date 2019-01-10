@@ -7,6 +7,7 @@
  */
 
 const express = require('express');
+var swaggerJSDoc = require('swagger-jsdoc');
 const app = express();
 const cors = require('cors');
 var cache = require('express-redis-cache')();
@@ -15,6 +16,37 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbUrl = require('./config/dbconfig');
 require('dotenv').config();
+
+
+app.use(express.static('public'));
+
+// swagger definition
+var swaggerDefinition = {
+    info: {
+        title: 'Node Swagger API',
+        version: '1.0.0',
+        description: 'Demonstrating how to describe a RESTful API with Swagger',
+    },
+    host: 'localhost:3000',
+    basePath: '/',
+};
+
+// options for the swagger docs
+var options = {
+    // import swaggerDefinitions
+    swaggerDefinition: swaggerDefinition,
+    // path to the API docs
+    apis: ['./route/*.js'],
+};
+
+// initialize swagger-jsdoc
+var swaggerSpec = swaggerJSDoc(options);
+
+// serve swagger
+app.get('/swagger.json', function (req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+});
 
 /**
  * @description Parsing the request get by client
@@ -28,15 +60,15 @@ app.use(cors());
  */
 app.use('/', routes);
 
-cache.on('connected', ()=> {
+cache.on('connected', () => {
     console.log('cache connected');
 })
 
-cache.on('error', ()=> {
+cache.on('error', () => {
     console.log('cache error');
 })
 
-cache.on('disconnected', ()=> {
+cache.on('disconnected', () => {
     console.log('cache disconnected');
 })
 
@@ -45,7 +77,7 @@ cache.on('disconnected', ()=> {
  * @param {String} dbUrl 
  */
 function startMongoDb(dbUrl) {
-    mongoose.set({useCreateIndex: true})
+    mongoose.set({ useCreateIndex: true })
     mongoose.connect(dbUrl, { useNewUrlParser: true });
     mongoose.connection.on('error', (error) => { console.log('Connection error with MongoDb'); });
     mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb on port : ' + dbUrl); });
@@ -56,8 +88,8 @@ function startMongoDb(dbUrl) {
  */
 app.use(function (err, req, res, next) {
     // console.error(err.stack)
-    console.log('err');    
-    console.log(err);  
+    console.log('err');
+    console.log(err);
     res.status(500).send(err)
 });
 
@@ -66,7 +98,7 @@ app.use(function (err, req, res, next) {
  */
 app.listen(8000, () => {
     startMongoDb(dbUrl);
-    console.log('server is up and running on :',8000);
+    console.log('server is up and running on :', 8000);
 });
 // app.get('/get',(req, res)=>{
 //     res.send("Hello")

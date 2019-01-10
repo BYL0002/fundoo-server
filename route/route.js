@@ -23,6 +23,14 @@ const labelController = require('../controller/LabelController');
 const multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
+//----------------------------------------------------------------Swagger related API-----------------------------------------------------------------------
+
+// serve swagger
+router.get('/swagger.json', function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
 //----------------------------------------------------------------USER related API-----------------------------------------------------------------------
 
 /**
@@ -82,6 +90,38 @@ router.post('/noteAddition', upload.single('image'), function (req, res, next) {
 /**
  * get for Notes Display
  */
+
+
+ /**
+ * @swagger
+ * definitions:
+ *   Puppy:
+ *     properties:
+ *       name:
+ *         type: string
+ *       breed:
+ *         type: string
+ *       age:
+ *         type: integer
+ *       sex:
+ *         type: string
+ */
+ /**
+ * @swagger
+ * /api/noteDisplay:
+ *   get:
+ *     tags:
+ *       - Puppies
+ *     description: Returns all puppies
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of puppies
+ *         schema:
+ *           $ref: '#/definitions/Puppy'
+ */
+
 router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getNotes', expire: 60}), noteController.displayNote );
 // router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
 

@@ -134,6 +134,8 @@ noteFunction.prototype.noteFindOneNoteModel = (reqNoteId, callback) => {
  */
 noteFunction.prototype.noteUpdateModel = (req, callback) => {
 
+  console.log("req--", req);
+
   note.findByIdAndUpdate(req._id, req, (err, result) => {
     if (err) {
       console.log('error occured while updation', err);
@@ -201,7 +203,6 @@ noteFunction.prototype.noteLabelEdittionModel = (req, callback) => {
     }
   })
 }
-
 
 
 /**

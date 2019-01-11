@@ -8,10 +8,6 @@
 
 const express = require('express');
 
-var swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-
 const app = express();
 const cors = require('cors');
 
@@ -25,34 +21,6 @@ require('dotenv').config();
 
 
 app.use(express.static('public'));
-
-// swagger definition
-var swaggerDefinition = {
-    info: {
-        title: 'Node Swagger API',
-        version: '1.0.0',
-        description: 'Demonstrating how to describe a RESTful API with Swagger',
-    },
-    host: 'localhost:3000',
-    basePath: '/',
-};
-
-// options for the swagger docs
-var options = {
-    // import swaggerDefinitions
-    swaggerDefinition: swaggerDefinition,
-    // path to the API docs
-    apis: ['./route/*.js'],
-};
-
-// initialize swagger-jsdoc
-var swaggerSpec = swaggerJSDoc(options);
-
-// serve swagger
-app.get('/swagger.json', function (req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(swaggerSpec);
-});
 
 /**
  * @description Parsing the request get by client

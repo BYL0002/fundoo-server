@@ -23,14 +23,15 @@ const labelController = require('../controller/LabelController');
 const multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
+
 //----------------------------------------------------------------Swagger related API-----------------------------------------------------------------------
 
 // serve swagger
-router.get('/swagger.json', function(req, res) {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger/swagger.json');
+ 
+router.use('/', swaggerUi.serve);
+router.get('/', swaggerUi.setup(swaggerDocument));
 //----------------------------------------------------------------USER related API-----------------------------------------------------------------------
 
 /**

@@ -7,11 +7,17 @@
  */
 
 const express = require('express');
+
 var swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 const app = express();
 const cors = require('cors');
+
 var cache = require('express-redis-cache')();
 const routes = require('./route/route.js');
+
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbUrl = require('./config/dbconfig');

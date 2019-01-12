@@ -63,55 +63,30 @@ collabFunction.prototype.collabSaveModel = (req, callback) => {
     })
 }
 
-
-/**
- * @description Note data retrival Retrieval
- */
-collabFunction.prototype.completeNoteDataModel = (req, callback) => {
-    console.log('req for data retrieval----', req);
-
-    collab.find({ userId: req.userId }).populate('userId').populate('collabId').populate('noteId').exec((err, result) => {
-        if (err) {
-            console.log('err of display on model', err);
-            return callback(err);
-        }
-        else {
-
-            return callback(null, result);
-        }
-    })
-}
-
-
-/**
- * @description collab Owner UserID & note retrival Retrieval
- */
-collabFunction.prototype.collabDataDisplayModel = (req, callback) => {
-    console.log('req for data retrieval----', req);
-
-    collab.find({ userId: req.userId }).populate('collabId').exec((err, result) => {
-        if (err) {
-            console.log('err of display on model', err);
-            return callback(err);
-        }
-        else {
-
-            return callback(null, result);
-        }
-    })
-}
-
 /**
  * @description Notes Deletion
  */
 collabFunction.prototype.collabDeletionModel = (req, callback) => {
 
-    label.deleteOne({ _id: req }, function (err, result) {
+    collab.deleteOne({ _id: req }, function (err, result) {
         if (err) {
             return callback(err);
         }
         else {
             return callback(null, result);
+        }
+    })
+}
+
+collabFunction.prototype.getDataByNoteId = (noteID, callback) => {
+
+    collab.find({ noteId: noteID }).populate("userId").populate("noteId").populate("collabId").exec((err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            console.log('result of getCollabNotesUserId ', result);
+
+            callback(null, result);
         }
     })
 }
@@ -119,26 +94,27 @@ collabFunction.prototype.collabDeletionModel = (req, callback) => {
 //userId---collabs id
 
 collabFunction.prototype.getCollabNotesUserId = (userID, callback) => {
-    
-    collab.find({ collabUserID: userID }, (err, result) => {
+
+    collab.find({ collabId: userID }, (err, result) => {
         if (err) {
             callback(err);
         } else {
-            // console.log('result of getCollabNotesUserId ', result);
-            
+            console.log('result of getCollabNotesUserId ', result);
+
             callback(null, result);
         }
     })
 }
 
 collabFunction.prototype.getCollabOwnerUserId = (userID, callback) => {
-    
-    collab.find({ collabUserID: userID }, (err, result) => {
+
+    collab.find({ userId: userID }).populate("collabId").exec((err, result) => {
         if (err) {
             callback(err);
         } else {
-            // console.log('result of getCollabOwnerUserId ------- ', result);
-            
+
+            console.log('result of getCollabOwnerUserId ------- ', result);
+
             callback(null, result);
         }
     })

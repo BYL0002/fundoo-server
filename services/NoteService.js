@@ -289,7 +289,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
 
                                     return function (callback) {
 
-                                        collabService.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
+                                        collabModel.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
                                             
                                             console.log("resultNote--- : ", resultNote);
 
@@ -300,6 +300,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
                                             } else {
 
                                                 var collabUserArray = [];
+
                                                 for (var i = 0; i < resultNote.length; i++) {
                                                     collabUserArray.push(resultNote[i].collabUserID)
                                                 }
@@ -311,6 +312,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
                                                 }
 
                                                 finalNotesData.push(collabNote);
+
                                                 callback(null, collabNote)
 
                                             }

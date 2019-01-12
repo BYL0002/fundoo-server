@@ -27,22 +27,6 @@ exports.collabAddService = function (req, callback) {
 }
 
 /**
- * @description Collab complete Data Display Service
- */
-exports.collabDisplayService = function (req, callback) {
-
-    collabmodel.labelDisplayModel(req, (err, data) => {
-        if (err) {
-            return callback(err);
-        }
-        else {
-            return callback(null, data);
-        }
-    })
-}
-
-
-/**
  * @description Collab User Delete Service
  */
 exports.collabDeletionService = function (req, callback) {
@@ -59,29 +43,28 @@ exports.collabDeletionService = function (req, callback) {
 
 }
 
-
 // collab
 
-exports.getCollabNotesUserId = (req, callback) => {
+// exports.getCollabNotesUserId = (req, callback) => {
 
-    collabmodel.getCollabNotesUserId(req, (err, result) => {
-        if(err) {
-            callback(err);
-        } else {
-            callback(null, result);
-        }
-    })
-}
+//     collabmodel.getCollabNotesUserId(req, (err, result) => {
+//         if(err) {
+//             callback(err);
+//         } else {
+//             callback(null, result);
+//         }
+//     })
+// }
 
 
-exports.getCollabDetails = (callback) => {
-    console.log("30");
+// exports.getCollabDetails = (callback) => {
+//     console.log("30");
 
-    usermodel.FindAllModel( (err, result) => {
-        if(err) {
-            callback(err);
-        } else {
-            callback(null, result);
-        }
-    })
-}
+//     usermodel.FindAllModel( (err, result) => {
+//         if(err) {
+//             callback(err);
+//         } else {
+//             callback(null, result);
+//         }
+//     })
+// }

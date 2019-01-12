@@ -17,6 +17,8 @@ exports.notesAddMiddleware = function noteAddMiddleware(req, res, next) {
         jwt.verify(req.headers.token, process.env.privateKey, function(err, result){
             
             req.headers.token = result.userId;
+            // console.log('token result', result);
+            
             
             if(err != null) throw 'err'
             {

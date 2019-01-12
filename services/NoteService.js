@@ -215,42 +215,54 @@ exports.getCompleteNoteDataService = (req, callback) => {
     //         callback(err);
     //     }
     //     else {
+    console.log('Owner Db _id', req);
+
     var finalNotesData = [];
-    noteModel.noteDisplayModel(req, (err, data) => {
+
+    noteModel.noteDisplayModel(req, (err, OwnerNotesData) => {
         if (err) {
             callback(err);
         } else {
-            usermodel.FindOneModel(req, (error, result) => {
+            // console.log('OwnerNotesData on user search---', OwnerNotesData);
+
+            usermodel.FindOneModel(req, (error, OwnerUserDetails) => {
                 if (error) {
                     callback(error);
                 } else {
 
+                    // console.log('OwnerUserDetails---', OwnerUserDetails);
+
+
                     const noteOwner = {
-                        name: result.name,
-                        email_id: result.email_id,
-                        _id: result._id
+                        _id: OwnerUserDetails._id,
+                        name: OwnerUserDetails.name,
+                        email_id: OwnerUserDetails.email_id
                     }
 
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < OwnerNotesData.length; i++) {
 
                         var userNote = {
-                            note: data[i],
+                            note: OwnerNotesData[i],
                             owner: noteOwner,
                             collab: []
                         }
 
                         finalNotesData.push(userNote);
+                        // console.log("finalNotesData-----", finalNotesData);
+
                     }
 
                     collabModel.getCollabOwnerUserId(req, (err, resultOwnerCollab) => {
                         if (err) {
                             callback(err);
                         } else {
-
+                            // console.log('resultOwnerCollab----', resultOwnerCollab);
+                            
                             for (var i = 0; i < finalNotesData.length; i++) {
                                 for (var j = 0; j < resultOwnerCollab.length; j++) {
 
-                                    if (finalNotesData[i].note._id.equals(resultOwnerCollab[j].noteID)) {
+                                    if (finalNotesData[i].note._id.equals(resultOwnerCollab[j].noteID))
+                                    {
                                         finalNotesData[i].collab.push(resultOwnerCollab[j].collabUserID)
                                     }
                                 }
@@ -258,33 +270,48 @@ exports.getCompleteNoteDataService = (req, callback) => {
                         }
                     })
 
+                    // console.log("finalNotesData after getCollabOwnerUserId Pushed -----", finalNotesData);
+                    
+
                     collabModel.getCollabNotesUserId(req, (err, resultCollab) => {
+
+                        console.log("entered or not");
+                        
+
                         if (err) {
                             callback(err);
                         } else {
 
                             var operations = [];
+
                             for (var i = 0; i < resultCollab.length; i++) {
+
                                 operations.push((function (collabData) {
 
                                     return function (callback) {
 
                                         collabService.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
+                                            
                                             console.log("123 : ", resultNote);
 
                                             if (errorNote) {
+
                                                 callback(errorNote)
+
                                             } else {
+
                                                 var collabUserArray = [];
                                                 for (var i = 0; i < resultNote.length; i++) {
                                                     collabUserArray.push(resultNote[i].collabUserID)
                                                 }
+
                                                 var collabNote = {
                                                     note: resultNote[0].noteID,
                                                     owner: resultNote[0].userID,
                                                     collab: collabUserArray
                                                 }
-                                                finalResult.push(collabNote);
+
+                                                finalNotesData.push(collabNote);
                                                 callback(null, collabNote)
 
                                             }
@@ -300,9 +327,9 @@ exports.getCompleteNoteDataService = (req, callback) => {
                                 if (errorAsync) {
                                     callback(errorAsync);
                                 } else {
-                                    console.log("final result ", finalResult);
+                                    // console.log("final result ", finalNotesData);
 
-                                    callback(null, finalResult)
+                                    callback(null, finalNotesData)
                                 }
                             })
                         }

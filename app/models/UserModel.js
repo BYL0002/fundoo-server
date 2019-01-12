@@ -123,7 +123,7 @@ userFunction.prototype.logoutModel = function (req, callback) {
  */
 userFunction.prototype.FindOneModel = function (req, callback) {
 
-  user.findOne({ email_id : req }, function (err, result) {
+  user.findOne({ _id : req }, function (err, result) {
     if (err) {
 
       console.log(err);

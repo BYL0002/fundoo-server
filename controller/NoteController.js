@@ -41,13 +41,44 @@ exports.addNote = function(req, res, next) {
 }
 
 /**
- * @description Note Display Controller
+ * @description Note Display wihtout Collab Controller
  */
 exports.displayNote = function(req, res, next) {
     
     try
     {
         noteService.NoteDisplayService( req.headers.token, (err, result) => {
+            if(err)
+            {
+                res.status(400).send({
+                    status : false,
+                    message : 'error'
+                })
+            }
+            else
+            {
+                res.status(200).send({
+                    status : true,
+                    message : result
+                })
+            }
+        })
+    }
+    catch(err)
+    {
+        next(err);
+    }
+}
+
+/**
+ * @description Note Complete Display Controller
+ */
+exports.displayCompleteNoteDetails = function(req, res, next) {
+    console.log('req.headers.token----', req.headers.token);
+    
+    try
+    {
+        noteService.getCompleteNoteDataService( req.headers.token, (err, result) => {
             if(err)
             {
                 res.status(400).send({

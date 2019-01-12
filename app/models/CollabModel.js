@@ -119,22 +119,26 @@ collabFunction.prototype.collabDeletionModel = (req, callback) => {
 //userId---collabs id
 
 collabFunction.prototype.getCollabNotesUserId = (userID, callback) => {
-    // console.log("ultimate save", collabData);
-    Collab.find({ collabUserID: userID }, (err, result) => {
+    
+    collab.find({ collabUserID: userID }, (err, result) => {
         if (err) {
             callback(err);
         } else {
+            console.log('result of getCollabNotesUserId ', result);
+            
             callback(null, result);
         }
     })
 }
 
 collabFunction.prototype.getCollabOwnerUserId = (userID, callback) => {
-    // console.log("ultimate save", collabData);
-    Collab.find({ collabUserID: userID }, (err, result) => {
+    
+    collab.find({ collabUserID: userID }, (err, result) => {
         if (err) {
             callback(err);
         } else {
+            // console.log('result of getCollabOwnerUserId ------- ', result);
+            
             callback(null, result);
         }
     })

@@ -123,7 +123,9 @@ router.post('/noteAddition', upload.single('image'), function (req, res, next) {
  *           $ref: '#/definitions/Puppy'
  */
 
-router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getNotes', expire: 60}), noteController.displayNote );
+router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getNotes', expire: 60}), noteController.displayCompleteNoteDetails );
+
+// router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getNotes', expire: 60}), noteController.displayNote );
 // router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
 
 /**

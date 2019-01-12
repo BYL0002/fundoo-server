@@ -369,3 +369,32 @@ exports.forgotPasswordEventEmitterController = function (req, res, next) {
         next(err);
     }
 }
+
+exports.userAllDetailsController = function (req, res, next) {
+
+    try {
+
+        userServices.userAllDetailsService(req.body.data, (err, data) => {
+
+            if (err == false) {
+                
+                res.status(400).send({
+                    status: false,
+                    message: err,
+                });
+            }
+            else {
+                
+                let token = utility.tokenGeneration(data._id);
+                res.status(200).send({
+                    status: true,
+                    message: data,
+                    token: token
+                });
+            }
+        })
+    }
+    catch (err) {
+        next(err);
+    }
+}

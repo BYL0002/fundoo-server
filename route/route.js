@@ -76,6 +76,11 @@ router.post('/registerUserVerifyEventEmitter', controller.registerUserVerifyEven
  */
 router.post('/forgotPasswordEventEmitter', controller.forgotPasswordEventEmitterController);
 
+/**
+ * get All User Details
+ */
+router.get('/AllUsersDetails', controller.userAllDetailsController);
+
 
 //----------------------------------------------------------------NOTE API-----------------------------------------------------------------------
 

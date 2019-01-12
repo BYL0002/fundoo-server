@@ -134,6 +134,26 @@ exports.logoutService = function(req, callback) {
     })
 }
 
+/**
+ * @description details service
+ */
+exports.userAllDetailsService = function(req, callback) {
+    
+    usermodel.FindAllModel(req, (err, data) => {
+
+        if(err == false) {
+            return callback(false);
+        }
+        else {
+
+            console.log('data', data);
+            
+            return callback(null, data);
+        }
+    });
+}
+
+
 //-----------------------------------------------------------------------Event Emitter
 
 // console.log(utility.eventEmitter.emit('sendEmail', {'data':1}));

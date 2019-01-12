@@ -74,7 +74,7 @@ exports.displayNote = function(req, res, next) {
  * @description Note Complete Display Controller
  */
 exports.displayCompleteNoteDetails = function(req, res, next) {
-    console.log('req.headers.token----', req.headers.token);
+    // console.log('req.headers.token----', req.headers.token);
     
     try
     {

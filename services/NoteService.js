@@ -210,12 +210,14 @@ exports.NoteDisplayService = function (req, callback) {
 //  * @param {callback function} callback
 //  */
 exports.getCompleteNoteDataService = (req, callback) => {
+    
     // user.findUserID(data, (err, userIDRes) => {
     //     if (err) {
     //         callback(err);
     //     }
     //     else {
-    console.log('Owner Db _id', req);
+    
+    // console.log('Owner Db _id', req);
 
     var finalNotesData = [];
 
@@ -231,7 +233,6 @@ exports.getCompleteNoteDataService = (req, callback) => {
                 } else {
 
                     // console.log('OwnerUserDetails---', OwnerUserDetails);
-
 
                     const noteOwner = {
                         _id: OwnerUserDetails._id,
@@ -271,12 +272,10 @@ exports.getCompleteNoteDataService = (req, callback) => {
                     })
 
                     // console.log("finalNotesData after getCollabOwnerUserId Pushed -----", finalNotesData);
-                    
 
                     collabModel.getCollabNotesUserId(req, (err, resultCollab) => {
 
                         console.log("entered or not");
-                        
 
                         if (err) {
                             callback(err);
@@ -292,7 +291,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
 
                                         collabService.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
                                             
-                                            console.log("123 : ", resultNote);
+                                            console.log("resultNote--- : ", resultNote);
 
                                             if (errorNote) {
 

@@ -124,7 +124,7 @@ collabFunction.prototype.getCollabNotesUserId = (userID, callback) => {
         if (err) {
             callback(err);
         } else {
-            console.log('result of getCollabNotesUserId ', result);
+            // console.log('result of getCollabNotesUserId ', result);
             
             callback(null, result);
         }

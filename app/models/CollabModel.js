@@ -107,13 +107,14 @@ collabFunction.prototype.getCollabNotesUserId = (userID, callback) => {
 }
 
 collabFunction.prototype.getCollabOwnerUserId = (userID, callback) => {
+    console.log('userId-----', userID);
 
     collab.find({ userId: userID }).populate("collabId").exec((err, result) => {
         if (err) {
             callback(err);
         } else {
 
-            console.log('result of getCollabOwnerUserId ------- ', result);
+            console.log('result of getCollabOwnerUserId ------- result ', result);
 
             callback(null, result);
         }

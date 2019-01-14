@@ -260,10 +260,13 @@ exports.getCompleteNoteDataService = (req, callback) => {
                             // console.log('resultOwnerCollab----', resultOwnerCollab);
                             
                             for (var i = 0; i < finalNotesData.length; i++) {
+                                
                                 for (var j = 0; j < resultOwnerCollab.length; j++) {
 
                                     if (finalNotesData[i].note._id.equals(resultOwnerCollab[j].noteID))
                                     {
+                                        console.log("----", resultOwnerCollab[j].collabUserID);
+                                        
                                         finalNotesData[i].collab.push(resultOwnerCollab[j].collabUserID)
                                     }
                                 }
@@ -271,7 +274,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
                         }
                     })
 
-                    // console.log("finalNotesData after getCollabOwnerUserId Pushed -----", finalNotesData);
+                    console.log("finalNotesData after getCollabOwnerUserId Pushed -----", finalNotesData);
 
                     collabModel.getCollabNotesUserId(req, (err, resultCollab) => {
 

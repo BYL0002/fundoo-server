@@ -32,8 +32,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.disable('x-powered-by');
-
 /**
  * @description for routing
  */
@@ -71,6 +69,11 @@ app.use(function (err, req, res, next) {
     console.log(err);
     res.status(500).send(err)
 });
+
+
+// app.disable('x-powered-by');
+app.disable('x-powered-by')
+app.set('trust proxy', false); 
 
 /**
  * @description Server Listening

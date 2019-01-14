@@ -14,7 +14,7 @@ exports.addCollab = function(req, res, next) {
 
     try{
         
-        CollabService.LabelAddService(req.body, (err, result) => {
+        CollabService.collabAddService(req.body.collab, (err, result) => {
             if(err)
             {
                 res.status(400).send({

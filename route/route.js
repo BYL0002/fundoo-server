@@ -19,6 +19,7 @@ const noteMiddleware = require('../middleware/NoteMiddleware');
 const controller = require('../controller/UserController');
 const noteController = require('../controller/NoteController');
 const labelController = require('../controller/LabelController');
+const collabController = require('../controller/CollabController');
 
 const multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
@@ -204,12 +205,12 @@ router.get('/labelDisplay', noteMiddleware.notesAddMiddleware, cache.route({name
 /**
  * post for Collaborator Addition
  */
-router.post('/AddCollab', noteMiddleware.notesAddMiddleware, labelController.addLabel );
+router.post('/AddCollab', noteMiddleware.notesAddMiddleware, collabController.addCollab );
 
 /**
  * get for Collaborator Details
  */
-router.get('/DisplayCollab', noteMiddleware.notesAddMiddleware, labelController.displayLabel );
+router.get('/DisplayCollab', noteMiddleware.notesAddMiddleware, collabController.displayCollab );
 
 
 /**

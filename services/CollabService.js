@@ -21,7 +21,7 @@ exports.collabAddService = function (req, callback) {
             return callback(err);
         }
         else {
-            return callback(null, result);
+            return callback(null, data);
         }
     })
 }

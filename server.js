@@ -11,6 +11,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+var hidePoweredBy = require('hide-powered-by')
+app.use(hidePoweredBy())
+
 var cache = require('express-redis-cache')();
 const routes = require('./route/route.js');
 
@@ -20,7 +23,7 @@ const dbUrl = require('./config/dbconfig');
 require('dotenv').config();
 
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 /**
  * @description Parsing the request get by client
@@ -28,6 +31,8 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+
+app.disable('x-powered-by');
 
 /**
  * @description for routing

@@ -51,12 +51,12 @@ collabFunction.prototype.collabSaveModel = (req, callback) => {
 
     newCollab.save(function (err, result) {
         if (err) {
-            console.log('label saved error');
+            console.log('collab saved error');
 
             return callback(err);
         }
         else {
-            console.log('label saved');
+            console.log('collab saved');
 
             return callback(null, result);
         }

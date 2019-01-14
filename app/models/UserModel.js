@@ -151,8 +151,7 @@ userFunction.prototype.FindAllModel = function (req, callback) {
       return callback(err);
     }
     else {
-      console.log('Found all Successful', result);
-      // console.log('result', result);
+      // console.log('Found all Successful', result);
       
       return callback(null, result);
     }

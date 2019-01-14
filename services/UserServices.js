@@ -145,8 +145,7 @@ exports.userAllDetailsService = function(req, callback) {
             return callback(false);
         }
         else {
-
-            console.log('data', data);
+            // console.log('data', data);
             
             return callback(null, data);
         }

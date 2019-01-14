@@ -77,3 +77,5 @@ app.listen(8000, () => {
 // app.get('/get',(req, res)=>{
 //     res.send("Hello")
 // })
+
+module.exports = { app };

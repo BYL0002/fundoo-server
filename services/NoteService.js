@@ -265,7 +265,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
 
                                     if (finalNotesData[i].note._id.equals(resultOwnerCollab[j].noteID))
                                     {
-                                        console.log("----", resultOwnerCollab[j].collabUserID);
+                                        // console.log("----", resultOwnerCollab[j].collabUserID);
                                         
                                         finalNotesData[i].collab.push(resultOwnerCollab[j].collabUserID)
                                     }
@@ -274,11 +274,11 @@ exports.getCompleteNoteDataService = (req, callback) => {
                         }
                     })
 
-                    console.log("finalNotesData after getCollabOwnerUserId Pushed -----", finalNotesData);
+                    // console.log("finalNotesData after getCollabOwnerUserId Pushed -----", finalNotesData);
 
                     collabModel.getCollabNotesUserId(req, (err, resultCollab) => {
 
-                        console.log("entered or not");
+                        // console.log("entered or not");
 
                         if (err) {
                             callback(err);
@@ -294,7 +294,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
 
                                         collabModel.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
                                             
-                                            console.log("resultNote--- : ", resultNote);
+                                            // console.log("resultNote--- : ", resultNote);
 
                                             if (errorNote) {
 
@@ -326,7 +326,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
                             }
 
                             async.series(operations, (errorAsync, resultAsync) => {
-                                console.log(resultAsync);
+                                // console.log(resultAsync);
 
                                 if (errorAsync) {
                                     callback(errorAsync);

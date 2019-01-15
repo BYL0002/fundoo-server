@@ -73,6 +73,9 @@ exports.displayLabel = function(req, res, next) {
  * @description Label Updation Generic Controller
  */
 exports.updateLabel = (req, res, next) => {
+
+    console.log("req to update label---", req.body.note);
+
     try{
         
         labelService.labelUpdateService (req.body.note, (err, data) => {

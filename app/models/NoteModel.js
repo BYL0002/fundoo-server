@@ -49,7 +49,10 @@ const newSchema = new schema({
   },
   trash: {
     type: Boolean
-  }
+  },
+  labels: [{
+    type: String
+  }]
 })
 
 /**
@@ -106,7 +109,7 @@ noteFunction.prototype.noteDisplayModel = (req, callback) => {
       return callback(err);
     }
     else {
-      
+
       return callback(null, result);
     }
   })
@@ -142,7 +145,7 @@ noteFunction.prototype.noteUpdateModel = (req, callback) => {
       return callback(err);
     }
     else {
-      console.log('updated');      
+      console.log('updated');
       return callback(null, result);
     }
   })
@@ -154,15 +157,15 @@ noteFunction.prototype.noteUpdateModel = (req, callback) => {
  */
 noteFunction.prototype.noteUpdateImageModel = (reqBody, reqFile, callback) => {
 
-  console.log("image", reqBody, ''+reqFile);
-  
-  note.findByIdAndUpdate(reqBody._id, {image : reqFile}, (err, result) => {
+  console.log("image", reqBody, '' + reqFile);
+
+  note.findByIdAndUpdate(reqBody._id, { image: reqFile }, (err, result) => {
     if (err) {
       console.log('error occured while updation', err);
       return callback(err);
     }
     else {
-      console.log('updated');      
+      console.log('updated');
       return callback(null, result);
     }
   })
@@ -191,17 +194,27 @@ noteFunction.prototype.noteDeletionModel = (req, callback) => {
  */
 noteFunction.prototype.noteLabelEdittionModel = (req, callback) => {
 
-  note.findById({ _id: req.noteId }, function (err, result) {
-    if (err) {
+  note.findByIdAndUpdate(req._id, {
 
-      return callback(err);
-    }
-    else {
+    $push: {
+      labels: req.label
+    },
 
-      result.label.push(req.label);
-      return callback(null, result);
-    }
-  })
+  },
+    function (err, result) {
+      if (err) {
+        console.log('err on label push', err);
+        return callback(err);
+      }
+      else {
+
+        console.log('result of label pushed', result);
+
+
+        // result.label.push(req.label);
+        return callback(null, result);
+      }
+    })
 }
 
 

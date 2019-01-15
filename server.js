@@ -11,8 +11,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-var hidePoweredBy = require('hide-powered-by')
-app.use(hidePoweredBy())
+// var hidePoweredBy = require('hide-powered-by')
+// app.use(hidePoweredBy())
 
 var cache = require('express-redis-cache')();
 const routes = require('./route/route.js');

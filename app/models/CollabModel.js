@@ -41,7 +41,7 @@ function collabFunction() {
  */
 collabFunction.prototype.collabSaveModel = (req, callback) => {
 
-    console.log('req on save', req);
+    // console.log('req on save', req);
 
     let newCollab = new collab({
         userId: req.userId,
@@ -84,7 +84,7 @@ collabFunction.prototype.getDataByNoteId = (noteID, callback) => {
         if (err) {
             callback(err);
         } else {
-            console.log('result of getCollabNotesUserId ', result);
+            // console.log('result of getCollabNotesUserId ', result);
 
             callback(null, result);
         }
@@ -99,7 +99,7 @@ collabFunction.prototype.getCollabNotesUserId = (userID, callback) => {
         if (err) {
             callback(err);
         } else {
-            console.log('result of getCollabNotesUserId ', result);
+            // console.log('result of getCollabNotesUserId ', result);
 
             callback(null, result);
         }
@@ -113,7 +113,7 @@ collabFunction.prototype.getCollabOwnerUserId = (userID, callback) => {
             callback(err);
         } else {
 
-            console.log('result of getCollabOwnerUserId ------- ', result);
+            // console.log('result of getCollabOwnerUserId ------- ', result);
 
             callback(null, result);
         }

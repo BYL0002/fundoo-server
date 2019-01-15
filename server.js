@@ -70,12 +70,21 @@ app.use(function (err, req, res, next) {
 /**
  * @description Server Listening
  */
-app.listen(8000, () => {
-    startMongoDb(dbUrl);
-    console.log('server is up and running on :', 8000);
-});
+// app.listen(8000, () => {
+//     startMongoDb(dbUrl);
+//     console.log('server is up and running on :', 8000);
+// });
+
+if(!module.parent) {
+    app.listen(8000, () => {
+        startMongoDb(dbUrl);
+        console.log('server is up and running on :', 8000);
+    });
+    
+ }
+
 // app.get('/get',(req, res)=>{
 //     res.send("Hello")
 // })
 
-module.exports = { app };
+module.exports = app ;

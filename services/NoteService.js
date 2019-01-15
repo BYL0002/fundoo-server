@@ -291,7 +291,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
 
                                         collabModel.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
                                             
-                                            console.log("resultNote--- : ", resultNote);
+                                            // console.log("resultNote--- : ", resultNote);
 
                                             if (errorNote) {
 
@@ -323,7 +323,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
                             }
 
                             async.series(operations, (errorAsync, resultAsync) => {
-                                console.log(resultAsync);
+                                // console.log(resultAsync);
 
                                 if (errorAsync) {
                                     callback(errorAsync);

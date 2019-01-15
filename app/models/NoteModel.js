@@ -49,7 +49,10 @@ const newSchema = new schema({
   },
   trash: {
     type: Boolean
-  }
+  },
+  labels: [{
+    type: String
+  }]
 })
 
 /**

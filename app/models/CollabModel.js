@@ -107,7 +107,7 @@ collabFunction.prototype.getCollabNotesUserId = (userID, callback) => {
 }
 
 collabFunction.prototype.getCollabOwnerUserId = (userID, callback) => {
-    // console.log('userId-----', userID);
+    // console.log('userId-----getCollabOwnerUserId', userID);
 
     collab.find({ userId: userID }).populate("collabId").exec((err, result) => {
         if (err) {

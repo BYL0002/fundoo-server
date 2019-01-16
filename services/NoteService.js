@@ -257,20 +257,29 @@ exports.getCompleteNoteDataService = (req, callback) => {
                         if (err) {
                             callback(err);
                         } else {
-                            // console.log('resultOwnerCollab----', resultOwnerCollab);
-                            
+                            // console.log('260--resultOwnerCollab----', resultOwnerCollab);
+
                             for (var i = 0; i < finalNotesData.length; i++) {
+
+                                // console.log('264--finalNotesData----', finalNotesData[i]);
                                 
                                 for (var j = 0; j < resultOwnerCollab.length; j++) {
 
-                                    if (finalNotesData[i].note._id.equals(resultOwnerCollab[j].noteID))
+                                    // console.log('268--'+[j]+'--resultOwnerCollab----', resultOwnerCollab[j].noteId);
+
+                                    // console.log('270--'+[i]+'--finalNotesData[i].note._id----', finalNotesData[i].note._id);
+                                    
+                                    if (finalNotesData[i].note._id.equals(resultOwnerCollab[j].noteId))
                                     {
-                                        // console.log("----", resultOwnerCollab[j].collabUserID);
+                                        // console.log("272--if condition----", resultOwnerCollab[j].collabId);
                                         
-                                        finalNotesData[i].collab.push(resultOwnerCollab[j].collabUserID)
+                                        finalNotesData[i].collab.push(resultOwnerCollab[j].collabId)
                                     }
                                 }
                             }
+
+                            // console.log("281--finalNotesData----", finalNotesData);
+                            
                         }
                     })
 

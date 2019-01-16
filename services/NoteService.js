@@ -267,7 +267,7 @@ exports.getCompleteNoteDataService = (req, callback) => {
                                     }
                                 }
                             }
-                            console.log("281--finalNotesData----------------------------------------", finalNotesData);
+                            // console.log("281--finalNotesData----------------------------------------", finalNotesData);
                             collabModel.getCollabNotesUserId(req, (err, resultCollab) => {
                                 // console.log("entered or not");
                                 if (err) {

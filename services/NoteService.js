@@ -15,18 +15,20 @@ const async = require('async');
  * @description notes save service
  */
 exports.NoteAddService = function (req, callback) {
-    // console.log('req on service', req);
+    console.log('req on service', req);
 
     let sender = req.sender;
     async.waterfall([
 
         function (callback) {
 
-            usermodel.FindOneModel(sender, (err, data) => {
+            usermodel.FindOneModelForAdd(sender, (err, data) => {
                 if (err) {
                     callback(err);
                 }
                 else {
+                    console.log("id of user---", data._id);
+                    
                     callback(null, data._id);
                 }
             })

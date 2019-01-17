@@ -88,11 +88,15 @@ router.get('/AllUsersDetails', controller.userAllDetailsController);
 /**
  * post for NoteAddition
  */
-router.post('/noteAddition', upload.single('image'), function (req, res, next) {
-   console.log('image file', req.file, req.body);
-//    console.log('file', req);
-    next();
-  }, noteMiddleware.notesAddMiddleware, noteController.addNote );
+// router.post('/noteAddition', upload.single('image'), function (req, res, next) {
+//    console.log('image file', req.file, req.body);
+// //    console.log('file', req);
+//     next();
+//   }, noteMiddleware.notesAddMiddleware, noteController.addNote );
+
+
+router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.addNote );
+
 
 /**
  * get for Notes Display

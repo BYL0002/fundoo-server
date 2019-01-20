@@ -21,9 +21,62 @@ const noteController = require('../controller/NoteController');
 const labelController = require('../controller/LabelController');
 const collabController = require('../controller/CollabController');
 
-const multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
+var aws = require('aws-sdk');
+var busboy = require('busboy');
 
+
+const BUCKET_NAME = '';
+const IAM_USER_KEY = '';
+const IAM_USER_SECRET = '';
+
+
+const multer = require('multer');
+var multerS3 = require('multer-s3')
+
+// var upload = multer({ dest: 'uploads/' });
+
+// var app = express()
+var s3 = new aws.S3({ 
+  accessKeyId: 'AKIAIQ6RRZ4FSZBEUU3Q',
+  secretAccessKey: 'AKIAIQ6RRZ4FSZBEUU3Q',
+  
+ })
+ 
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'imageuploadshweta',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  })
+})
+
+// ---------------------------------------------------------------------------------------
+
+// let s3bucket = new AWS.S3({
+//   accessKeyId: IAM_USER_KEY,
+//   secretAccessKey: IAM_USER_SECRET,
+//   Bucket: BUCKET_NAME
+// });
+// s3bucket.createBucket(function () {
+//     var params = {
+//       Bucket: BUCKET_NAME,
+//       Key: file.name,
+//       Body: file.data
+//     };
+//     s3bucket.upload(params, function (err, data) {
+//       if (err) {
+//         console.log('error in callback');
+//         console.log(err);
+//       }
+//       console.log('success');
+//       console.log(data);
+//     });
+// });
 
 //----------------------------------------------------------------Swagger related API-----------------------------------------------------------------------
 
@@ -134,8 +187,20 @@ router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteControlle
 /**
  * post for Note Updation for Image via individual api
  */
-router.post('/updateNoteImage', upload.single('image'), (req, res, next) => {
+
+//Before S3 implementation
+
+ // router.post('/updateNoteImage', upload.single('image'), (req, res, next) => {
+//   console.log('req.file', req.file);
+//   next();
+// } , noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
+
+
+//After S3 Implementation
+
+router.post('/updateNoteImage', upload.array('image'), (req, res, next) => {
   console.log('req.file', req.file);
+  console.log('success', req.file.length, 'file!');
   next();
 } , noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
 

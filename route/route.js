@@ -24,7 +24,6 @@ const collabController = require('../controller/CollabController');
 var aws = require('aws-sdk');
 var busboy = require('busboy');
 
-
 const BUCKET_NAME = '';
 const IAM_USER_KEY = '';
 const IAM_USER_SECRET = '';
@@ -37,19 +36,22 @@ var multerS3 = require('multer-s3')
 
 // var app = express()
 var s3 = new aws.S3({ 
-  accessKeyId: 'AKIAIQ6RRZ4FSZBEUU3Q',
-  secretAccessKey: 'AKIAIQ6RRZ4FSZBEUU3Q',
-  
+  accessKeyId: process.env.accessKeyId,
+  secretAccessKey: process.env.secretAccessKey,
  })
  
 var upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'imageuploadshweta',
+    // bucket: process.env.bucketName,
+    bucket: 'fundoo-image-upload',
+
     metadata: function (req, file, cb) {
+      console.log('file in metadata-----', file);
       cb(null, {fieldName: file.fieldname});
     },
     key: function (req, file, cb) {
+      console.log('file in key-----', file);
       cb(null, Date.now().toString())
     }
   })
@@ -198,7 +200,18 @@ router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteControlle
 
 //After S3 Implementation
 
-router.post('/updateNoteImage', upload.array('image'), (req, res, next) => {
+router.post('/updateNoteImage', upload.single( ('image'), (err, data) => {
+  
+  if(err){
+    console.log('209--err', err);
+  }
+  else
+  {
+    console.log('213--data', data);
+    next();
+  }
+
+} ), (req, res, next) => {
   console.log('req.file', req.file);
   console.log('success', req.file.length, 'file!');
   next();

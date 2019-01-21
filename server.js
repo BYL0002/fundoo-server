@@ -70,7 +70,6 @@ app.use(function (err, req, res, next) {
     res.status(500).send(err)
 });
 
-
 // app.disable('x-powered-by');
 app.disable('x-powered-by')
 app.set('trust proxy', false); 

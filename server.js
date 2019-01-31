@@ -13,7 +13,7 @@ const cors = require('cors');
 // var hidePoweredBy = require('hide-powered-by')
 // app.use(hidePoweredBy())
 
-var cache = require('express-redis-cache')();
+// var cache = require('express-redis-cache')();
 const routes = require('./route/route.js');
 
 const mongoose = require('mongoose');
@@ -37,17 +37,17 @@ app.use(cors());
 
 app.use('/', routes);
 
-cache.on('connected', () => {
-    console.log('cache connected');
-})
+// cache.on('connected', () => {
+//     console.log('cache connected');
+// })
 
-cache.on('error', () => {
-    console.log('cache error');
-})
+// cache.on('error', () => {
+//     console.log('cache error');
+// })
 
-cache.on('disconnected', () => {
-    console.log('cache disconnected');
-})
+// cache.on('disconnected', () => {
+//     console.log('cache disconnected');
+// })
 
 /**
  * @description cheking database connectivity

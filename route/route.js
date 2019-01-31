@@ -10,7 +10,7 @@
  * importing express
  */
 const express = require('express');
-var cache = require('express-redis-cache')();
+// var cache = require('express-redis-cache')();
 const router = express.Router();
 
 const middleware = require('../middleware/UserMiddleware');
@@ -22,11 +22,11 @@ const labelController = require('../controller/LabelController');
 const collabController = require('../controller/CollabController');
 
 var aws = require('aws-sdk');
-var busboy = require('busboy');
+// var busboy = require('busboy');
 
-const BUCKET_NAME = '';
-const IAM_USER_KEY = '';
-const IAM_USER_SECRET = '';
+// const BUCKET_NAME = '';
+// const IAM_USER_KEY = '';
+// const IAM_USER_SECRET = '';
 
 
 const multer = require('multer');
@@ -35,25 +35,25 @@ var multerS3 = require('multer-s3')
 // var upload = multer({ dest: 'uploads/' });
 
 // var app = express()
-var s3 = new aws.S3({ 
+var s3 = new aws.S3({
   accessKeyId: process.env.accessKeyId,
   secretAccessKey: process.env.secretAccessKey,
- })
- 
+})
+
 var upload = multer({
   storage: multerS3({
     s3: s3,
     // bucket: process.env.bucketName,
     bucket: 'fundoo-image-upload',
 
-    metadata: function (req, file, cb) {
-      console.log('file in metadata-----', file);
-      cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-      console.log('file in key-----', file);
-      cb(null, Date.now().toString())
-    }
+    // metadata: function (req, file, cb) {
+    //   console.log('file in metadata-----', file);
+    //   cb(null, { fieldName: file.fieldname });
+    // },
+    // key: function (req, file, cb) {
+    //   console.log('file in key-----', file);
+    //   cb(null, Date.now().toString()) res.status(400).send(err);
+    // }
   })
 })
 
@@ -85,7 +85,7 @@ var upload = multer({
 // serve swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger/swagger.json');
- 
+
 router.use('/', swaggerUi.serve);
 router.get('/', swaggerUi.setup(swaggerDocument));
 //----------------------------------------------------------------USER related API-----------------------------------------------------------------------
@@ -99,7 +99,7 @@ router.post("/register", middleware.registerMiddleware, controller.registerContr
 /**
  * post for login
  */
-router.post('/login',controller.loginController);
+router.post('/login', controller.loginController);
 
 /**
  * post for logout
@@ -150,13 +150,15 @@ router.get('/AllUsersDetails', controller.userAllDetailsController);
 //   }, noteMiddleware.notesAddMiddleware, noteController.addNote );
 
 
-router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.addNote );
+router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.addNote);
 
 
 /**
  * get for Notes Display
  */
-router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getNotes', expire: 30}), noteController.displayCompleteNoteDetails );
+
+//Commenting it just to make docker run without redis
+// router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({ name: 'getNotes', expire: 30 }), noteController.displayCompleteNoteDetails);
 
 // router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getNotes', expire: 60}), noteController.displayNote );
 // router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
@@ -164,27 +166,27 @@ router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:
 /**
  * post for Note Updation Via Generic Nature
  */
-router.post('/updateNote', noteMiddleware.notesAddMiddleware, noteController.updateNote );
+router.post('/updateNote', noteMiddleware.notesAddMiddleware, noteController.updateNote);
 
 /**
  * post for Note Updation for Color via individual api
  */
-router.post('/updateNoteColor', noteMiddleware.notesAddMiddleware, noteController.updateNoteColor );
+router.post('/updateNoteColor', noteMiddleware.notesAddMiddleware, noteController.updateNoteColor);
 
 /**
  * post for Note Updation for Reminder via individual api
  */
-router.post('/updateNoteReminder', noteMiddleware.notesAddMiddleware, noteController.updateNoteReminder );
+router.post('/updateNoteReminder', noteMiddleware.notesAddMiddleware, noteController.updateNoteReminder);
 
 /**
  * post for Note Updation for Pin via individual api
  */
-router.post('/updateNotePin', noteMiddleware.notesAddMiddleware, noteController.updateNotePin );
+router.post('/updateNotePin', noteMiddleware.notesAddMiddleware, noteController.updateNotePin);
 
 /**
  * post for Note Updation for Trash via individual api
  */
-router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteController.updateNoteTrash );
+router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteController.updateNoteTrash);
 
 /**
  * post for Note Updation for Image via individual api
@@ -192,7 +194,7 @@ router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteControlle
 
 //Before S3 implementation
 
- // router.post('/updateNoteImage', upload.single('image'), (req, res, next) => {
+// router.post('/updateNoteImage', upload.single('image'), (req, res, next) => {
 //   console.log('req.file', req.file);
 //   next();
 // } , noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
@@ -200,32 +202,31 @@ router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteControlle
 
 //After S3 Implementation
 
-router.post('/updateNoteImage', upload.single( ('image'), (err, data) => {
-  
-  if(err){
-    console.log('209--err', err);
+router.post('/updateNoteImage', upload.single(('image'), (err, data) => {
+  if (err) {
+    console.log('205--err', err);
   }
-  else
-  {
-    console.log('213--data', data);
+  else {
+    console.log('208--data', data);
     next();
   }
+}),
+  (req, res, next) => {
+    console.log('req.file', req.file);
+    console.log('successful uploadation on Amazon S3', req.file.length, ' image files!');
+    next();
 
-} ), (req, res, next) => {
-  console.log('req.file', req.file);
-  console.log('success', req.file.length, 'file!');
-  next();
-} , noteMiddleware.notesAddMiddleware, noteController.updateNoteImage );
+  }, noteMiddleware.notesAddMiddleware, noteController.updateNoteImage);
 
 /**
  * post for Note Updation for Trash via individual api
  */
-router.post('/deleteNote', noteMiddleware.notesAddMiddleware, noteController.deleteNote );
+router.post('/deleteNote', noteMiddleware.notesAddMiddleware, noteController.deleteNote);
 
 /**
  * post for Note Updation of Title or Description for Trash via individual api
  */
-router.post('/updateNoteTitleDescription', noteMiddleware.notesAddMiddleware, noteController.UpdateNoteTitleDescription );
+router.post('/updateNoteTitleDescription', noteMiddleware.notesAddMiddleware, noteController.UpdateNoteTitleDescription);
 
 
 //----------------------------------------------------------------LABEL API-----------------------------------------------------------------------
@@ -233,34 +234,34 @@ router.post('/updateNoteTitleDescription', noteMiddleware.notesAddMiddleware, no
 /**
  * post for Label Addition
  */
-router.post('/AddLabel', noteMiddleware.notesAddMiddleware, labelController.addLabel );
+router.post('/AddLabel', noteMiddleware.notesAddMiddleware, labelController.addLabel);
 
 /**
  * post for Label Updation
  */
-router.post('/updateLabel', noteMiddleware.notesAddMiddleware, labelController.updateLabel );
+router.post('/updateLabel', noteMiddleware.notesAddMiddleware, labelController.updateLabel);
 
 /**
  * post for Label Deletion
  */
-router.post('/deleteLabel', noteMiddleware.notesAddMiddleware, labelController.deleteLabel );
+router.post('/deleteLabel', noteMiddleware.notesAddMiddleware, labelController.deleteLabel);
 
 /**
  * get for Label Display
  */
-router.get('/labelDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getLabel', expire: 60}), labelController.displayLabel );
+// router.get('/labelDisplay', noteMiddleware.notesAddMiddleware, cache.route({ name: 'getLabel', expire: 60 }), labelController.displayLabel);
 
 //----------------------------------------------------------------COLLABORATOR API-----------------------------------------------------------------------
 
 /**
  * post for Collaborator Addition
  */
-router.post('/AddCollab', noteMiddleware.notesAddMiddleware, collabController.addCollab );
+router.post('/AddCollab', noteMiddleware.notesAddMiddleware, collabController.addCollab);
 
 /**
  * get for Collaborator Details
  */
-router.get('/DisplayCollab', noteMiddleware.notesAddMiddleware, collabController.displayCollab );
+router.get('/DisplayCollab', noteMiddleware.notesAddMiddleware, collabController.displayCollab);
 
 
 /**

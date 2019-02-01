@@ -138,6 +138,23 @@ userFunction.prototype.FindOneModel = function (req, callback) {
   })
 }
 
+userFunction.prototype.FindOneModelForAdd = function (req, callback) {
+// console.log("142    ====    ",req);
+
+  user.findOne({email_id : req }, function (err, result) {
+    if (err) {
+
+      console.log(err);
+      return callback(err);
+    }
+    else {
+      console.log('Found Successful');
+      // console.log('result', result);
+      
+      return callback(null, result);
+    }
+  })
+}
 /**
  * @description Finding ALL data inside database
  * make this available to our users in our Node applications
@@ -151,8 +168,7 @@ userFunction.prototype.FindAllModel = function (req, callback) {
       return callback(err);
     }
     else {
-      console.log('Found all Successful', result);
-      // console.log('result', result);
+      // console.log('Found all Successful', result);
       
       return callback(null, result);
     }

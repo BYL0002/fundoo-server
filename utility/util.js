@@ -78,7 +78,6 @@ eventEmitterObj.on('userVerify', function(userDetails) {
     mailSender(userDetails);
 })
 
-
 /**
  * @description Event Listener to send mails to users on different tasks
  */

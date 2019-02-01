@@ -15,18 +15,20 @@ const async = require('async');
  * @description notes save service
  */
 exports.NoteAddService = function (req, callback) {
-    // console.log('req on service', req);
+    console.log('req on service', req);
 
     let sender = req.sender;
     async.waterfall([
 
         function (callback) {
 
-            usermodel.FindOneModel(sender, (err, data) => {
+            usermodel.FindOneModelForAdd(sender, (err, data) => {
                 if (err) {
                     callback(err);
                 }
                 else {
+                    console.log("id of user---", data._id);
+                    
                     callback(null, data._id);
                 }
             })
@@ -210,13 +212,13 @@ exports.NoteDisplayService = function (req, callback) {
 //  * @param {callback function} callback
 //  */
 exports.getCompleteNoteDataService = (req, callback) => {
-    
+
     // user.findUserID(data, (err, userIDRes) => {
     //     if (err) {
     //         callback(err);
     //     }
     //     else {
-    
+
     // console.log('Owner Db _id', req);
 
     var finalNotesData = [];
@@ -247,90 +249,71 @@ exports.getCompleteNoteDataService = (req, callback) => {
                             owner: noteOwner,
                             collab: []
                         }
-
                         finalNotesData.push(userNote);
                         // console.log("finalNotesData-----", finalNotesData);
-
                     }
-
                     collabModel.getCollabOwnerUserId(req, (err, resultOwnerCollab) => {
                         if (err) {
                             callback(err);
                         } else {
-                            // console.log('resultOwnerCollab----', resultOwnerCollab);
-                            
+                            // console.log('260--resultOwnerCollab----', resultOwnerCollab);
                             for (var i = 0; i < finalNotesData.length; i++) {
+                                // console.log('264--finalNotesData----', finalNotesData[i]);
                                 for (var j = 0; j < resultOwnerCollab.length; j++) {
+                                    // console.log('268--'+[j]+'--resultOwnerCollab----', resultOwnerCollab[j].noteId);
+                                    // console.log('270--'+[i]+'--finalNotesData[i].note._id----', finalNotesData[i].note._id);
 
-                                    if (finalNotesData[i].note._id.equals(resultOwnerCollab[j].noteID))
-                                    {
-                                        finalNotesData[i].collab.push(resultOwnerCollab[j].collabUserID)
+                                    if (finalNotesData[i].note._id.equals(resultOwnerCollab[j].noteId)) {
+                                        // console.log("272--if condition----", resultOwnerCollab[j].collabId);
+                                        finalNotesData[i].collab.push(resultOwnerCollab[j].collabId)
                                     }
                                 }
                             }
-                        }
-                    })
+                            // console.log("281--finalNotesData----------------------------------------", finalNotesData);
+                            collabModel.getCollabNotesUserId(req, (err, resultCollab) => {
+                                // console.log("entered or not");
+                                if (err) {
+                                    callback(err);
+                                } else {
+                                    var operations = [];
+                                    for (var i = 0; i < resultCollab.length; i++) {
+                                        operations.push((function (collabData) {
+                                            return function (callback) {
+                                                collabModel.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
+                                                    // console.log("resultNote--- : ", resultNote);
 
-                    // console.log("finalNotesData after getCollabOwnerUserId Pushed -----", finalNotesData);
+                                                    if (errorNote) {
+                                                        callback(errorNote)
 
-                    collabModel.getCollabNotesUserId(req, (err, resultCollab) => {
+                                                    } else {
 
-                        console.log("entered or not");
+                                                        var collabUserArray = [];
+                                                        for (var i = 0; i < resultNote.length; i++) {
+                                                            collabUserArray.push(resultNote[i].collabUserID)
+                                                        }
+                                                        var collabNote = {
+                                                            note: resultNote[0].noteID,
+                                                            owner: resultNote[0].userID,
+                                                            collab: collabUserArray
+                                                        }
+                                                        finalNotesData.push(collabNote);
 
-                        if (err) {
-                            callback(err);
-                        } else {
-
-                            var operations = [];
-
-                            for (var i = 0; i < resultCollab.length; i++) {
-
-                                operations.push((function (collabData) {
-
-                                    return function (callback) {
-
-                                        collabModel.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
-                                            
-                                            // console.log("resultNote--- : ", resultNote);
-
-                                            if (errorNote) {
-
-                                                callback(errorNote)
-
-                                            } else {
-
-                                                var collabUserArray = [];
-
-                                                for (var i = 0; i < resultNote.length; i++) {
-                                                    collabUserArray.push(resultNote[i].collabUserID)
-                                                }
-
-                                                var collabNote = {
-                                                    note: resultNote[0].noteID,
-                                                    owner: resultNote[0].userID,
-                                                    collab: collabUserArray
-                                                }
-
-                                                finalNotesData.push(collabNote);
-
-                                                callback(null, collabNote)
-
+                                                        callback(null, collabNote)
+                                                    }
+                                                })
                                             }
-                                        })
+                                        })(resultCollab[i]))
                                     }
 
-                                })(resultCollab[i]))
-                            }
-
-                            async.series(operations, (errorAsync, resultAsync) => {
-                                // console.log(resultAsync);
-
-                                if (errorAsync) {
-                                    callback(errorAsync);
-                                } else {
-                                    // console.log("final result ", finalNotesData);
-
-                                    callback(null, finalNotesData)
+                                    async.series(operations, (errorAsync, resultAsync) => {
+                                        // console.log(resultAsync);
+                                        if (errorAsync) {
+                                            callback(errorAsync);
+                                        } else {
+                                            // console.log("final result ", finalNotesData);
+                                            callback(null, finalNotesData)
+                                        }
+                                    })
                                 }
                             })
                         }

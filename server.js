@@ -7,11 +7,13 @@
  */
 
 const express = require('express');
-
 const app = express();
 const cors = require('cors');
 
-var cache = require('express-redis-cache')();
+// var hidePoweredBy = require('hide-powered-by')
+// app.use(hidePoweredBy())
+
+// var cache = require('express-redis-cache')();
 const routes = require('./route/route.js');
 
 const mongoose = require('mongoose');
@@ -20,7 +22,7 @@ const dbUrl = require('./config/dbconfig');
 require('dotenv').config();
 
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 /**
  * @description Parsing the request get by client
@@ -32,19 +34,20 @@ app.use(cors());
 /**
  * @description for routing
  */
+
 app.use('/', routes);
 
-cache.on('connected', () => {
-    console.log('cache connected');
-})
+// cache.on('connected', () => {
+//     console.log('cache connected');
+// })
 
-cache.on('error', () => {
-    console.log('cache error');
-})
+// cache.on('error', () => {
+//     console.log('cache error');
+// })
 
-cache.on('disconnected', () => {
-    console.log('cache disconnected');
-})
+// cache.on('disconnected', () => {
+//     console.log('cache disconnected');
+// })
 
 /**
  * @description cheking database connectivity
@@ -66,6 +69,10 @@ app.use(function (err, req, res, next) {
     console.log(err);
     res.status(500).send(err)
 });
+
+// app.disable('x-powered-by');
+app.disable('x-powered-by')
+app.set('trust proxy', false); 
 
 /**
  * @description Server Listening

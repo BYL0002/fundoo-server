@@ -14,7 +14,7 @@ const async = require('async');
  * @description notes save service
  */
 exports.LabelAddService = function (req, callback) {
-    console.log('req on service', req);
+    // console.log('req on service', req);
 
     async.waterfall([
 
@@ -124,6 +124,7 @@ exports.labelDisplayService = function (req, callback) {
             return callback(err);
         }
         else {
+            // console.log('labels---', data);            
             return callback(null, data);
         }
     })
@@ -151,9 +152,10 @@ exports.labelDeletionService = function (req, callback) {
  * @description Note Title or Description Update Service
  */
 exports.labelUpdateService = function (req, callback) {
+
     console.log("req on service on note display", req);
 
-    labelModel.labelUpdateModel(req, (err, data) => {
+    noteModel.noteLabelEdittionModel(req, (err, data) => {
         if (err) {
             return callback(err);
         }
@@ -161,5 +163,7 @@ exports.labelUpdateService = function (req, callback) {
             return callback(null, data);
         }
     })
+
+    // labelModel.labelUpdateModel
 
 }

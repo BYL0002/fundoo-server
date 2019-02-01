@@ -213,6 +213,7 @@ router.post('/updateNoteImage', upload.single(('image'), (err, data) => {
 }),
   (req, res, next) => {
     console.log('req.file', req.file);
+    console.log('req.file', req.file.path);
     console.log('successful uploadation on Amazon S3', req.file.length, ' image files!');
     next();
 

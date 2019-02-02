@@ -217,6 +217,23 @@ noteFunction.prototype.noteLabelEdittionModel = (req, callback) => {
     })
 }
 
+/**
+ * @description Notes Label Updation
+ */
+noteFunction.prototype.noteLabelsDisplayModel = (req, callback) => {
+
+  note.findById(req._id,
+    function (err, result) {
+      if (err) {
+        console.log('err on notes label display', err);
+        return callback(err);
+      }
+      else {
+        console.log('result of notes label display', result.labels);
+        return callback(null, result.labels);
+      }
+    })
+}
 
 /**
  * @exports function to get database connected and get operation done on basis of request from client

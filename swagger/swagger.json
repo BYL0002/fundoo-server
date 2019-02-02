@@ -17,6 +17,10 @@
   "basePath": "/v2",
   "tags": [
     {
+      "name": "dummy",
+      "description": "dummy for api"
+    },
+    {
       "name": "login",
       "description": "Everything about your Pets",
       "externalDocs": {
@@ -308,6 +312,48 @@
             "description": "User not found"
           }
         }
+      }
+    },
+    "/dummy": {
+      "post": {
+        "tags": [
+          "dummy"
+        ],
+        "summary": "login registered user",
+        "description": "login here",
+        "operationId": "addPet",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "email_id & password",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
       }
     }
   },

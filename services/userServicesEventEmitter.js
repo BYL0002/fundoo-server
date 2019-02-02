@@ -59,7 +59,7 @@ eventEmitterObj.on('userVerify', function(req) {
             let userDetails = {
                 to: req.email,
                 subject: 'Registration Link for Fundoo Notes',
-                html: '<p>Click <a href = "http://localhost:3000/setpassword/'+ token+ '">here</a> to activate account.</p>'
+                html: '<p>Click <a href = "'+staticFile.url_setpassword + token + '">here</a> to activate account.</p>'
             }
             utility.eventEmitterObj.emit('userVerify', userDetails );
             console.log('success on service emitter');

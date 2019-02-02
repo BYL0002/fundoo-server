@@ -318,9 +318,15 @@ exports.UpdateNoteTitleDescription = (req, res, next) => {
 exports.updateNoteImage = (req, res, next) => {
     try{
 
-        let file = new Buffer(fs.readFileSync(req.file.path)).toString("base64");
-        let fileFinal ='data:image/jpg;base64, '+file; 
+        //For base64 image
+
+        // let file = new Buffer(fs.readFileSync(req.file.path)).toString("base64");
+        // let fileFinal ='data:image/jpg;base64, '+file;
     
+        //For AmazonS3 image path
+
+        let fileFinal = req.file.path;
+
         noteService.noteUpdateImageService (req.body, fileFinal, (err, data) => {
             if(err)
             {

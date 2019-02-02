@@ -28,7 +28,6 @@ var aws = require('aws-sdk');
 // const IAM_USER_KEY = '';
 // const IAM_USER_SECRET = '';
 
-
 const multer = require('multer');
 var multerS3 = require('multer-s3')
 
@@ -46,14 +45,14 @@ var upload = multer({
     // bucket: process.env.bucketName,
     bucket: 'fundoo-image-upload',
 
-    // metadata: function (req, file, cb) {
-    //   console.log('file in metadata-----', file);
-    //   cb(null, { fieldName: file.fieldname });
-    // },
-    // key: function (req, file, cb) {
-    //   console.log('file in key-----', file);
-    //   cb(null, Date.now().toString()) res.status(400).send(err);
-    // }
+    metadata: function (req, file, cb) {
+      console.log('file in metadata-----', file);
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      console.log('file in key-----', file);
+      cb(null, Date.now().toString());
+    }
   })
 })
 
@@ -149,9 +148,7 @@ router.get('/AllUsersDetails', controller.userAllDetailsController);
 //     next();
 //   }, noteMiddleware.notesAddMiddleware, noteController.addNote );
 
-
 router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.addNote);
-
 
 /**
  * get for Notes Display
@@ -159,6 +156,9 @@ router.post('/noteAddition', noteMiddleware.notesAddMiddleware, noteController.a
 
 //Commenting it just to make docker run without redis
 // router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({ name: 'getNotes', expire: 30 }), noteController.displayCompleteNoteDetails);
+
+//just to make noteDisplay api run without cache as redis port getting conflict in docker
+router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayCompleteNoteDetails);
 
 // router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, cache.route({name:'getNotes', expire: 60}), noteController.displayNote );
 // router.get('/noteDisplay', noteMiddleware.notesAddMiddleware, noteController.displayNote );
@@ -171,7 +171,7 @@ router.post('/updateNote', noteMiddleware.notesAddMiddleware, noteController.upd
 /**
  * post for Note Updation for Color via individual api
  */
-router.post('/updateNoteColor', noteMiddleware.notesAddMiddleware, noteController.updateNoteColor);
+router.put('/updateNoteColor', noteMiddleware.notesAddMiddleware, noteController.updateNoteColor);
 
 /**
  * post for Note Updation for Reminder via individual api
@@ -204,10 +204,10 @@ router.post('/updateNoteTrash', noteMiddleware.notesAddMiddleware, noteControlle
 
 router.post('/updateNoteImage', upload.single(('image'), (err, data) => {
   if (err) {
-    console.log('205--err', err);
+    console.log('err in uploading image', err);
   }
   else {
-    console.log('208--data', data);
+    console.log('data in uploading image', data);
     next();
   }
 }),
@@ -216,7 +216,6 @@ router.post('/updateNoteImage', upload.single(('image'), (err, data) => {
     console.log('req.file', req.file.path);
     console.log('successful uploadation on Amazon S3', req.file.length, ' image files!');
     next();
-
   }, noteMiddleware.notesAddMiddleware, noteController.updateNoteImage);
 
 /**
@@ -228,7 +227,6 @@ router.post('/deleteNote', noteMiddleware.notesAddMiddleware, noteController.del
  * post for Note Updation of Title or Description for Trash via individual api
  */
 router.post('/updateNoteTitleDescription', noteMiddleware.notesAddMiddleware, noteController.UpdateNoteTitleDescription);
-
 
 //----------------------------------------------------------------LABEL API-----------------------------------------------------------------------
 
@@ -264,6 +262,9 @@ router.post('/AddCollab', noteMiddleware.notesAddMiddleware, collabController.ad
  */
 router.get('/DisplayCollab', noteMiddleware.notesAddMiddleware, collabController.displayCollab);
 
+/**
+ * delete for 
+ */
 
 /**
  * @exports express_router so the flow can include express router and get the proper routng to required task

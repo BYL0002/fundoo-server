@@ -51,10 +51,10 @@ exports.LabelAddService = function (req, callback) {
                     //             callback(err);
                     //         }
                     //         else {
-                                callback(null, data);
-                        //     }
-                        // })
-                    }
+                    callback(null, data);
+                    //     }
+                    // })
+                }
                 // }
             })
         }
@@ -103,12 +103,12 @@ exports.LabelAddService = function (req, callback) {
             // })
 
             // labelModel.labelSaveModel(req, (err, data) => {
-                if (err) {
-                    return callback(err);
-                }
-                else {
-                    return callback(null, result);
-                }
+            if (err) {
+                return callback(err);
+            }
+            else {
+                return callback(null, result);
+            }
             // })
         }
     )
@@ -137,15 +137,55 @@ exports.labelDisplayService = function (req, callback) {
 exports.labelDeletionService = function (req, callback) {
     console.log("req on service on note display", req);
 
-    labelModel.labelDeletionModel(req, (err, data) => {
-        if (err) {
-            return callback(err);
-        }
-        else {
-            return callback(null, data);
-        }
-    })
+    async.waterfall([
 
+        function (callback) {
+
+            noteModel.noteLabelsDisplayModel(req._id, (err, data) => {
+                if (err) {
+                    callback(err);
+                }
+                else {
+                    let tempLabels = [];
+                    let count = 0;
+                    for (let i = 0; i < data.label.length; i++) {
+                        if (data[i] == req.label) {
+                            count++;
+                        }
+                        else {
+                            tempLabels.push(data[i])
+                        }
+                    }
+                    callback(null, count, tempLabels);
+                }
+            })
+        }
+    ],
+
+        function (err, counter, result) {
+
+            if (counter == 0) {
+                console.log('counter == 0 err--', err);                
+                return callback(err);
+            }
+            else {
+                let notesLabelsUpdated = {
+                    _id: req._id,
+                    label: result
+                }
+                noteModel.noteLabelEdittionModel(notesLabelsUpdated, (err, resultFinal) => {
+                    if (err) {
+                        console.log('counter != 0 err--', err);
+                        return callback(err);
+                    }
+                    else {
+                        console.log('counter != 0 resultFinal--', err);
+                        return callback(null, resultFinal);
+                    }
+                })
+            }
+        }
+    )
 }
 
 /**

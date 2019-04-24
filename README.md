@@ -14,11 +14,6 @@ What things you need to install the software and how to install them
 ```
 npm install - which will install all modules present in package.json file.
 ```
-## afsdfsdfsdfsdfsdfsdfsdf
-
-```sh
-npm install my-crazy-module --save
-```
 
 ## Usage example
 
@@ -105,11 +100,7 @@ Unit testing done with Json format.
 
 * [Express](https://expressjs.com/) - The nodejs framework used to create server
 * [Redis](https://redis.io/) - Dependency Management so as to enable caching at api level
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* [Aws-sdk](https://docs.aws.amazon.com/sdk-for-javascript/index.html) - Used to get access to deployment and image upload in s3 bucket. 
 
 ## Authors
 

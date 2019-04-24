@@ -5,12 +5,16 @@ Fundoo Back-end developed on Nodejs Express framework &amp; MongoDb as database.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+### Prerequisites or Installation
+
+Linux:
 
 What things you need to install the software and how to install them
 
 ```
-Give examples
+npm install - which will install all modules present in package.json file.
+sudo apt-get install redis-server
+sudo systemctl enable redis-server.service
 ```
 
 # Product Name
@@ -24,18 +28,10 @@ One to two paragraph statement about your product and what it does.
 
 ![](header.png)
 
-## Installation
-
-OS X & Linux:
+## 
 
 ```sh
 npm install my-crazy-module --save
-```
-
-Windows:
-
-```sh
-edit autoexec.bat
 ```
 
 ## Usage example

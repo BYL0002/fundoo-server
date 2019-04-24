@@ -13,8 +13,11 @@ What things you need to install the software and how to install them
 
 ```
 npm install - which will install all modules present in package.json file.
+npm i express
+npm i cors
 sudo apt-get install redis-server
 sudo systemctl enable redis-server.service
+npm i aws-sdk
 ```
 
 # Product Name
@@ -28,7 +31,7 @@ One to two paragraph statement about your product and what it does.
 
 ![](header.png)
 
-## 
+## afsdfsdfsdfsdfsdfsdfsdf
 
 ```sh
 npm install my-crazy-module --save

@@ -1,9 +1,5 @@
 # fundoo-server
-Fundoo Back-end developed on Nodejs Express framework &amp; MongoDb as database.
-
-# Project Title
-
-One Paragraph of project description goes here
+Fundoo Back-end developed on Nodejs Express framework &amp; MongoDb as database. Using Redis for caching & amazon-sdk to upload images to amazon s3 bucket.
 
 ## Getting Started
 

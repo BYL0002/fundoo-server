@@ -7,30 +7,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites or Installation
 
-Linux:
+> Linux:
 
 What things you need to install the software and how to install them
 
 ```
 npm install - which will install all modules present in package.json file.
-npm i express
-npm i cors
-sudo apt-get install redis-server
-sudo systemctl enable redis-server.service
-npm i aws-sdk
 ```
-
-# Product Name
-> Short blurb about what your product does.
-
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
-One to two paragraph statement about your product and what it does.
-
-![](header.png)
-
 ## afsdfsdfsdfsdfsdfsdfsdf
 
 ```sh
@@ -43,25 +26,20 @@ A few motivating and useful examples of how your product can be used. Spice this
 
 _For more examples and usage, please refer to the [Wiki][wiki]._
 
-## Development setup
-
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
-
-```sh
-make install
-npm test
-```
-
-
-
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
-
 ```
-Give the example
+npm i express
+npm i cors
+sudo apt-get install redis-server
+sudo systemctl enable redis-server.service
+npm i aws-sdk
+npm i dotenv
+---or---
+npm install
+npm run start
 ```
 
 And repeat
@@ -70,41 +48,64 @@ And repeat
 until finished
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+## Code analysis setup
+
+> Describe how to install all development dependencies and how to run an automated code analysis. Potentially do this for multiple platforms.
+
+```sh
+sudo apt-get install docker.io
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+npm i sonarqube-scanner
+run sonarqube on browser - localhost:9000
+```
+
+## Testing setup
+
+> Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
+
+```sh
+npm i chai
+npm i chai-http
+npm i mocha
+```
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+> Explain how to run the automated tests for this system
+
+```sh
+change branch to test
+npm install
+npm run test
+```
 
 ### Break down into end to end tests
 
 Explain what these tests test and why
 
 ```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
+tests work on input and output of project flow.
+Request to hit api and response generated with status code from the operations on request data.
+Unit testing done with Json format.
 ```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+> Notes about how to deploy this on a live system
+
+```sh
+* [Docker] (https://www.docker.com/) - to get the images of redis, mongodb & etc.
+* [AWS Console] (https://aws.amazon.com/console/) to get instances running to provide CICD.
+* [Jenkins] (https://jenkins.io/) - to get the job assigned and running with github repo.
+* [Github] (https://github.com/) - to make our code best accessible to team.
+```
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
+* [Express](https://expressjs.com/) - The nodejs framework used to create server
+* [Redis](https://redis.io/) - Dependency Management so as to enable caching at api level
 * [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
@@ -112,7 +113,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Yash Sharma** - *Initial work* - [BridgeLabz-Yash](https://github.com/BYL0002)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
